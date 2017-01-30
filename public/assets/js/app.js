@@ -58,9 +58,9 @@
 
 	var _App2 = _interopRequireDefault(_App);
 
-	var _reactRedux = __webpack_require__(179);
+	var _reactRedux = __webpack_require__(180);
 
-	var _store = __webpack_require__(217);
+	var _store = __webpack_require__(220);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -112,7 +112,7 @@
 	var ReactVersion = __webpack_require__(30);
 
 	var onlyChild = __webpack_require__(31);
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var warning = __webpack_require__(11);
 
 	var createElement = ReactElement.createElement;
 	var createFactory = ReactElement.createFactory;
@@ -368,8 +368,15 @@
 /* 4 */
 /***/ function(module, exports) {
 
+	/*
+	object-assign
+	(c) Sindre Sorhus
+	@license MIT
+	*/
+
 	'use strict';
 	/* eslint-disable no-unused-vars */
+	var getOwnPropertySymbols = Object.getOwnPropertySymbols;
 	var hasOwnProperty = Object.prototype.hasOwnProperty;
 	var propIsEnumerable = Object.prototype.propertyIsEnumerable;
 
@@ -390,7 +397,7 @@
 			// Detect buggy property enumeration order in older V8 versions.
 
 			// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-			var test1 = new String('abc');  // eslint-disable-line
+			var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
 			test1[5] = 'de';
 			if (Object.getOwnPropertyNames(test1)[0] === '5') {
 				return false;
@@ -419,7 +426,7 @@
 			}
 
 			return true;
-		} catch (e) {
+		} catch (err) {
 			// We don't expect any of the above to throw, but better to be safe.
 			return false;
 		}
@@ -439,8 +446,8 @@
 				}
 			}
 
-			if (Object.getOwnPropertySymbols) {
-				symbols = Object.getOwnPropertySymbols(from);
+			if (getOwnPropertySymbols) {
+				symbols = getOwnPropertySymbols(from);
 				for (var i = 0; i < symbols.length; i++) {
 					if (propIsEnumerable.call(from, symbols[i])) {
 						to[symbols[i]] = from[symbols[i]];
@@ -472,7 +479,7 @@
 	var PooledClass = __webpack_require__(6);
 	var ReactElement = __webpack_require__(9);
 
-	var emptyFunction = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/emptyFunction\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var emptyFunction = __webpack_require__(12);
 	var traverseAllChildren = __webpack_require__(15);
 
 	var twoArgumentPooler = PooledClass.twoArgumentPooler;
@@ -667,7 +674,7 @@
 
 	var _prodInvariant = __webpack_require__(7);
 
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
 
 	/**
 	 * Static poolers. Several custom versions for each potential number of
@@ -809,7 +816,67 @@
 	module.exports = reactProdInvariant;
 
 /***/ },
-/* 8 */,
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 */
+
+	'use strict';
+
+	/**
+	 * Use invariant() to assert state which your program assumes to be true.
+	 *
+	 * Provide sprintf-style format (only %s is supported) and arguments
+	 * to provide information about what broke and what you were
+	 * expecting.
+	 *
+	 * The invariant message will be stripped in production, but the invariant
+	 * will remain to ensure logic does not differ in production.
+	 */
+
+	var validateFormat = function validateFormat(format) {};
+
+	if (process.env.NODE_ENV !== 'production') {
+	  validateFormat = function validateFormat(format) {
+	    if (format === undefined) {
+	      throw new Error('invariant requires an error message argument');
+	    }
+	  };
+	}
+
+	function invariant(condition, format, a, b, c, d, e, f) {
+	  validateFormat(format);
+
+	  if (!condition) {
+	    var error;
+	    if (format === undefined) {
+	      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
+	    } else {
+	      var args = [a, b, c, d, e, f];
+	      var argIndex = 0;
+	      error = new Error(format.replace(/%s/g, function () {
+	        return args[argIndex++];
+	      }));
+	      error.name = 'Invariant Violation';
+	    }
+
+	    error.framesToPop = 1; // we don't care about invariant's own frame
+	    throw error;
+	  }
+	}
+
+	module.exports = invariant;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
 /* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -829,7 +896,7 @@
 
 	var ReactCurrentOwner = __webpack_require__(10);
 
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var warning = __webpack_require__(11);
 	var canDefineProperty = __webpack_require__(13);
 	var hasOwnProperty = Object.prototype.hasOwnProperty;
 
@@ -1191,8 +1258,121 @@
 	module.exports = ReactCurrentOwner;
 
 /***/ },
-/* 11 */,
-/* 12 */,
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright 2014-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 */
+
+	'use strict';
+
+	var emptyFunction = __webpack_require__(12);
+
+	/**
+	 * Similar to invariant but only logs a warning if the condition is not met.
+	 * This can be used to log issues in development environments in critical
+	 * paths. Removing the logging code for production environments will keep the
+	 * same logic and follow the same code paths.
+	 */
+
+	var warning = emptyFunction;
+
+	if (process.env.NODE_ENV !== 'production') {
+	  (function () {
+	    var printWarning = function printWarning(format) {
+	      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+	        args[_key - 1] = arguments[_key];
+	      }
+
+	      var argIndex = 0;
+	      var message = 'Warning: ' + format.replace(/%s/g, function () {
+	        return args[argIndex++];
+	      });
+	      if (typeof console !== 'undefined') {
+	        console.error(message);
+	      }
+	      try {
+	        // --- Welcome to debugging React ---
+	        // This error was thrown as a convenience so that you can use this stack
+	        // to find the callsite that caused this warning to fire.
+	        throw new Error(message);
+	      } catch (x) {}
+	    };
+
+	    warning = function warning(condition, format) {
+	      if (format === undefined) {
+	        throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
+	      }
+
+	      if (format.indexOf('Failed Composite propType: ') === 0) {
+	        return; // Ignore CompositeComponent proptype check.
+	      }
+
+	      if (!condition) {
+	        for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+	          args[_key2 - 2] = arguments[_key2];
+	        }
+
+	        printWarning.apply(undefined, [format].concat(args));
+	      }
+	    };
+	  })();
+	}
+
+	module.exports = warning;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 12 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * 
+	 */
+
+	function makeEmptyFunction(arg) {
+	  return function () {
+	    return arg;
+	  };
+	}
+
+	/**
+	 * This function accepts and discards inputs; it has no side effects. This is
+	 * primarily useful idiomatically for overridable function endpoints which
+	 * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
+	 */
+	var emptyFunction = function emptyFunction() {};
+
+	emptyFunction.thatReturns = makeEmptyFunction;
+	emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
+	emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
+	emptyFunction.thatReturnsNull = makeEmptyFunction(null);
+	emptyFunction.thatReturnsThis = function () {
+	  return this;
+	};
+	emptyFunction.thatReturnsArgument = function (arg) {
+	  return arg;
+	};
+
+	module.exports = emptyFunction;
+
+/***/ },
 /* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -1269,9 +1449,9 @@
 	var REACT_ELEMENT_TYPE = __webpack_require__(14);
 
 	var getIteratorFn = __webpack_require__(16);
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
 	var KeyEscapeUtils = __webpack_require__(17);
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var warning = __webpack_require__(11);
 
 	var SEPARATOR = '.';
 	var SUBSEPARATOR = ':';
@@ -1557,9 +1737,9 @@
 	var ReactNoopUpdateQueue = __webpack_require__(19);
 
 	var canDefineProperty = __webpack_require__(13);
-	var emptyObject = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/emptyObject\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var emptyObject = __webpack_require__(20);
+	var invariant = __webpack_require__(8);
+	var warning = __webpack_require__(11);
 
 	/**
 	 * Base class helpers for the updating state of a component.
@@ -1675,7 +1855,7 @@
 
 	'use strict';
 
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var warning = __webpack_require__(11);
 
 	function warnNoop(publicInstance, callerName) {
 	  if (process.env.NODE_ENV !== 'production') {
@@ -1761,7 +1941,31 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 20 */,
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 */
+
+	'use strict';
+
+	var emptyObject = {};
+
+	if (process.env.NODE_ENV !== 'production') {
+	  Object.freeze(emptyObject);
+	}
+
+	module.exports = emptyObject;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
 /* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -1782,7 +1986,7 @@
 	var ReactComponent = __webpack_require__(18);
 	var ReactNoopUpdateQueue = __webpack_require__(19);
 
-	var emptyObject = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/emptyObject\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var emptyObject = __webpack_require__(20);
 
 	/**
 	 * Base class helpers for the updating state of a component.
@@ -1831,9 +2035,9 @@
 	var ReactPropTypeLocationNames = __webpack_require__(23);
 	var ReactNoopUpdateQueue = __webpack_require__(19);
 
-	var emptyObject = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/emptyObject\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var emptyObject = __webpack_require__(20);
+	var invariant = __webpack_require__(8);
+	var warning = __webpack_require__(11);
 
 	var MIXINS_KEY = 'mixins';
 
@@ -2765,7 +2969,7 @@
 
 	var canDefineProperty = __webpack_require__(13);
 	var getIteratorFn = __webpack_require__(16);
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var warning = __webpack_require__(11);
 
 	function getDeclarationErrorAddendum() {
 	  if (ReactCurrentOwner.current) {
@@ -2994,8 +3198,8 @@
 
 	var ReactCurrentOwner = __webpack_require__(10);
 
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
+	var warning = __webpack_require__(11);
 
 	function isNative(fn) {
 	  // Based on isNative() from Lodash
@@ -3333,8 +3537,8 @@
 	var ReactPropTypeLocationNames = __webpack_require__(23);
 	var ReactPropTypesSecret = __webpack_require__(28);
 
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
+	var warning = __webpack_require__(11);
 
 	var ReactComponentTreeHook;
 
@@ -3445,9 +3649,9 @@
 	var ReactPropTypeLocationNames = __webpack_require__(23);
 	var ReactPropTypesSecret = __webpack_require__(28);
 
-	var emptyFunction = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/emptyFunction\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var emptyFunction = __webpack_require__(12);
 	var getIteratorFn = __webpack_require__(16);
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var warning = __webpack_require__(11);
 
 	/**
 	 * Collection of methods that allow declaration and validation of props that are
@@ -3901,7 +4105,7 @@
 
 	var ReactElement = __webpack_require__(9);
 
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
 
 	/**
 	 * Returns the first child in a collection of children and verifies that there
@@ -3962,7 +4166,7 @@
 	var findDOMNode = __webpack_require__(172);
 	var getHostComponentFromComposite = __webpack_require__(173);
 	var renderSubtreeIntoContainer = __webpack_require__(174);
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var warning = __webpack_require__(11);
 
 	ReactDefaultInjection.inject();
 
@@ -4001,7 +4205,7 @@
 	}
 
 	if (process.env.NODE_ENV !== 'production') {
-	  var ExecutionEnvironment = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/ExecutionEnvironment\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	  var ExecutionEnvironment = __webpack_require__(48);
 	  if (ExecutionEnvironment.canUseDOM && window.top === window.self) {
 
 	    // First check if devtools is not installed
@@ -4071,7 +4275,7 @@
 	var DOMProperty = __webpack_require__(36);
 	var ReactDOMComponentFlags = __webpack_require__(37);
 
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
 
 	var ATTR_NAME = DOMProperty.ID_ATTRIBUTE_NAME;
 	var Flags = ReactDOMComponentFlags;
@@ -4311,7 +4515,7 @@
 
 	var _prodInvariant = __webpack_require__(35);
 
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
 
 	function checkMask(value, bitmask) {
 	  return (value & bitmask) === bitmask;
@@ -4715,7 +4919,7 @@
 	'use strict';
 
 	var EventPropagators = __webpack_require__(41);
-	var ExecutionEnvironment = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/ExecutionEnvironment\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var ExecutionEnvironment = __webpack_require__(48);
 	var FallbackCompositionState = __webpack_require__(49);
 	var SyntheticCompositionEvent = __webpack_require__(52);
 	var SyntheticInputEvent = __webpack_require__(54);
@@ -5108,7 +5312,7 @@
 
 	var accumulateInto = __webpack_require__(46);
 	var forEachAccumulated = __webpack_require__(47);
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var warning = __webpack_require__(11);
 
 	var getListener = EventPluginHub.getListener;
 
@@ -5250,7 +5454,7 @@
 
 	var accumulateInto = __webpack_require__(46);
 	var forEachAccumulated = __webpack_require__(47);
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
 
 	/**
 	 * Internal store for event listeners
@@ -5528,7 +5732,7 @@
 
 	var _prodInvariant = __webpack_require__(35);
 
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
 
 	/**
 	 * Injectable ordering of event plugins.
@@ -5789,8 +5993,8 @@
 
 	var ReactErrorUtils = __webpack_require__(45);
 
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
+	var warning = __webpack_require__(11);
 
 	/**
 	 * Injected dependencies:
@@ -6101,7 +6305,7 @@
 
 	var _prodInvariant = __webpack_require__(35);
 
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
 
 	/**
 	 * Accumulates items that must not be null or undefined into the first one. This
@@ -6181,7 +6385,46 @@
 	module.exports = forEachAccumulated;
 
 /***/ },
-/* 48 */,
+/* 48 */
+/***/ function(module, exports) {
+
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 */
+
+	'use strict';
+
+	var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
+
+	/**
+	 * Simple, lightweight module assisting with the detection and context of
+	 * Worker. Helps avoid circular dependencies and allows code to reason about
+	 * whether or not they are in a Worker, even if they never include the main
+	 * `ReactWorker` dependency.
+	 */
+	var ExecutionEnvironment = {
+
+	  canUseDOM: canUseDOM,
+
+	  canUseWorkers: typeof Worker !== 'undefined',
+
+	  canUseEventListeners: canUseDOM && !!(window.addEventListener || window.attachEvent),
+
+	  canUseViewport: canUseDOM && !!window.screen,
+
+	  isInWorker: !canUseDOM // For now, this is true - might change in the future.
+
+	};
+
+	module.exports = ExecutionEnvironment;
+
+/***/ },
 /* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -6299,7 +6542,7 @@
 
 	var _prodInvariant = __webpack_require__(35);
 
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
 
 	/**
 	 * Static poolers. Several custom versions for each potential number of
@@ -6413,7 +6656,7 @@
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/ExecutionEnvironment\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var ExecutionEnvironment = __webpack_require__(48);
 
 	var contentKey = null;
 
@@ -6494,8 +6737,8 @@
 
 	var PooledClass = __webpack_require__(50);
 
-	var emptyFunction = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/emptyFunction\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var emptyFunction = __webpack_require__(12);
+	var warning = __webpack_require__(11);
 
 	var didWarnForAddedNewProperty = false;
 	var isProxySupported = typeof Proxy === 'function';
@@ -6806,7 +7049,7 @@
 
 	var EventPluginHub = __webpack_require__(42);
 	var EventPropagators = __webpack_require__(41);
-	var ExecutionEnvironment = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/ExecutionEnvironment\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var ExecutionEnvironment = __webpack_require__(48);
 	var ReactDOMComponentTree = __webpack_require__(34);
 	var ReactUpdates = __webpack_require__(56);
 	var SyntheticEvent = __webpack_require__(53);
@@ -7138,7 +7381,7 @@
 	var ReactReconciler = __webpack_require__(59);
 	var Transaction = __webpack_require__(68);
 
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
 
 	var dirtyComponents = [];
 	var updateBatchNumber = 0;
@@ -7392,7 +7635,7 @@
 
 	var PooledClass = __webpack_require__(50);
 
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
 
 	/**
 	 * A specialized pseudo-event module to help keep track of components waiting to
@@ -7538,7 +7781,7 @@
 	var ReactRef = __webpack_require__(60);
 	var ReactInstrumentation = __webpack_require__(62);
 
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var warning = __webpack_require__(11);
 
 	/**
 	 * Helper to call ReactRef.attachRefs with this composite component, split out
@@ -7804,7 +8047,7 @@
 
 	var _prodInvariant = __webpack_require__(35);
 
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
 
 	/**
 	 * @param {?object} object
@@ -7933,10 +8176,10 @@
 	var ReactInvalidSetStateWarningHook = __webpack_require__(64);
 	var ReactHostOperationHistoryHook = __webpack_require__(65);
 	var ReactComponentTreeHook = __webpack_require__(26);
-	var ExecutionEnvironment = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/ExecutionEnvironment\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var ExecutionEnvironment = __webpack_require__(48);
 
-	var performanceNow = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/performanceNow\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var performanceNow = __webpack_require__(66);
+	var warning = __webpack_require__(11);
 
 	var hooks = [];
 	var didHookThrowForEvent = {};
@@ -8296,7 +8539,7 @@
 
 	'use strict';
 
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var warning = __webpack_require__(11);
 
 	if (process.env.NODE_ENV !== 'production') {
 	  var processingChildContext = false;
@@ -8360,8 +8603,71 @@
 	module.exports = ReactHostOperationHistoryHook;
 
 /***/ },
-/* 66 */,
-/* 67 */,
+/* 66 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @typechecks
+	 */
+
+	var performance = __webpack_require__(67);
+
+	var performanceNow;
+
+	/**
+	 * Detect if we can use `window.performance.now()` and gracefully fallback to
+	 * `Date.now()` if it doesn't exist. We need to support Firefox < 15 for now
+	 * because of Facebook's testing infrastructure.
+	 */
+	if (performance.now) {
+	  performanceNow = function performanceNow() {
+	    return performance.now();
+	  };
+	} else {
+	  performanceNow = function performanceNow() {
+	    return Date.now();
+	  };
+	}
+
+	module.exports = performanceNow;
+
+/***/ },
+/* 67 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @typechecks
+	 */
+
+	'use strict';
+
+	var ExecutionEnvironment = __webpack_require__(48);
+
+	var performance;
+
+	if (ExecutionEnvironment.canUseDOM) {
+	  performance = window.performance || window.msPerformance || window.webkitPerformance;
+	}
+
+	module.exports = performance || {};
+
+/***/ },
 /* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -8380,7 +8686,7 @@
 
 	var _prodInvariant = __webpack_require__(35);
 
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
 
 	var OBSERVED_ERROR = {};
 
@@ -8646,7 +8952,7 @@
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/ExecutionEnvironment\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var ExecutionEnvironment = __webpack_require__(48);
 
 	var useHasFeature;
 	if (ExecutionEnvironment.canUseDOM) {
@@ -9742,7 +10048,7 @@
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/ExecutionEnvironment\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var ExecutionEnvironment = __webpack_require__(48);
 	var DOMNamespaces = __webpack_require__(82);
 
 	var WHITESPACE_TEST = /^[ \r\n\t\f]/;
@@ -9880,7 +10186,7 @@
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/ExecutionEnvironment\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var ExecutionEnvironment = __webpack_require__(48);
 	var escapeTextContentForBrowser = __webpack_require__(86);
 	var setInnerHTML = __webpack_require__(83);
 
@@ -10066,11 +10372,11 @@
 	var _prodInvariant = __webpack_require__(35);
 
 	var DOMLazyTree = __webpack_require__(81);
-	var ExecutionEnvironment = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/ExecutionEnvironment\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var ExecutionEnvironment = __webpack_require__(48);
 
-	var createNodesFromMarkup = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/createNodesFromMarkup\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	var emptyFunction = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/emptyFunction\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var createNodesFromMarkup = __webpack_require__(88);
+	var emptyFunction = __webpack_require__(12);
+	var invariant = __webpack_require__(8);
 
 	var Danger = {
 
@@ -10101,9 +10407,327 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 88 */,
-/* 89 */,
-/* 90 */,
+/* 88 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @typechecks
+	 */
+
+	/*eslint-disable fb-www/unsafe-html*/
+
+	var ExecutionEnvironment = __webpack_require__(48);
+
+	var createArrayFromMixed = __webpack_require__(89);
+	var getMarkupWrap = __webpack_require__(90);
+	var invariant = __webpack_require__(8);
+
+	/**
+	 * Dummy container used to render all markup.
+	 */
+	var dummyNode = ExecutionEnvironment.canUseDOM ? document.createElement('div') : null;
+
+	/**
+	 * Pattern used by `getNodeName`.
+	 */
+	var nodeNamePattern = /^\s*<(\w+)/;
+
+	/**
+	 * Extracts the `nodeName` of the first element in a string of markup.
+	 *
+	 * @param {string} markup String of markup.
+	 * @return {?string} Node name of the supplied markup.
+	 */
+	function getNodeName(markup) {
+	  var nodeNameMatch = markup.match(nodeNamePattern);
+	  return nodeNameMatch && nodeNameMatch[1].toLowerCase();
+	}
+
+	/**
+	 * Creates an array containing the nodes rendered from the supplied markup. The
+	 * optionally supplied `handleScript` function will be invoked once for each
+	 * <script> element that is rendered. If no `handleScript` function is supplied,
+	 * an exception is thrown if any <script> elements are rendered.
+	 *
+	 * @param {string} markup A string of valid HTML markup.
+	 * @param {?function} handleScript Invoked once for each rendered <script>.
+	 * @return {array<DOMElement|DOMTextNode>} An array of rendered nodes.
+	 */
+	function createNodesFromMarkup(markup, handleScript) {
+	  var node = dummyNode;
+	  !!!dummyNode ? process.env.NODE_ENV !== 'production' ? invariant(false, 'createNodesFromMarkup dummy not initialized') : invariant(false) : void 0;
+	  var nodeName = getNodeName(markup);
+
+	  var wrap = nodeName && getMarkupWrap(nodeName);
+	  if (wrap) {
+	    node.innerHTML = wrap[1] + markup + wrap[2];
+
+	    var wrapDepth = wrap[0];
+	    while (wrapDepth--) {
+	      node = node.lastChild;
+	    }
+	  } else {
+	    node.innerHTML = markup;
+	  }
+
+	  var scripts = node.getElementsByTagName('script');
+	  if (scripts.length) {
+	    !handleScript ? process.env.NODE_ENV !== 'production' ? invariant(false, 'createNodesFromMarkup(...): Unexpected <script> element rendered.') : invariant(false) : void 0;
+	    createArrayFromMixed(scripts).forEach(handleScript);
+	  }
+
+	  var nodes = Array.from(node.childNodes);
+	  while (node.lastChild) {
+	    node.removeChild(node.lastChild);
+	  }
+	  return nodes;
+	}
+
+	module.exports = createNodesFromMarkup;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 89 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @typechecks
+	 */
+
+	var invariant = __webpack_require__(8);
+
+	/**
+	 * Convert array-like objects to arrays.
+	 *
+	 * This API assumes the caller knows the contents of the data type. For less
+	 * well defined inputs use createArrayFromMixed.
+	 *
+	 * @param {object|function|filelist} obj
+	 * @return {array}
+	 */
+	function toArray(obj) {
+	  var length = obj.length;
+
+	  // Some browsers builtin objects can report typeof 'function' (e.g. NodeList
+	  // in old versions of Safari).
+	  !(!Array.isArray(obj) && (typeof obj === 'object' || typeof obj === 'function')) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'toArray: Array-like object expected') : invariant(false) : void 0;
+
+	  !(typeof length === 'number') ? process.env.NODE_ENV !== 'production' ? invariant(false, 'toArray: Object needs a length property') : invariant(false) : void 0;
+
+	  !(length === 0 || length - 1 in obj) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'toArray: Object should have keys for indices') : invariant(false) : void 0;
+
+	  !(typeof obj.callee !== 'function') ? process.env.NODE_ENV !== 'production' ? invariant(false, 'toArray: Object can\'t be `arguments`. Use rest params ' + '(function(...args) {}) or Array.from() instead.') : invariant(false) : void 0;
+
+	  // Old IE doesn't give collections access to hasOwnProperty. Assume inputs
+	  // without method will throw during the slice call and skip straight to the
+	  // fallback.
+	  if (obj.hasOwnProperty) {
+	    try {
+	      return Array.prototype.slice.call(obj);
+	    } catch (e) {
+	      // IE < 9 does not support Array#slice on collections objects
+	    }
+	  }
+
+	  // Fall back to copying key by key. This assumes all keys have a value,
+	  // so will not preserve sparsely populated inputs.
+	  var ret = Array(length);
+	  for (var ii = 0; ii < length; ii++) {
+	    ret[ii] = obj[ii];
+	  }
+	  return ret;
+	}
+
+	/**
+	 * Perform a heuristic test to determine if an object is "array-like".
+	 *
+	 *   A monk asked Joshu, a Zen master, "Has a dog Buddha nature?"
+	 *   Joshu replied: "Mu."
+	 *
+	 * This function determines if its argument has "array nature": it returns
+	 * true if the argument is an actual array, an `arguments' object, or an
+	 * HTMLCollection (e.g. node.childNodes or node.getElementsByTagName()).
+	 *
+	 * It will return false for other array-like objects like Filelist.
+	 *
+	 * @param {*} obj
+	 * @return {boolean}
+	 */
+	function hasArrayNature(obj) {
+	  return (
+	    // not null/false
+	    !!obj && (
+	    // arrays are objects, NodeLists are functions in Safari
+	    typeof obj == 'object' || typeof obj == 'function') &&
+	    // quacks like an array
+	    'length' in obj &&
+	    // not window
+	    !('setInterval' in obj) &&
+	    // no DOM node should be considered an array-like
+	    // a 'select' element has 'length' and 'item' properties on IE8
+	    typeof obj.nodeType != 'number' && (
+	    // a real array
+	    Array.isArray(obj) ||
+	    // arguments
+	    'callee' in obj ||
+	    // HTMLCollection/NodeList
+	    'item' in obj)
+	  );
+	}
+
+	/**
+	 * Ensure that the argument is an array by wrapping it in an array if it is not.
+	 * Creates a copy of the argument if it is already an array.
+	 *
+	 * This is mostly useful idiomatically:
+	 *
+	 *   var createArrayFromMixed = require('createArrayFromMixed');
+	 *
+	 *   function takesOneOrMoreThings(things) {
+	 *     things = createArrayFromMixed(things);
+	 *     ...
+	 *   }
+	 *
+	 * This allows you to treat `things' as an array, but accept scalars in the API.
+	 *
+	 * If you need to convert an array-like object, like `arguments`, into an array
+	 * use toArray instead.
+	 *
+	 * @param {*} obj
+	 * @return {array}
+	 */
+	function createArrayFromMixed(obj) {
+	  if (!hasArrayNature(obj)) {
+	    return [obj];
+	  } else if (Array.isArray(obj)) {
+	    return obj.slice();
+	  } else {
+	    return toArray(obj);
+	  }
+	}
+
+	module.exports = createArrayFromMixed;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 90 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 */
+
+	/*eslint-disable fb-www/unsafe-html */
+
+	var ExecutionEnvironment = __webpack_require__(48);
+
+	var invariant = __webpack_require__(8);
+
+	/**
+	 * Dummy container used to detect which wraps are necessary.
+	 */
+	var dummyNode = ExecutionEnvironment.canUseDOM ? document.createElement('div') : null;
+
+	/**
+	 * Some browsers cannot use `innerHTML` to render certain elements standalone,
+	 * so we wrap them, render the wrapped nodes, then extract the desired node.
+	 *
+	 * In IE8, certain elements cannot render alone, so wrap all elements ('*').
+	 */
+
+	var shouldWrap = {};
+
+	var selectWrap = [1, '<select multiple="true">', '</select>'];
+	var tableWrap = [1, '<table>', '</table>'];
+	var trWrap = [3, '<table><tbody><tr>', '</tr></tbody></table>'];
+
+	var svgWrap = [1, '<svg xmlns="http://www.w3.org/2000/svg">', '</svg>'];
+
+	var markupWrap = {
+	  '*': [1, '?<div>', '</div>'],
+
+	  'area': [1, '<map>', '</map>'],
+	  'col': [2, '<table><tbody></tbody><colgroup>', '</colgroup></table>'],
+	  'legend': [1, '<fieldset>', '</fieldset>'],
+	  'param': [1, '<object>', '</object>'],
+	  'tr': [2, '<table><tbody>', '</tbody></table>'],
+
+	  'optgroup': selectWrap,
+	  'option': selectWrap,
+
+	  'caption': tableWrap,
+	  'colgroup': tableWrap,
+	  'tbody': tableWrap,
+	  'tfoot': tableWrap,
+	  'thead': tableWrap,
+
+	  'td': trWrap,
+	  'th': trWrap
+	};
+
+	// Initialize the SVG elements since we know they'll always need to be wrapped
+	// consistently. If they are created inside a <div> they will be initialized in
+	// the wrong namespace (and will not display).
+	var svgElements = ['circle', 'clipPath', 'defs', 'ellipse', 'g', 'image', 'line', 'linearGradient', 'mask', 'path', 'pattern', 'polygon', 'polyline', 'radialGradient', 'rect', 'stop', 'text', 'tspan'];
+	svgElements.forEach(function (nodeName) {
+	  markupWrap[nodeName] = svgWrap;
+	  shouldWrap[nodeName] = true;
+	});
+
+	/**
+	 * Gets the markup wrap configuration for the supplied `nodeName`.
+	 *
+	 * NOTE: This lazily detects which wraps are necessary for the current browser.
+	 *
+	 * @param {string} nodeName Lowercase `nodeName`.
+	 * @return {?array} Markup wrap configuration, if applicable.
+	 */
+	function getMarkupWrap(nodeName) {
+	  !!!dummyNode ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Markup wrapping node not initialized') : invariant(false) : void 0;
+	  if (!markupWrap.hasOwnProperty(nodeName)) {
+	    nodeName = '*';
+	  }
+	  if (!shouldWrap.hasOwnProperty(nodeName)) {
+	    if (nodeName === '*') {
+	      dummyNode.innerHTML = '<link />';
+	    } else {
+	      dummyNode.innerHTML = '<' + nodeName + '></' + nodeName + '>';
+	    }
+	    shouldWrap[nodeName] = !dummyNode.firstChild;
+	  }
+	  return shouldWrap[nodeName] ? markupWrap[nodeName] : null;
+	}
+
+	module.exports = getMarkupWrap;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
 /* 91 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -10181,13 +10805,13 @@
 	var ReactMultiChild = __webpack_require__(114);
 	var ReactServerRenderingTransaction = __webpack_require__(133);
 
-	var emptyFunction = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/emptyFunction\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var emptyFunction = __webpack_require__(12);
 	var escapeTextContentForBrowser = __webpack_require__(86);
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
 	var isEventSupported = __webpack_require__(70);
-	var shallowEqual = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/shallowEqual\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var shallowEqual = __webpack_require__(123);
 	var validateDOMNesting = __webpack_require__(136);
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var warning = __webpack_require__(11);
 
 	var Flags = ReactDOMComponentFlags;
 	var deleteListener = EventPluginHub.deleteListener;
@@ -11165,7 +11789,7 @@
 
 	var ReactDOMComponentTree = __webpack_require__(34);
 
-	var focusNode = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/focusNode\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var focusNode = __webpack_require__(94);
 
 	var AutoFocusUtils = {
 	  focusDOMComponent: function () {
@@ -11176,7 +11800,37 @@
 	module.exports = AutoFocusUtils;
 
 /***/ },
-/* 94 */,
+/* 94 */
+/***/ function(module, exports) {
+
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 */
+
+	'use strict';
+
+	/**
+	 * @param {DOMElement} node input/textarea to focus
+	 */
+
+	function focusNode(node) {
+	  // IE8 can throw "Can't move focus to the control because it is invisible,
+	  // not enabled, or of a type that does not accept the focus." for all kinds of
+	  // reasons that are too expensive and fragile to test.
+	  try {
+	    node.focus();
+	  } catch (e) {}
+	}
+
+	module.exports = focusNode;
+
+/***/ },
 /* 95 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -11193,14 +11847,14 @@
 	'use strict';
 
 	var CSSProperty = __webpack_require__(96);
-	var ExecutionEnvironment = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/ExecutionEnvironment\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var ExecutionEnvironment = __webpack_require__(48);
 	var ReactInstrumentation = __webpack_require__(62);
 
-	var camelizeStyleName = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/camelizeStyleName\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var camelizeStyleName = __webpack_require__(97);
 	var dangerousStyleValue = __webpack_require__(99);
-	var hyphenateStyleName = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/hyphenateStyleName\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	var memoizeStringOnly = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/memoizeStringOnly\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var hyphenateStyleName = __webpack_require__(100);
+	var memoizeStringOnly = __webpack_require__(102);
+	var warning = __webpack_require__(11);
 
 	var processStyleName = memoizeStringOnly(function (styleName) {
 	  return hyphenateStyleName(styleName);
@@ -11543,8 +12197,86 @@
 	module.exports = CSSProperty;
 
 /***/ },
-/* 97 */,
-/* 98 */,
+/* 97 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @typechecks
+	 */
+
+	'use strict';
+
+	var camelize = __webpack_require__(98);
+
+	var msPattern = /^-ms-/;
+
+	/**
+	 * Camelcases a hyphenated CSS property name, for example:
+	 *
+	 *   > camelizeStyleName('background-color')
+	 *   < "backgroundColor"
+	 *   > camelizeStyleName('-moz-transition')
+	 *   < "MozTransition"
+	 *   > camelizeStyleName('-ms-transition')
+	 *   < "msTransition"
+	 *
+	 * As Andi Smith suggests
+	 * (http://www.andismith.com/blog/2012/02/modernizr-prefixed/), an `-ms` prefix
+	 * is converted to lowercase `ms`.
+	 *
+	 * @param {string} string
+	 * @return {string}
+	 */
+	function camelizeStyleName(string) {
+	  return camelize(string.replace(msPattern, 'ms-'));
+	}
+
+	module.exports = camelizeStyleName;
+
+/***/ },
+/* 98 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @typechecks
+	 */
+
+	var _hyphenPattern = /-(.)/g;
+
+	/**
+	 * Camelcases a hyphenated string, for example:
+	 *
+	 *   > camelize('background-color')
+	 *   < "backgroundColor"
+	 *
+	 * @param {string} string
+	 * @return {string}
+	 */
+	function camelize(string) {
+	  return string.replace(_hyphenPattern, function (_, character) {
+	    return character.toUpperCase();
+	  });
+	}
+
+	module.exports = camelize;
+
+/***/ },
 /* 99 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -11561,7 +12293,7 @@
 	'use strict';
 
 	var CSSProperty = __webpack_require__(96);
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var warning = __webpack_require__(11);
 
 	var isUnitlessNumber = CSSProperty.isUnitlessNumber;
 	var styleWarnings = {};
@@ -11629,9 +12361,120 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 100 */,
-/* 101 */,
-/* 102 */,
+/* 100 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @typechecks
+	 */
+
+	'use strict';
+
+	var hyphenate = __webpack_require__(101);
+
+	var msPattern = /^ms-/;
+
+	/**
+	 * Hyphenates a camelcased CSS property name, for example:
+	 *
+	 *   > hyphenateStyleName('backgroundColor')
+	 *   < "background-color"
+	 *   > hyphenateStyleName('MozTransition')
+	 *   < "-moz-transition"
+	 *   > hyphenateStyleName('msTransition')
+	 *   < "-ms-transition"
+	 *
+	 * As Modernizr suggests (http://modernizr.com/docs/#prefixed), an `ms` prefix
+	 * is converted to `-ms-`.
+	 *
+	 * @param {string} string
+	 * @return {string}
+	 */
+	function hyphenateStyleName(string) {
+	  return hyphenate(string).replace(msPattern, '-ms-');
+	}
+
+	module.exports = hyphenateStyleName;
+
+/***/ },
+/* 101 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @typechecks
+	 */
+
+	var _uppercasePattern = /([A-Z])/g;
+
+	/**
+	 * Hyphenates a camelcased string, for example:
+	 *
+	 *   > hyphenate('backgroundColor')
+	 *   < "background-color"
+	 *
+	 * For CSS style names, use `hyphenateStyleName` instead which works properly
+	 * with all vendor prefixes, including `ms`.
+	 *
+	 * @param {string} string
+	 * @return {string}
+	 */
+	function hyphenate(string) {
+	  return string.replace(_uppercasePattern, '-$1').toLowerCase();
+	}
+
+	module.exports = hyphenate;
+
+/***/ },
+/* 102 */
+/***/ function(module, exports) {
+
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * 
+	 * @typechecks static-only
+	 */
+
+	'use strict';
+
+	/**
+	 * Memoizes the return value of a function that accepts one string argument.
+	 */
+
+	function memoizeStringOnly(callback) {
+	  var cache = {};
+	  return function (string) {
+	    if (!cache.hasOwnProperty(string)) {
+	      cache[string] = callback.call(this, string);
+	    }
+	    return cache[string];
+	  };
+	}
+
+	module.exports = memoizeStringOnly;
+
+/***/ },
 /* 103 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -11652,7 +12495,7 @@
 	var ReactInstrumentation = __webpack_require__(62);
 
 	var quoteAttributeValueForBrowser = __webpack_require__(104);
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var warning = __webpack_require__(11);
 
 	var VALID_ATTRIBUTE_NAME_REGEX = new RegExp('^[' + DOMProperty.ATTRIBUTE_NAME_START_CHAR + '][' + DOMProperty.ATTRIBUTE_NAME_CHAR + ']*$');
 	var illegalAttributeNameCache = {};
@@ -12288,7 +13131,7 @@
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/ExecutionEnvironment\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var ExecutionEnvironment = __webpack_require__(48);
 
 	/**
 	 * Generate a mapping of standard vendor prefixes using the defined style property and event name.
@@ -12401,8 +13244,8 @@
 	var ReactDOMComponentTree = __webpack_require__(34);
 	var ReactUpdates = __webpack_require__(56);
 
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
+	var warning = __webpack_require__(11);
 
 	var didWarnValueLink = false;
 	var didWarnCheckedLink = false;
@@ -12681,8 +13524,8 @@
 	var React = __webpack_require__(2);
 	var ReactPropTypesSecret = __webpack_require__(110);
 
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
+	var warning = __webpack_require__(11);
 
 	var hasReadOnlyValue = {
 	  'button': true,
@@ -12843,7 +13686,7 @@
 	var ReactDOMComponentTree = __webpack_require__(34);
 	var ReactDOMSelect = __webpack_require__(112);
 
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var warning = __webpack_require__(11);
 	var didWarnInvalidOptionChildren = false;
 
 	function flattenChildren(children) {
@@ -12971,7 +13814,7 @@
 	var ReactDOMComponentTree = __webpack_require__(34);
 	var ReactUpdates = __webpack_require__(56);
 
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var warning = __webpack_require__(11);
 
 	var didWarnValueLink = false;
 	var didWarnValueDefaultValue = false;
@@ -13177,8 +14020,8 @@
 	var ReactDOMComponentTree = __webpack_require__(34);
 	var ReactUpdates = __webpack_require__(56);
 
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
+	var warning = __webpack_require__(11);
 
 	var didWarnValueLink = false;
 	var didWarnValDefaultVal = false;
@@ -13345,9 +14188,9 @@
 	var ReactReconciler = __webpack_require__(59);
 	var ReactChildReconciler = __webpack_require__(117);
 
-	var emptyFunction = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/emptyFunction\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var emptyFunction = __webpack_require__(12);
 	var flattenChildren = __webpack_require__(132);
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
 
 	/**
 	 * Make an update for markup to be rendered and inserted at a supplied index.
@@ -13793,7 +14636,7 @@
 
 	var _prodInvariant = __webpack_require__(35);
 
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
 
 	var injected = false;
 
@@ -13899,7 +14742,7 @@
 	var KeyEscapeUtils = __webpack_require__(128);
 	var shouldUpdateReactComponent = __webpack_require__(124);
 	var traverseAllChildren = __webpack_require__(129);
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var warning = __webpack_require__(11);
 
 	var ReactComponentTreeHook;
 
@@ -14060,8 +14903,8 @@
 	var ReactHostComponent = __webpack_require__(126);
 
 	var getNextDebugID = __webpack_require__(127);
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
+	var warning = __webpack_require__(11);
 
 	// To avoid a cyclic dependency, we create the final class in this module
 	var ReactCompositeComponentWrapper = function (element) {
@@ -14201,11 +15044,11 @@
 	  var checkReactTypeSpec = __webpack_require__(121);
 	}
 
-	var emptyObject = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/emptyObject\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	var shallowEqual = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/shallowEqual\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var emptyObject = __webpack_require__(20);
+	var invariant = __webpack_require__(8);
+	var shallowEqual = __webpack_require__(123);
 	var shouldUpdateReactComponent = __webpack_require__(124);
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var warning = __webpack_require__(11);
 
 	var CompositeTypes = {
 	  ImpureClass: 0,
@@ -15097,7 +15940,7 @@
 
 	var React = __webpack_require__(2);
 
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
 
 	var ReactNodeTypes = {
 	  HOST: 0,
@@ -15142,8 +15985,8 @@
 	var ReactPropTypeLocationNames = __webpack_require__(122);
 	var ReactPropTypesSecret = __webpack_require__(110);
 
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
+	var warning = __webpack_require__(11);
 
 	var ReactComponentTreeHook;
 
@@ -15244,7 +16087,78 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 123 */,
+/* 123 */
+/***/ function(module, exports) {
+
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @typechecks
+	 * 
+	 */
+
+	/*eslint-disable no-self-compare */
+
+	'use strict';
+
+	var hasOwnProperty = Object.prototype.hasOwnProperty;
+
+	/**
+	 * inlined Object.is polyfill to avoid requiring consumers ship their own
+	 * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+	 */
+	function is(x, y) {
+	  // SameValue algorithm
+	  if (x === y) {
+	    // Steps 1-5, 7-10
+	    // Steps 6.b-6.e: +0 != -0
+	    // Added the nonzero y check to make Flow happy, but it is redundant
+	    return x !== 0 || y !== 0 || 1 / x === 1 / y;
+	  } else {
+	    // Step 6.a: NaN == NaN
+	    return x !== x && y !== y;
+	  }
+	}
+
+	/**
+	 * Performs equality by iterating through keys on an object and returning false
+	 * when any key has values which are not strictly equal between the arguments.
+	 * Returns true when the values of all keys are strictly equal.
+	 */
+	function shallowEqual(objA, objB) {
+	  if (is(objA, objB)) {
+	    return true;
+	  }
+
+	  if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
+	    return false;
+	  }
+
+	  var keysA = Object.keys(objA);
+	  var keysB = Object.keys(objB);
+
+	  if (keysA.length !== keysB.length) {
+	    return false;
+	  }
+
+	  // Test for A's keys different from B.
+	  for (var i = 0; i < keysA.length; i++) {
+	    if (!hasOwnProperty.call(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) {
+	      return false;
+	    }
+	  }
+
+	  return true;
+	}
+
+	module.exports = shallowEqual;
+
+/***/ },
 /* 124 */
 /***/ function(module, exports) {
 
@@ -15342,7 +16256,7 @@
 
 	var _prodInvariant = __webpack_require__(35);
 
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
 
 	var genericComponentClass = null;
 	var textComponentClass = null;
@@ -15507,9 +16421,9 @@
 	var REACT_ELEMENT_TYPE = __webpack_require__(130);
 
 	var getIteratorFn = __webpack_require__(131);
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
 	var KeyEscapeUtils = __webpack_require__(128);
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var warning = __webpack_require__(11);
 
 	var SEPARATOR = '.';
 	var SUBSEPARATOR = ':';
@@ -15754,7 +16668,7 @@
 
 	var KeyEscapeUtils = __webpack_require__(128);
 	var traverseAllChildren = __webpack_require__(129);
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var warning = __webpack_require__(11);
 
 	var ReactComponentTreeHook;
 
@@ -15932,7 +16846,7 @@
 
 	var ReactUpdateQueue = __webpack_require__(135);
 
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var warning = __webpack_require__(11);
 
 	function warnNoop(publicInstance, callerName) {
 	  if (process.env.NODE_ENV !== 'production') {
@@ -16078,8 +16992,8 @@
 	var ReactInstrumentation = __webpack_require__(62);
 	var ReactUpdates = __webpack_require__(56);
 
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
+	var warning = __webpack_require__(11);
 
 	function enqueueUpdate(internalInstance) {
 	  ReactUpdates.enqueueUpdate(internalInstance);
@@ -16304,8 +17218,8 @@
 
 	var _assign = __webpack_require__(4);
 
-	var emptyFunction = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/emptyFunction\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var emptyFunction = __webpack_require__(12);
+	var warning = __webpack_require__(11);
 
 	var validateDOMNesting = emptyFunction;
 
@@ -16755,7 +17669,7 @@
 
 	var _prodInvariant = __webpack_require__(35);
 
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
 
 	/**
 	 * Return the lowest common ancestor of A and B, or null if they are in
@@ -16902,7 +17816,7 @@
 	var ReactDOMComponentTree = __webpack_require__(34);
 
 	var escapeTextContentForBrowser = __webpack_require__(86);
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
 	var validateDOMNesting = __webpack_require__(136);
 
 	/**
@@ -17068,7 +17982,7 @@
 	var ReactUpdates = __webpack_require__(56);
 	var Transaction = __webpack_require__(68);
 
-	var emptyFunction = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/emptyFunction\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var emptyFunction = __webpack_require__(12);
 
 	var RESET_BATCHED_UPDATES = {
 	  initialize: emptyFunction,
@@ -17137,14 +18051,14 @@
 
 	var _assign = __webpack_require__(4);
 
-	var EventListener = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/EventListener\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	var ExecutionEnvironment = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/ExecutionEnvironment\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var EventListener = __webpack_require__(142);
+	var ExecutionEnvironment = __webpack_require__(48);
 	var PooledClass = __webpack_require__(50);
 	var ReactDOMComponentTree = __webpack_require__(34);
 	var ReactUpdates = __webpack_require__(56);
 
 	var getEventTarget = __webpack_require__(69);
-	var getUnboundedScrollPosition = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/getUnboundedScrollPosition\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var getUnboundedScrollPosition = __webpack_require__(143);
 
 	/**
 	 * Find the deepest React component completely containing the root of the
@@ -17279,8 +18193,138 @@
 	module.exports = ReactEventListener;
 
 /***/ },
-/* 142 */,
-/* 143 */,
+/* 142 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 *
+	 * Licensed under the Apache License, Version 2.0 (the "License");
+	 * you may not use this file except in compliance with the License.
+	 * You may obtain a copy of the License at
+	 *
+	 * http://www.apache.org/licenses/LICENSE-2.0
+	 *
+	 * Unless required by applicable law or agreed to in writing, software
+	 * distributed under the License is distributed on an "AS IS" BASIS,
+	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	 * See the License for the specific language governing permissions and
+	 * limitations under the License.
+	 *
+	 * @typechecks
+	 */
+
+	var emptyFunction = __webpack_require__(12);
+
+	/**
+	 * Upstream version of event listener. Does not take into account specific
+	 * nature of platform.
+	 */
+	var EventListener = {
+	  /**
+	   * Listen to DOM events during the bubble phase.
+	   *
+	   * @param {DOMEventTarget} target DOM element to register listener on.
+	   * @param {string} eventType Event type, e.g. 'click' or 'mouseover'.
+	   * @param {function} callback Callback function.
+	   * @return {object} Object with a `remove` method.
+	   */
+	  listen: function listen(target, eventType, callback) {
+	    if (target.addEventListener) {
+	      target.addEventListener(eventType, callback, false);
+	      return {
+	        remove: function remove() {
+	          target.removeEventListener(eventType, callback, false);
+	        }
+	      };
+	    } else if (target.attachEvent) {
+	      target.attachEvent('on' + eventType, callback);
+	      return {
+	        remove: function remove() {
+	          target.detachEvent('on' + eventType, callback);
+	        }
+	      };
+	    }
+	  },
+
+	  /**
+	   * Listen to DOM events during the capture phase.
+	   *
+	   * @param {DOMEventTarget} target DOM element to register listener on.
+	   * @param {string} eventType Event type, e.g. 'click' or 'mouseover'.
+	   * @param {function} callback Callback function.
+	   * @return {object} Object with a `remove` method.
+	   */
+	  capture: function capture(target, eventType, callback) {
+	    if (target.addEventListener) {
+	      target.addEventListener(eventType, callback, true);
+	      return {
+	        remove: function remove() {
+	          target.removeEventListener(eventType, callback, true);
+	        }
+	      };
+	    } else {
+	      if (process.env.NODE_ENV !== 'production') {
+	        console.error('Attempted to listen to events during the capture phase on a ' + 'browser that does not support the capture phase. Your application ' + 'will not receive some events.');
+	      }
+	      return {
+	        remove: emptyFunction
+	      };
+	    }
+	  },
+
+	  registerDefault: function registerDefault() {}
+	};
+
+	module.exports = EventListener;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 143 */
+/***/ function(module, exports) {
+
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @typechecks
+	 */
+
+	'use strict';
+
+	/**
+	 * Gets the scroll position of the supplied element or window.
+	 *
+	 * The return values are unbounded, unlike `getScrollPosition`. This means they
+	 * may be negative or exceed the element boundaries (which is possible using
+	 * inertial scrolling).
+	 *
+	 * @param {DOMWindow|DOMElement} scrollable
+	 * @return {object} Map with `x` and `y` keys.
+	 */
+
+	function getUnboundedScrollPosition(scrollable) {
+	  if (scrollable === window) {
+	    return {
+	      x: window.pageXOffset || document.documentElement.scrollLeft,
+	      y: window.pageYOffset || document.documentElement.scrollTop
+	    };
+	  }
+	  return {
+	    x: scrollable.scrollLeft,
+	    y: scrollable.scrollTop
+	  };
+	}
+
+	module.exports = getUnboundedScrollPosition;
+
+/***/ },
 /* 144 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -17519,9 +18563,9 @@
 
 	var ReactDOMSelection = __webpack_require__(147);
 
-	var containsNode = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/containsNode\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	var focusNode = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/focusNode\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	var getActiveElement = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/getActiveElement\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var containsNode = __webpack_require__(149);
+	var focusNode = __webpack_require__(94);
+	var getActiveElement = __webpack_require__(152);
 
 	function isInDocument(node) {
 	  return containsNode(document.documentElement, node);
@@ -17645,7 +18689,7 @@
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/ExecutionEnvironment\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var ExecutionEnvironment = __webpack_require__(48);
 
 	var getNodeForCharacterOffset = __webpack_require__(148);
 	var getTextContentAccessor = __webpack_require__(51);
@@ -17924,10 +18968,145 @@
 	module.exports = getNodeForCharacterOffset;
 
 /***/ },
-/* 149 */,
-/* 150 */,
-/* 151 */,
-/* 152 */,
+/* 149 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * 
+	 */
+
+	var isTextNode = __webpack_require__(150);
+
+	/*eslint-disable no-bitwise */
+
+	/**
+	 * Checks if a given DOM node contains or is another DOM node.
+	 */
+	function containsNode(outerNode, innerNode) {
+	  if (!outerNode || !innerNode) {
+	    return false;
+	  } else if (outerNode === innerNode) {
+	    return true;
+	  } else if (isTextNode(outerNode)) {
+	    return false;
+	  } else if (isTextNode(innerNode)) {
+	    return containsNode(outerNode, innerNode.parentNode);
+	  } else if ('contains' in outerNode) {
+	    return outerNode.contains(innerNode);
+	  } else if (outerNode.compareDocumentPosition) {
+	    return !!(outerNode.compareDocumentPosition(innerNode) & 16);
+	  } else {
+	    return false;
+	  }
+	}
+
+	module.exports = containsNode;
+
+/***/ },
+/* 150 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @typechecks
+	 */
+
+	var isNode = __webpack_require__(151);
+
+	/**
+	 * @param {*} object The object to check.
+	 * @return {boolean} Whether or not the object is a DOM text node.
+	 */
+	function isTextNode(object) {
+	  return isNode(object) && object.nodeType == 3;
+	}
+
+	module.exports = isTextNode;
+
+/***/ },
+/* 151 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @typechecks
+	 */
+
+	/**
+	 * @param {*} object The object to check.
+	 * @return {boolean} Whether or not the object is a DOM node.
+	 */
+	function isNode(object) {
+	  return !!(object && (typeof Node === 'function' ? object instanceof Node : typeof object === 'object' && typeof object.nodeType === 'number' && typeof object.nodeName === 'string'));
+	}
+
+	module.exports = isNode;
+
+/***/ },
+/* 152 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @typechecks
+	 */
+
+	/* eslint-disable fb-www/typeof-undefined */
+
+	/**
+	 * Same as document.activeElement but wraps in a try-catch block. In IE it is
+	 * not safe to call document.activeElement if there is nothing focused.
+	 *
+	 * The activeElement will be null only if the document or document body is not
+	 * yet defined.
+	 */
+	function getActiveElement() /*?DOMElement*/{
+	  if (typeof document === 'undefined') {
+	    return null;
+	  }
+	  try {
+	    return document.activeElement || document.body;
+	  } catch (e) {
+	    return document.body;
+	  }
+	}
+
+	module.exports = getActiveElement;
+
+/***/ },
 /* 153 */
 /***/ function(module, exports) {
 
@@ -18250,14 +19429,14 @@
 	'use strict';
 
 	var EventPropagators = __webpack_require__(41);
-	var ExecutionEnvironment = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/ExecutionEnvironment\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var ExecutionEnvironment = __webpack_require__(48);
 	var ReactDOMComponentTree = __webpack_require__(34);
 	var ReactInputSelection = __webpack_require__(146);
 	var SyntheticEvent = __webpack_require__(53);
 
-	var getActiveElement = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/getActiveElement\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var getActiveElement = __webpack_require__(152);
 	var isTextInputElement = __webpack_require__(71);
-	var shallowEqual = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/shallowEqual\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var shallowEqual = __webpack_require__(123);
 
 	var skipSelectionChangeEvent = ExecutionEnvironment.canUseDOM && 'documentMode' in document && document.documentMode <= 11;
 
@@ -18447,7 +19626,7 @@
 
 	var _prodInvariant = __webpack_require__(35);
 
-	var EventListener = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/EventListener\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var EventListener = __webpack_require__(142);
 	var EventPropagators = __webpack_require__(41);
 	var ReactDOMComponentTree = __webpack_require__(34);
 	var SyntheticAnimationEvent = __webpack_require__(156);
@@ -18462,9 +19641,9 @@
 	var SyntheticUIEvent = __webpack_require__(75);
 	var SyntheticWheelEvent = __webpack_require__(165);
 
-	var emptyFunction = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/emptyFunction\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var emptyFunction = __webpack_require__(12);
 	var getEventCharCode = __webpack_require__(160);
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
 
 	/**
 	 * Turns
@@ -19258,12 +20437,12 @@
 	var ReactUpdateQueue = __webpack_require__(135);
 	var ReactUpdates = __webpack_require__(56);
 
-	var emptyObject = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/emptyObject\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var emptyObject = __webpack_require__(20);
 	var instantiateReactComponent = __webpack_require__(118);
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
 	var setInnerHTML = __webpack_require__(83);
 	var shouldUpdateReactComponent = __webpack_require__(124);
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var warning = __webpack_require__(11);
 
 	var ATTR_NAME = DOMProperty.ID_ATTRIBUTE_NAME;
 	var ROOT_ATTR_NAME = DOMProperty.ROOT_ATTRIBUTE_NAME;
@@ -19971,8 +21150,8 @@
 	var ReactInstanceMap = __webpack_require__(116);
 
 	var getHostComponentFromComposite = __webpack_require__(173);
-	var invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var invariant = __webpack_require__(8);
+	var warning = __webpack_require__(11);
 
 	/**
 	 * Returns the DOM node rendered by this element.
@@ -20087,7 +21266,7 @@
 	var EventPluginRegistry = __webpack_require__(43);
 	var ReactComponentTreeHook = __webpack_require__(26);
 
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var warning = __webpack_require__(11);
 
 	if (process.env.NODE_ENV !== 'production') {
 	  var reactProps = {
@@ -20202,7 +21381,7 @@
 
 	var ReactComponentTreeHook = __webpack_require__(26);
 
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var warning = __webpack_require__(11);
 
 	var didWarnValueNull = false;
 
@@ -20251,7 +21430,7 @@
 	var DOMProperty = __webpack_require__(36);
 	var ReactComponentTreeHook = __webpack_require__(26);
 
-	var warning = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fbjs/lib/warning\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var warning = __webpack_require__(11);
 
 	var warnedProperties = {};
 	var rARIA = new RegExp('^(aria)-[' + DOMProperty.ATTRIBUTE_NAME_CHAR + ']*$');
@@ -20337,7 +21516,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -20345,6 +21524,18 @@
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _NavBar = __webpack_require__(179);
+
+	var _NavBar2 = _interopRequireDefault(_NavBar);
+
+	var _ProductList = __webpack_require__(218);
+
+	var _ProductList2 = _interopRequireDefault(_ProductList);
+
+	var _Footer = __webpack_require__(223);
+
+	var _Footer2 = _interopRequireDefault(_Footer);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20358,26 +21549,28 @@
 	 * Create App Component
 	 */
 	var App = function (_Component) {
-		_inherits(App, _Component);
+	  _inherits(App, _Component);
 
-		function App() {
-			_classCallCheck(this, App);
+	  function App() {
+	    _classCallCheck(this, App);
 
-			return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
-		}
+	    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+	  }
 
-		_createClass(App, [{
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(
-					'div',
-					null,
-					'Welcome To React-Redux Application'
-				);
-			}
-		}]);
+	  _createClass(App, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_NavBar2.default, null),
+	        _react2.default.createElement(_ProductList2.default, null),
+	        _react2.default.createElement(_Footer2.default, null)
+	      );
+	    }
+	  }]);
 
-		return App;
+	  return App;
 	}(_react.Component);
 
 	exports.default = App;
@@ -20388,18 +21581,172 @@
 
 	'use strict';
 
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(180);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	/**
+	 * Create NavBar Container
+	 */
+	var NavBar = function (_Component) {
+	  _inherits(NavBar, _Component);
+
+	  function NavBar() {
+	    _classCallCheck(this, NavBar);
+
+	    return _possibleConstructorReturn(this, (NavBar.__proto__ || Object.getPrototypeOf(NavBar)).apply(this, arguments));
+	  }
+
+	  _createClass(NavBar, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'nav',
+	        { className: 'nav has-shadow' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'container' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'nav-left' },
+	            _react2.default.createElement(
+	              'a',
+	              { className: 'nav-item' },
+	              _react2.default.createElement('img', { src: 'http://bulma.io/images/bulma-logo.png', alt: 'Bulma logo' })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'nav-toggle' },
+	            _react2.default.createElement('span', null),
+	            _react2.default.createElement('span', null),
+	            _react2.default.createElement('span', null)
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'nav-right nav-menu' },
+	            _react2.default.createElement(
+	              'a',
+	              { className: 'nav-item' },
+	              'Home'
+	            ),
+	            _react2.default.createElement(
+	              'a',
+	              { className: 'nav-item' },
+	              'About us'
+	            ),
+	            _react2.default.createElement(
+	              'a',
+	              { className: 'nav-item' },
+	              'Contact'
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              { className: 'nav-item' },
+	              _react2.default.createElement(
+	                'a',
+	                { className: 'button is-success is-outlined' },
+	                _react2.default.createElement(
+	                  'span',
+	                  { className: 'icon' },
+	                  _react2.default.createElement('i', { className: 'fa fa-shopping-cart', 'aria-hidden': 'true' })
+	                ),
+	                _react2.default.createElement(
+	                  'span',
+	                  { className: 'tag is-light' },
+	                  '0'
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'a',
+	                { className: 'button is-danger is-outlined' },
+	                _react2.default.createElement(
+	                  'span',
+	                  { className: 'icon' },
+	                  _react2.default.createElement('i', { className: 'fa fa-heart', 'aria-hidden': 'true' })
+	                ),
+	                _react2.default.createElement(
+	                  'span',
+	                  { className: 'tag is-light' },
+	                  '0'
+	                )
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              { className: 'nav-item' },
+	              _react2.default.createElement(
+	                'a',
+	                { className: 'button' },
+	                _react2.default.createElement(
+	                  'span',
+	                  null,
+	                  'Login'
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'a',
+	                { className: 'button is-info' },
+	                _react2.default.createElement(
+	                  'span',
+	                  null,
+	                  'Register'
+	                )
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return NavBar;
+	}(_react.Component);
+	/**
+	 * Insert Props Into Component
+	 */
+
+
+	var stateProps = function stateProps(state) {
+	  return {};
+	};
+
+	exports.default = (0, _reactRedux.connect)(stateProps)(NavBar);
+
+/***/ },
+/* 180 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
 	exports.__esModule = true;
 	exports.connect = exports.connectAdvanced = exports.Provider = undefined;
 
-	var _Provider = __webpack_require__(180);
+	var _Provider = __webpack_require__(181);
 
 	var _Provider2 = _interopRequireDefault(_Provider);
 
-	var _connectAdvanced = __webpack_require__(184);
+	var _connectAdvanced = __webpack_require__(185);
 
 	var _connectAdvanced2 = _interopRequireDefault(_connectAdvanced);
 
-	var _connect = __webpack_require__(187);
+	var _connect = __webpack_require__(188);
 
 	var _connect2 = _interopRequireDefault(_connect);
 
@@ -20410,7 +21757,7 @@
 	exports.connect = _connect2.default;
 
 /***/ },
-/* 180 */
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -20420,15 +21767,15 @@
 
 	var _react = __webpack_require__(1);
 
-	var _Subscription = __webpack_require__(181);
+	var _Subscription = __webpack_require__(182);
 
 	var _Subscription2 = _interopRequireDefault(_Subscription);
 
-	var _storeShape = __webpack_require__(182);
+	var _storeShape = __webpack_require__(183);
 
 	var _storeShape2 = _interopRequireDefault(_storeShape);
 
-	var _warning = __webpack_require__(183);
+	var _warning = __webpack_require__(184);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
@@ -20500,7 +21847,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 181 */
+/* 182 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -20598,7 +21945,7 @@
 	exports.default = Subscription;
 
 /***/ },
-/* 182 */
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20614,7 +21961,7 @@
 	});
 
 /***/ },
-/* 183 */
+/* 184 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -20644,7 +21991,7 @@
 	}
 
 /***/ },
-/* 184 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -20655,21 +22002,21 @@
 
 	exports.default = connectAdvanced;
 
-	var _hoistNonReactStatics = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"hoist-non-react-statics\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _hoistNonReactStatics = __webpack_require__(186);
 
 	var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
 
-	var _invariant = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"invariant\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _invariant = __webpack_require__(187);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
 	var _react = __webpack_require__(1);
 
-	var _Subscription = __webpack_require__(181);
+	var _Subscription = __webpack_require__(182);
 
 	var _Subscription2 = _interopRequireDefault(_Subscription);
 
-	var _storeShape = __webpack_require__(182);
+	var _storeShape = __webpack_require__(183);
 
 	var _storeShape2 = _interopRequireDefault(_storeShape);
 
@@ -20926,9 +22273,121 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 185 */,
-/* 186 */,
+/* 186 */
+/***/ function(module, exports) {
+
+	/**
+	 * Copyright 2015, Yahoo! Inc.
+	 * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
+	 */
+	'use strict';
+
+	var REACT_STATICS = {
+	    childContextTypes: true,
+	    contextTypes: true,
+	    defaultProps: true,
+	    displayName: true,
+	    getDefaultProps: true,
+	    mixins: true,
+	    propTypes: true,
+	    type: true
+	};
+
+	var KNOWN_STATICS = {
+	    name: true,
+	    length: true,
+	    prototype: true,
+	    caller: true,
+	    arguments: true,
+	    arity: true
+	};
+
+	var isGetOwnPropertySymbolsAvailable = typeof Object.getOwnPropertySymbols === 'function';
+
+	module.exports = function hoistNonReactStatics(targetComponent, sourceComponent, customStatics) {
+	    if (typeof sourceComponent !== 'string') { // don't hoist over string (html) components
+	        var keys = Object.getOwnPropertyNames(sourceComponent);
+
+	        /* istanbul ignore else */
+	        if (isGetOwnPropertySymbolsAvailable) {
+	            keys = keys.concat(Object.getOwnPropertySymbols(sourceComponent));
+	        }
+
+	        for (var i = 0; i < keys.length; ++i) {
+	            if (!REACT_STATICS[keys[i]] && !KNOWN_STATICS[keys[i]] && (!customStatics || !customStatics[keys[i]])) {
+	                try {
+	                    targetComponent[keys[i]] = sourceComponent[keys[i]];
+	                } catch (error) {
+
+	                }
+	            }
+	        }
+	    }
+
+	    return targetComponent;
+	};
+
+
+/***/ },
 /* 187 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright 2013-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 */
+
+	'use strict';
+
+	/**
+	 * Use invariant() to assert state which your program assumes to be true.
+	 *
+	 * Provide sprintf-style format (only %s is supported) and arguments
+	 * to provide information about what broke and what you were
+	 * expecting.
+	 *
+	 * The invariant message will be stripped in production, but the invariant
+	 * will remain to ensure logic does not differ in production.
+	 */
+
+	var invariant = function(condition, format, a, b, c, d, e, f) {
+	  if (process.env.NODE_ENV !== 'production') {
+	    if (format === undefined) {
+	      throw new Error('invariant requires an error message argument');
+	    }
+	  }
+
+	  if (!condition) {
+	    var error;
+	    if (format === undefined) {
+	      error = new Error(
+	        'Minified exception occurred; use the non-minified dev environment ' +
+	        'for the full error message and additional helpful warnings.'
+	      );
+	    } else {
+	      var args = [a, b, c, d, e, f];
+	      var argIndex = 0;
+	      error = new Error(
+	        format.replace(/%s/g, function() { return args[argIndex++]; })
+	      );
+	      error.name = 'Invariant Violation';
+	    }
+
+	    error.framesToPop = 1; // we don't care about invariant's own frame
+	    throw error;
+	  }
+	};
+
+	module.exports = invariant;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20939,27 +22398,27 @@
 
 	exports.createConnect = createConnect;
 
-	var _connectAdvanced = __webpack_require__(184);
+	var _connectAdvanced = __webpack_require__(185);
 
 	var _connectAdvanced2 = _interopRequireDefault(_connectAdvanced);
 
-	var _shallowEqual = __webpack_require__(188);
+	var _shallowEqual = __webpack_require__(189);
 
 	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
-	var _mapDispatchToProps = __webpack_require__(189);
+	var _mapDispatchToProps = __webpack_require__(190);
 
 	var _mapDispatchToProps2 = _interopRequireDefault(_mapDispatchToProps);
 
-	var _mapStateToProps = __webpack_require__(213);
+	var _mapStateToProps = __webpack_require__(214);
 
 	var _mapStateToProps2 = _interopRequireDefault(_mapStateToProps);
 
-	var _mergeProps = __webpack_require__(214);
+	var _mergeProps = __webpack_require__(215);
 
 	var _mergeProps2 = _interopRequireDefault(_mergeProps);
 
-	var _selectorFactory = __webpack_require__(215);
+	var _selectorFactory = __webpack_require__(216);
 
 	var _selectorFactory2 = _interopRequireDefault(_selectorFactory);
 
@@ -21061,7 +22520,7 @@
 	exports.default = createConnect();
 
 /***/ },
-/* 188 */
+/* 189 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -21089,7 +22548,7 @@
 	}
 
 /***/ },
-/* 189 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21099,9 +22558,9 @@
 	exports.whenMapDispatchToPropsIsMissing = whenMapDispatchToPropsIsMissing;
 	exports.whenMapDispatchToPropsIsObject = whenMapDispatchToPropsIsObject;
 
-	var _redux = __webpack_require__(190);
+	var _redux = __webpack_require__(191);
 
-	var _wrapMapToProps = __webpack_require__(211);
+	var _wrapMapToProps = __webpack_require__(212);
 
 	function whenMapDispatchToPropsIsFunction(mapDispatchToProps) {
 	  return typeof mapDispatchToProps === 'function' ? (0, _wrapMapToProps.wrapMapToPropsFunc)(mapDispatchToProps, 'mapDispatchToProps') : undefined;
@@ -21122,7 +22581,7 @@
 	exports.default = [whenMapDispatchToPropsIsFunction, whenMapDispatchToPropsIsMissing, whenMapDispatchToPropsIsObject];
 
 /***/ },
-/* 190 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -21130,27 +22589,27 @@
 	exports.__esModule = true;
 	exports.compose = exports.applyMiddleware = exports.bindActionCreators = exports.combineReducers = exports.createStore = undefined;
 
-	var _createStore = __webpack_require__(191);
+	var _createStore = __webpack_require__(192);
 
 	var _createStore2 = _interopRequireDefault(_createStore);
 
-	var _combineReducers = __webpack_require__(206);
+	var _combineReducers = __webpack_require__(207);
 
 	var _combineReducers2 = _interopRequireDefault(_combineReducers);
 
-	var _bindActionCreators = __webpack_require__(208);
+	var _bindActionCreators = __webpack_require__(209);
 
 	var _bindActionCreators2 = _interopRequireDefault(_bindActionCreators);
 
-	var _applyMiddleware = __webpack_require__(209);
+	var _applyMiddleware = __webpack_require__(210);
 
 	var _applyMiddleware2 = _interopRequireDefault(_applyMiddleware);
 
-	var _compose = __webpack_require__(210);
+	var _compose = __webpack_require__(211);
 
 	var _compose2 = _interopRequireDefault(_compose);
 
-	var _warning = __webpack_require__(207);
+	var _warning = __webpack_require__(208);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
@@ -21174,7 +22633,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 191 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21183,11 +22642,11 @@
 	exports.ActionTypes = undefined;
 	exports['default'] = createStore;
 
-	var _isPlainObject = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"lodash/isPlainObject\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _isPlainObject = __webpack_require__(193);
 
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
-	var _symbolObservable = __webpack_require__(202);
+	var _symbolObservable = __webpack_require__(203);
 
 	var _symbolObservable2 = _interopRequireDefault(_symbolObservable);
 
@@ -21440,24 +22899,302 @@
 	}
 
 /***/ },
-/* 192 */,
-/* 193 */,
-/* 194 */,
-/* 195 */,
-/* 196 */,
-/* 197 */,
-/* 198 */,
-/* 199 */,
-/* 200 */,
-/* 201 */,
-/* 202 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(203);
+	var baseGetTag = __webpack_require__(194),
+	    getPrototype = __webpack_require__(200),
+	    isObjectLike = __webpack_require__(202);
+
+	/** `Object#toString` result references. */
+	var objectTag = '[object Object]';
+
+	/** Used for built-in method references. */
+	var funcProto = Function.prototype,
+	    objectProto = Object.prototype;
+
+	/** Used to resolve the decompiled source of functions. */
+	var funcToString = funcProto.toString;
+
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+
+	/** Used to infer the `Object` constructor. */
+	var objectCtorString = funcToString.call(Object);
+
+	/**
+	 * Checks if `value` is a plain object, that is, an object created by the
+	 * `Object` constructor or one with a `[[Prototype]]` of `null`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.8.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
+	 * @example
+	 *
+	 * function Foo() {
+	 *   this.a = 1;
+	 * }
+	 *
+	 * _.isPlainObject(new Foo);
+	 * // => false
+	 *
+	 * _.isPlainObject([1, 2, 3]);
+	 * // => false
+	 *
+	 * _.isPlainObject({ 'x': 0, 'y': 0 });
+	 * // => true
+	 *
+	 * _.isPlainObject(Object.create(null));
+	 * // => true
+	 */
+	function isPlainObject(value) {
+	  if (!isObjectLike(value) || baseGetTag(value) != objectTag) {
+	    return false;
+	  }
+	  var proto = getPrototype(value);
+	  if (proto === null) {
+	    return true;
+	  }
+	  var Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
+	  return typeof Ctor == 'function' && Ctor instanceof Ctor &&
+	    funcToString.call(Ctor) == objectCtorString;
+	}
+
+	module.exports = isPlainObject;
+
+
+/***/ },
+/* 194 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Symbol = __webpack_require__(195),
+	    getRawTag = __webpack_require__(198),
+	    objectToString = __webpack_require__(199);
+
+	/** `Object#toString` result references. */
+	var nullTag = '[object Null]',
+	    undefinedTag = '[object Undefined]';
+
+	/** Built-in value references. */
+	var symToStringTag = Symbol ? Symbol.toStringTag : undefined;
+
+	/**
+	 * The base implementation of `getTag` without fallbacks for buggy environments.
+	 *
+	 * @private
+	 * @param {*} value The value to query.
+	 * @returns {string} Returns the `toStringTag`.
+	 */
+	function baseGetTag(value) {
+	  if (value == null) {
+	    return value === undefined ? undefinedTag : nullTag;
+	  }
+	  return (symToStringTag && symToStringTag in Object(value))
+	    ? getRawTag(value)
+	    : objectToString(value);
+	}
+
+	module.exports = baseGetTag;
+
+
+/***/ },
+/* 195 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var root = __webpack_require__(196);
+
+	/** Built-in value references. */
+	var Symbol = root.Symbol;
+
+	module.exports = Symbol;
+
+
+/***/ },
+/* 196 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var freeGlobal = __webpack_require__(197);
+
+	/** Detect free variable `self`. */
+	var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+
+	/** Used as a reference to the global object. */
+	var root = freeGlobal || freeSelf || Function('return this')();
+
+	module.exports = root;
+
+
+/***/ },
+/* 197 */
+/***/ function(module, exports) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {/** Detect free variable `global` from Node.js. */
+	var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
+
+	module.exports = freeGlobal;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 198 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Symbol = __webpack_require__(195);
+
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+
+	/**
+	 * Used to resolve the
+	 * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+	 * of values.
+	 */
+	var nativeObjectToString = objectProto.toString;
+
+	/** Built-in value references. */
+	var symToStringTag = Symbol ? Symbol.toStringTag : undefined;
+
+	/**
+	 * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
+	 *
+	 * @private
+	 * @param {*} value The value to query.
+	 * @returns {string} Returns the raw `toStringTag`.
+	 */
+	function getRawTag(value) {
+	  var isOwn = hasOwnProperty.call(value, symToStringTag),
+	      tag = value[symToStringTag];
+
+	  try {
+	    value[symToStringTag] = undefined;
+	    var unmasked = true;
+	  } catch (e) {}
+
+	  var result = nativeObjectToString.call(value);
+	  if (unmasked) {
+	    if (isOwn) {
+	      value[symToStringTag] = tag;
+	    } else {
+	      delete value[symToStringTag];
+	    }
+	  }
+	  return result;
+	}
+
+	module.exports = getRawTag;
+
+
+/***/ },
+/* 199 */
+/***/ function(module, exports) {
+
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+
+	/**
+	 * Used to resolve the
+	 * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+	 * of values.
+	 */
+	var nativeObjectToString = objectProto.toString;
+
+	/**
+	 * Converts `value` to a string using `Object.prototype.toString`.
+	 *
+	 * @private
+	 * @param {*} value The value to convert.
+	 * @returns {string} Returns the converted string.
+	 */
+	function objectToString(value) {
+	  return nativeObjectToString.call(value);
+	}
+
+	module.exports = objectToString;
+
+
+/***/ },
+/* 200 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var overArg = __webpack_require__(201);
+
+	/** Built-in value references. */
+	var getPrototype = overArg(Object.getPrototypeOf, Object);
+
+	module.exports = getPrototype;
+
+
+/***/ },
+/* 201 */
+/***/ function(module, exports) {
+
+	/**
+	 * Creates a unary function that invokes `func` with its argument transformed.
+	 *
+	 * @private
+	 * @param {Function} func The function to wrap.
+	 * @param {Function} transform The argument transform.
+	 * @returns {Function} Returns the new function.
+	 */
+	function overArg(func, transform) {
+	  return function(arg) {
+	    return func(transform(arg));
+	  };
+	}
+
+	module.exports = overArg;
+
+
+/***/ },
+/* 202 */
+/***/ function(module, exports) {
+
+	/**
+	 * Checks if `value` is object-like. A value is object-like if it's not `null`
+	 * and has a `typeof` result of "object".
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+	 * @example
+	 *
+	 * _.isObjectLike({});
+	 * // => true
+	 *
+	 * _.isObjectLike([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isObjectLike(_.noop);
+	 * // => false
+	 *
+	 * _.isObjectLike(null);
+	 * // => false
+	 */
+	function isObjectLike(value) {
+	  return value != null && typeof value == 'object';
+	}
+
+	module.exports = isObjectLike;
 
 
 /***/ },
 /* 203 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(204);
+
+
+/***/ },
+/* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, module) {'use strict';
@@ -21466,7 +23203,7 @@
 	  value: true
 	});
 
-	var _ponyfill = __webpack_require__(205);
+	var _ponyfill = __webpack_require__(206);
 
 	var _ponyfill2 = _interopRequireDefault(_ponyfill);
 
@@ -21489,10 +23226,10 @@
 
 	var result = (0, _ponyfill2['default'])(root);
 	exports['default'] = result;
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(204)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(205)(module)))
 
 /***/ },
-/* 204 */
+/* 205 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -21508,7 +23245,7 @@
 
 
 /***/ },
-/* 205 */
+/* 206 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -21536,7 +23273,7 @@
 	};
 
 /***/ },
-/* 206 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -21544,13 +23281,13 @@
 	exports.__esModule = true;
 	exports['default'] = combineReducers;
 
-	var _createStore = __webpack_require__(191);
+	var _createStore = __webpack_require__(192);
 
-	var _isPlainObject = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"lodash/isPlainObject\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _isPlainObject = __webpack_require__(193);
 
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
-	var _warning = __webpack_require__(207);
+	var _warning = __webpack_require__(208);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
@@ -21684,7 +23421,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 207 */
+/* 208 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -21714,7 +23451,7 @@
 	}
 
 /***/ },
-/* 208 */
+/* 209 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -21770,7 +23507,7 @@
 	}
 
 /***/ },
-/* 209 */
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21781,7 +23518,7 @@
 
 	exports['default'] = applyMiddleware;
 
-	var _compose = __webpack_require__(210);
+	var _compose = __webpack_require__(211);
 
 	var _compose2 = _interopRequireDefault(_compose);
 
@@ -21833,7 +23570,7 @@
 	}
 
 /***/ },
-/* 210 */
+/* 211 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -21876,7 +23613,7 @@
 	}
 
 /***/ },
-/* 211 */
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -21886,7 +23623,7 @@
 	exports.getDependsOnOwnProps = getDependsOnOwnProps;
 	exports.wrapMapToPropsFunc = wrapMapToPropsFunc;
 
-	var _verifyPlainObject = __webpack_require__(212);
+	var _verifyPlainObject = __webpack_require__(213);
 
 	var _verifyPlainObject2 = _interopRequireDefault(_verifyPlainObject);
 
@@ -21958,7 +23695,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 212 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21966,11 +23703,11 @@
 	exports.__esModule = true;
 	exports.default = verifyPlainObject;
 
-	var _isPlainObject = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"lodash/isPlainObject\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _isPlainObject = __webpack_require__(193);
 
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
-	var _warning = __webpack_require__(183);
+	var _warning = __webpack_require__(184);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
@@ -21983,7 +23720,7 @@
 	}
 
 /***/ },
-/* 213 */
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21992,7 +23729,7 @@
 	exports.whenMapStateToPropsIsFunction = whenMapStateToPropsIsFunction;
 	exports.whenMapStateToPropsIsMissing = whenMapStateToPropsIsMissing;
 
-	var _wrapMapToProps = __webpack_require__(211);
+	var _wrapMapToProps = __webpack_require__(212);
 
 	function whenMapStateToPropsIsFunction(mapStateToProps) {
 	  return typeof mapStateToProps === 'function' ? (0, _wrapMapToProps.wrapMapToPropsFunc)(mapStateToProps, 'mapStateToProps') : undefined;
@@ -22007,7 +23744,7 @@
 	exports.default = [whenMapStateToPropsIsFunction, whenMapStateToPropsIsMissing];
 
 /***/ },
-/* 214 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -22021,7 +23758,7 @@
 	exports.whenMergePropsIsFunction = whenMergePropsIsFunction;
 	exports.whenMergePropsIsOmitted = whenMergePropsIsOmitted;
 
-	var _verifyPlainObject = __webpack_require__(212);
+	var _verifyPlainObject = __webpack_require__(213);
 
 	var _verifyPlainObject2 = _interopRequireDefault(_verifyPlainObject);
 
@@ -22071,7 +23808,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 215 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -22081,7 +23818,7 @@
 	exports.pureFinalPropsSelectorFactory = pureFinalPropsSelectorFactory;
 	exports.default = finalPropsSelectorFactory;
 
-	var _verifySubselectors = __webpack_require__(216);
+	var _verifySubselectors = __webpack_require__(217);
 
 	var _verifySubselectors2 = _interopRequireDefault(_verifySubselectors);
 
@@ -22190,7 +23927,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 216 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22198,7 +23935,7 @@
 	exports.__esModule = true;
 	exports.default = verifySubselectors;
 
-	var _warning = __webpack_require__(183);
+	var _warning = __webpack_require__(184);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
@@ -22221,7 +23958,7 @@
 	}
 
 /***/ },
-/* 217 */
+/* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22230,13 +23967,199 @@
 	  value: true
 	});
 
-	var _redux = __webpack_require__(190);
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _reduxThunk = __webpack_require__(218);
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(180);
+
+	var _ProductItem = __webpack_require__(219);
+
+	var _ProductItem2 = _interopRequireDefault(_ProductItem);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	/**
+	 * Create ProductList Container
+	 */
+	var ProductList = function (_Component) {
+	  _inherits(ProductList, _Component);
+
+	  function ProductList() {
+	    _classCallCheck(this, ProductList);
+
+	    return _possibleConstructorReturn(this, (ProductList.__proto__ || Object.getPrototypeOf(ProductList)).apply(this, arguments));
+	  }
+
+	  _createClass(ProductList, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'section',
+	        { className: 'section' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'container' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'heading' },
+	            _react2.default.createElement(
+	              'h1',
+	              { className: 'title' },
+	              'Latest Products'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'columns is-multiline' },
+	              _react2.default.createElement(_ProductItem2.default, null),
+	              _react2.default.createElement(_ProductItem2.default, null),
+	              _react2.default.createElement(_ProductItem2.default, null),
+	              _react2.default.createElement(_ProductItem2.default, null),
+	              _react2.default.createElement(_ProductItem2.default, null),
+	              _react2.default.createElement(_ProductItem2.default, null),
+	              _react2.default.createElement(_ProductItem2.default, null),
+	              _react2.default.createElement(_ProductItem2.default, null)
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return ProductList;
+	}(_react.Component);
+	/**
+	 * Insert Props Into Component
+	 */
+
+
+	var stateProps = function stateProps(state) {
+	  return {};
+	};
+
+	exports.default = (0, _reactRedux.connect)(stateProps)(ProductList);
+
+/***/ },
+/* 219 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	/**
+	 * Create ProductItem Component
+	 */
+	var ProductItem = function (_Component) {
+		_inherits(ProductItem, _Component);
+
+		function ProductItem() {
+			_classCallCheck(this, ProductItem);
+
+			return _possibleConstructorReturn(this, (ProductItem.__proto__ || Object.getPrototypeOf(ProductItem)).apply(this, arguments));
+		}
+
+		_createClass(ProductItem, [{
+			key: "render",
+			value: function render() {
+				return _react2.default.createElement(
+					"div",
+					{ className: "column is-one-quarter" },
+					_react2.default.createElement(
+						"div",
+						{ className: "card" },
+						_react2.default.createElement(
+							"div",
+							{ className: "card-image" },
+							_react2.default.createElement(
+								"figure",
+								{ className: "image is-4by3" },
+								_react2.default.createElement("img", { src: "http://bulma.io/images/placeholders/1280x960.png" })
+							)
+						),
+						_react2.default.createElement(
+							"div",
+							{ className: "card-content is-clearfix" },
+							_react2.default.createElement(
+								"div",
+								{ className: "media" },
+								_react2.default.createElement(
+									"div",
+									{ className: "media-content" },
+									_react2.default.createElement(
+										"h4",
+										{ className: "title is-4" },
+										"John Smith"
+									)
+								)
+							),
+							_react2.default.createElement(
+								"div",
+								{ className: "content" },
+								"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris."
+							),
+							_react2.default.createElement(
+								"a",
+								{ className: "button is-success is-pulled-left" },
+								_react2.default.createElement("i", { className: "fa fa-shopping-cart", "aria-hidden": "true" })
+							),
+							_react2.default.createElement(
+								"a",
+								{ className: "button is-danger is-pulled-right" },
+								_react2.default.createElement("i", { className: "fa fa-heart", "aria-hidden": "true" })
+							)
+						)
+					)
+				);
+			}
+		}]);
+
+		return ProductItem;
+	}(_react.Component);
+
+	exports.default = ProductItem;
+
+/***/ },
+/* 220 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _redux = __webpack_require__(191);
+
+	var _reduxThunk = __webpack_require__(221);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _index = __webpack_require__(219);
+	var _index = __webpack_require__(222);
 
 	var _index2 = _interopRequireDefault(_index);
 
@@ -22254,7 +24177,7 @@
 	exports.default = store;
 
 /***/ },
-/* 218 */
+/* 221 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22262,8 +24185,8 @@
 	exports.__esModule = true;
 	function createThunkMiddleware(extraArgument) {
 	  return function (_ref) {
-	    var dispatch = _ref.dispatch;
-	    var getState = _ref.getState;
+	    var dispatch = _ref.dispatch,
+	        getState = _ref.getState;
 	    return function (next) {
 	      return function (action) {
 	        if (typeof action === 'function') {
@@ -22282,7 +24205,7 @@
 	exports['default'] = thunk;
 
 /***/ },
-/* 219 */
+/* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22291,7 +24214,7 @@
 	  value: true
 	});
 
-	var _redux = __webpack_require__(190);
+	var _redux = __webpack_require__(191);
 
 	/**
 	 * Combine Reducers In One Object
@@ -22299,6 +24222,70 @@
 	exports.default = (0, _redux.combineReducers)({
 	  //..
 	});
+
+/***/ },
+/* 223 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	/**
+	 * Create Footer Component
+	 */
+	var Footer = function (_Component) {
+	  _inherits(Footer, _Component);
+
+	  function Footer() {
+	    _classCallCheck(this, Footer);
+
+	    return _possibleConstructorReturn(this, (Footer.__proto__ || Object.getPrototypeOf(Footer)).apply(this, arguments));
+	  }
+
+	  _createClass(Footer, [{
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        "footer",
+	        { className: "footer" },
+	        _react2.default.createElement(
+	          "div",
+	          { className: "container" },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "content has-text-centered" },
+	            _react2.default.createElement(
+	              "p",
+	              null,
+	              "\xA9 Copyright 2017"
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Footer;
+	}(_react.Component);
+
+	exports.default = Footer;
 
 /***/ }
 /******/ ]);
