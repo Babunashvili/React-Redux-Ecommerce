@@ -15,7 +15,7 @@ import React, { Component } from 'react'
 				  <div className="card-content is-clearfix">
 				    <div className="media">
 				      <div className="media-content">
-				        <h4 className="title is-4">John Smith</h4>
+				        <h4 className="title is-4">{this.props.product.title}</h4>
 				      </div>
 				    </div>
 				    <div className="content">
