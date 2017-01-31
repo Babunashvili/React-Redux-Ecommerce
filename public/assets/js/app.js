@@ -60,7 +60,7 @@
 
 	var _reactRedux = __webpack_require__(180);
 
-	var _store = __webpack_require__(220);
+	var _store = __webpack_require__(221);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -21533,7 +21533,7 @@
 
 	var _ProductList2 = _interopRequireDefault(_ProductList);
 
-	var _Footer = __webpack_require__(223);
+	var _Footer = __webpack_require__(220);
 
 	var _Footer2 = _interopRequireDefault(_Footer);
 
@@ -24147,86 +24147,6 @@
 /* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _redux = __webpack_require__(191);
-
-	var _reduxThunk = __webpack_require__(221);
-
-	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
-
-	var _index = __webpack_require__(222);
-
-	var _index2 = _interopRequireDefault(_index);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	/**
-	 * Create Middleware
-	 */
-	var middleware = (0, _redux.applyMiddleware)(_reduxThunk2.default);
-	/**
-	 * Create Store
-	 */
-	var store = (0, _redux.createStore)(_index2.default, middleware);
-
-	exports.default = store;
-
-/***/ },
-/* 221 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	exports.__esModule = true;
-	function createThunkMiddleware(extraArgument) {
-	  return function (_ref) {
-	    var dispatch = _ref.dispatch,
-	        getState = _ref.getState;
-	    return function (next) {
-	      return function (action) {
-	        if (typeof action === 'function') {
-	          return action(dispatch, getState, extraArgument);
-	        }
-
-	        return next(action);
-	      };
-	    };
-	  };
-	}
-
-	var thunk = createThunkMiddleware();
-	thunk.withExtraArgument = createThunkMiddleware;
-
-	exports['default'] = thunk;
-
-/***/ },
-/* 222 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _redux = __webpack_require__(191);
-
-	/**
-	 * Combine Reducers In One Object
-	 */
-	exports.default = (0, _redux.combineReducers)({
-	  //..
-	});
-
-/***/ },
-/* 223 */
-/***/ function(module, exports, __webpack_require__) {
-
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
@@ -24286,6 +24206,86 @@
 	}(_react.Component);
 
 	exports.default = Footer;
+
+/***/ },
+/* 221 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _redux = __webpack_require__(191);
+
+	var _reduxThunk = __webpack_require__(222);
+
+	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+
+	var _index = __webpack_require__(223);
+
+	var _index2 = _interopRequireDefault(_index);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * Create Middleware
+	 */
+	var middleware = (0, _redux.applyMiddleware)(_reduxThunk2.default);
+	/**
+	 * Create Store
+	 */
+	var store = (0, _redux.createStore)(_index2.default, middleware);
+
+	exports.default = store;
+
+/***/ },
+/* 222 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	exports.__esModule = true;
+	function createThunkMiddleware(extraArgument) {
+	  return function (_ref) {
+	    var dispatch = _ref.dispatch,
+	        getState = _ref.getState;
+	    return function (next) {
+	      return function (action) {
+	        if (typeof action === 'function') {
+	          return action(dispatch, getState, extraArgument);
+	        }
+
+	        return next(action);
+	      };
+	    };
+	  };
+	}
+
+	var thunk = createThunkMiddleware();
+	thunk.withExtraArgument = createThunkMiddleware;
+
+	exports['default'] = thunk;
+
+/***/ },
+/* 223 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _redux = __webpack_require__(191);
+
+	/**
+	 * Combine Reducers In One Object
+	 */
+	exports.default = (0, _redux.combineReducers)({
+	  //..
+	});
 
 /***/ }
 /******/ ]);
