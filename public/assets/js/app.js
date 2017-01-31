@@ -28908,7 +28908,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	   value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -28923,6 +28923,8 @@
 
 	var _ProductItem2 = _interopRequireDefault(_ProductItem);
 
+	var _fetchProducts = __webpack_require__(308);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28935,50 +28937,52 @@
 	 * Create ProductList Container
 	 */
 	var ProductList = function (_Component) {
-	  _inherits(ProductList, _Component);
+	   _inherits(ProductList, _Component);
 
-	  function ProductList() {
-	    _classCallCheck(this, ProductList);
+	   function ProductList() {
+	      _classCallCheck(this, ProductList);
 
-	    return _possibleConstructorReturn(this, (ProductList.__proto__ || Object.getPrototypeOf(ProductList)).apply(this, arguments));
-	  }
+	      return _possibleConstructorReturn(this, (ProductList.__proto__ || Object.getPrototypeOf(ProductList)).apply(this, arguments));
+	   }
 
-	  _createClass(ProductList, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'section',
-	        { className: 'section' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'container' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'heading' },
+	   _createClass(ProductList, [{
+	      key: 'componentDidMount',
+	      value: function componentDidMount() {
+	         var dispatch = this.props.dispatch;
+
+	         dispatch((0, _fetchProducts.fetchProducts)());
+	      }
+	   }, {
+	      key: 'render',
+	      value: function render() {
+	         return _react2.default.createElement(
+	            'section',
+	            { className: 'section' },
 	            _react2.default.createElement(
-	              'h1',
-	              { className: 'title' },
-	              'Latest Products'
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'columns is-multiline' },
-	              _react2.default.createElement(_ProductItem2.default, null),
-	              _react2.default.createElement(_ProductItem2.default, null),
-	              _react2.default.createElement(_ProductItem2.default, null),
-	              _react2.default.createElement(_ProductItem2.default, null),
-	              _react2.default.createElement(_ProductItem2.default, null),
-	              _react2.default.createElement(_ProductItem2.default, null),
-	              _react2.default.createElement(_ProductItem2.default, null),
-	              _react2.default.createElement(_ProductItem2.default, null)
+	               'div',
+	               { className: 'container' },
+	               _react2.default.createElement(
+	                  'div',
+	                  { className: 'heading' },
+	                  _react2.default.createElement(
+	                     'h1',
+	                     { className: 'title' },
+	                     'Latest Products'
+	                  ),
+	                  _react2.default.createElement(
+	                     'div',
+	                     { className: 'columns is-multiline' },
+	                     this.props.products.map(function (product) {
+	                        return _react2.default.createElement(_ProductItem2.default, { key: product.id, product: product });
+	                     })
+	                  )
+	               )
 	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
+	         );
+	      }
+	   }]);
 
-	  return ProductList;
+	   return ProductList;
 	}(_react.Component);
 	/**
 	 * Insert Props Into Component
@@ -28986,9 +28990,10 @@
 
 
 	var stateProps = function stateProps(state) {
-	  return {};
+	   return {
+	      products: state.ProductsReducer
+	   };
 	};
-
 	exports.default = (0, _reactRedux.connect)(stateProps)(ProductList);
 
 /***/ },
@@ -29057,7 +29062,7 @@
 									_react2.default.createElement(
 										"h4",
 										{ className: "title is-4" },
-										"John Smith"
+										this.props.product.title
 									)
 								)
 							),
@@ -29366,13 +29371,18 @@
 
 	var _AboutReducer2 = _interopRequireDefault(_AboutReducer);
 
+	var _ProductsReducer = __webpack_require__(307);
+
+	var _ProductsReducer2 = _interopRequireDefault(_ProductsReducer);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	/**
 	 * Combine Reducers In One Object
 	 */
 	exports.default = (0, _redux.combineReducers)({
-	  AboutReducer: _AboutReducer2.default
+	  AboutReducer: _AboutReducer2.default,
+	  ProductsReducer: _ProductsReducer2.default
 	});
 
 /***/ },
@@ -29389,7 +29399,7 @@
 	 * @param  {Object} state 
 	 * @param  {Object} action
 	 */
-	var itemsReducer = function itemsReducer() {
+	var AboutReducer = function AboutReducer() {
 	   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { title: '', content: '' };
 	   var action = arguments[1];
 
@@ -29404,7 +29414,7 @@
 	         return state;
 	   }
 	};
-	exports.default = itemsReducer;
+	exports.default = AboutReducer;
 
 /***/ },
 /* 280 */
@@ -31044,6 +31054,85 @@
 	};
 
 	exports.default = (0, _reactRedux.connect)(stateProps)(Wishlist);
+
+/***/ },
+/* 307 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	   value: true
+	});
+	/**
+	 * Products Reducer
+	 * @param  {Array} state 
+	 * @param  {Object} action
+	 */
+	var ProductsReducer = function ProductsReducer() {
+	   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+	   var action = arguments[1];
+
+	   switch (action.type) {
+	      case 'REQUEST_PRODUCTS':
+	         return state;
+	         break;
+	      case 'RECEIVE_PRODUCTS':
+	         return action.payload;
+	         break;
+	      default:
+	         return state;
+	   }
+	};
+	exports.default = ProductsReducer;
+
+/***/ },
+/* 308 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.fetchProducts = undefined;
+
+	var _store = __webpack_require__(276);
+
+	var _store2 = _interopRequireDefault(_store);
+
+	var _axios = __webpack_require__(280);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * Create fetchAbout Action
+	 */
+	var requestProducts = function requestProducts() {
+	  return {
+	    type: 'REQUEST_PRODUCTS'
+	  };
+	};
+
+	var receiveProducts = function receiveProducts(data) {
+	  return {
+	    type: 'RECEIVE_PRODUCTS',
+	    payload: data
+	  };
+	};
+
+	var fetchProducts = exports.fetchProducts = function fetchProducts() {
+	  return function (dispatch) {
+	    dispatch(requestProducts());
+	    return _axios2.default.get('https://ecommerce-e4289.firebaseio.com/products.json').then(function (response) {
+	      return response;
+	    }).then(function (json) {
+	      dispatch(receiveProducts(json.data));
+	    });
+	  };
+	};
 
 /***/ }
 /******/ ]);

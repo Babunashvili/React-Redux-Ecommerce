@@ -3,7 +3,7 @@
  * @param  {Object} state 
  * @param  {Object} action
  */
-const itemsReducer = (state = {title:'',content:''}, action) => {
+const AboutReducer = (state = {title:'',content:''}, action) => {
    switch(action.type){
    	  case 'REQUEST_ABOUT':
         return state
@@ -15,4 +15,4 @@ const itemsReducer = (state = {title:'',content:''}, action) => {
    	  return state
    }
 }
-export default itemsReducer
+export default AboutReducer
