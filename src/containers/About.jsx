@@ -9,7 +9,7 @@ import { fetchAbout } from '../actions/fetchAbout'
 	    const { dispatch } = this.props
 	    dispatch(fetchAbout())
 	}
- 	render(){
+ 	render(){ 
  		return (
  			<section className="section">
  			<div className="container">
