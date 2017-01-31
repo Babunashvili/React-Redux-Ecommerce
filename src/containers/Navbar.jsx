@@ -5,6 +5,23 @@ import { Link } from 'react-router'
  * Create NavBar Container
  */
  class NavBar extends Component{
+ 	constructor(props){
+ 		super(props)
+ 		this.state ={
+ 			showBar: false
+ 		}
+ 	}
+ 	toggleNavBar(){
+ 		if(this.state.showBar){
+ 			this.setState({
+ 				showBar:false
+ 			})
+ 		}else{
+ 			this.setState({
+ 				showBar:true
+ 			})
+ 		}
+ 	}
  	render(){
  		return (
  			<nav className="nav has-shadow">
@@ -14,13 +31,13 @@ import { Link } from 'react-router'
  			  <img src="http://bulma.io/images/bulma-logo.png" alt="Bulma logo" />
  			</Link>
  			</div>
- 			<span className="nav-toggle">
+ 			<span className="nav-toggle" onClick={this.toggleNavBar.bind(this)}>
  			<span></span>
  			<span></span>
  			<span></span>
  			</span>
 
- 			<div className="nav-right nav-menu">
+ 			<div className={`nav-right nav-menu ${ (this.state.showBar) ? 'is-active' : '' }`}>
  			<Link to="/" className="nav-item">
  			Home
  			</Link>

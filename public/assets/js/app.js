@@ -21638,13 +21638,31 @@
 	var NavBar = function (_Component) {
 	  _inherits(NavBar, _Component);
 
-	  function NavBar() {
+	  function NavBar(props) {
 	    _classCallCheck(this, NavBar);
 
-	    return _possibleConstructorReturn(this, (NavBar.__proto__ || Object.getPrototypeOf(NavBar)).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, (NavBar.__proto__ || Object.getPrototypeOf(NavBar)).call(this, props));
+
+	    _this.state = {
+	      showBar: false
+	    };
+	    return _this;
 	  }
 
 	  _createClass(NavBar, [{
+	    key: 'toggleNavBar',
+	    value: function toggleNavBar() {
+	      if (this.state.showBar) {
+	        this.setState({
+	          showBar: false
+	        });
+	      } else {
+	        this.setState({
+	          showBar: true
+	        });
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
@@ -21664,14 +21682,14 @@
 	          ),
 	          _react2.default.createElement(
 	            'span',
-	            { className: 'nav-toggle' },
+	            { className: 'nav-toggle', onClick: this.toggleNavBar.bind(this) },
 	            _react2.default.createElement('span', null),
 	            _react2.default.createElement('span', null),
 	            _react2.default.createElement('span', null)
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'nav-right nav-menu' },
+	            { className: 'nav-right nav-menu ' + (this.state.showBar ? 'is-active' : '') },
 	            _react2.default.createElement(
 	              _reactRouter.Link,
 	              { to: '/', className: 'nav-item' },
@@ -29047,7 +29065,7 @@
 							_react2.default.createElement(
 								"figure",
 								{ className: "image is-4by3" },
-								_react2.default.createElement("img", { src: "http://bulma.io/images/placeholders/1280x960.png" })
+								_react2.default.createElement("img", { src: this.props.product.image })
 							)
 						),
 						_react2.default.createElement(
@@ -29069,7 +29087,13 @@
 							_react2.default.createElement(
 								"div",
 								{ className: "content" },
-								"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris."
+								_react2.default.createElement(
+									"h4",
+									null,
+									"Price: ",
+									this.props.product.price,
+									"$"
+								)
 							),
 							_react2.default.createElement(
 								"a",

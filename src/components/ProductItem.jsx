@@ -9,7 +9,7 @@ import React, { Component } from 'react'
  		       <div className="card">
 				  <div className="card-image">
 				    <figure className="image is-4by3">
-				      <img src="http://bulma.io/images/placeholders/1280x960.png" /> 
+				      <img src={this.props.product.image} /> 
 				    </figure>
 				  </div>
 				  <div className="card-content is-clearfix">
@@ -19,8 +19,7 @@ import React, { Component } from 'react'
 				      </div>
 				    </div>
 				    <div className="content">
-				      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-				      Phasellus nec iaculis mauris.
+				      <h4>Price: {this.props.product.price}$</h4>
 				    </div>
 				    <a className="button is-success is-pulled-left">
 				    	<i className="fa fa-shopping-cart" aria-hidden="true"></i>
