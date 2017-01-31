@@ -10,7 +10,7 @@ class App extends Component {
 		return (
            <div>
            	 <NavBar />
-             <ProductList />
+             {this.props.children}
              <Footer />
            </div>
 		)
