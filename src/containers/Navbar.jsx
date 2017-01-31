@@ -26,7 +26,7 @@ import { Link } from 'react-router'
  			</Link>
  			<Link to="/about" className="nav-item">
  			About us
- 			</Link>
+ 			</Link> 
  			<span className="nav-item">
  			<Link to="cart" className="button is-success is-outlined" >
  			<span className="icon">
@@ -53,7 +53,7 @@ import { Link } from 'react-router'
  			</div>
  			</div>
  			</nav>
- 			)
+ 		)
  	}
  }
 /**
