@@ -5,4 +5,4 @@ import AboutReducer from './AboutReducer'
  */
 export default combineReducers({
   AboutReducer: AboutReducer
-})
+}) 
