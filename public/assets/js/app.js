@@ -33188,7 +33188,10 @@
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                _react2.default.createElement(_reactHelmet2.default, { title: this.props.product.title }),
+	                _react2.default.createElement(_reactHelmet2.default, {
+	                    title: this.props.product.title,
+	                    meta: [{ property: "og:type", content: "article" }, { property: "og:title", content: this.props.product.title }, { property: "og:image", content: this.props.product.image }, { property: "og:description", content: this.props.product.description }]
+	                }),
 	                _react2.default.createElement(
 	                    'section',
 	                    { className: 'section' },

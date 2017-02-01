@@ -13,7 +13,17 @@ import { fetchProduct } from '../actions/fetchProduct'
  	render(){
  		return (
 			<div>
-                        <Helmet title={this.props.product.title} />
+                        <Helmet 
+                           title={this.props.product.title}
+                           meta={
+                               [
+                                    {property: "og:type", content: "article"},
+                                    {property: "og:title", content:this.props.product.title },
+                                    {property: "og:image", content: this.props.product.image},
+                                    {property: "og:description", content: this.props.product.description}
+                                ]
+                           }
+                         />
 						<section className="section">
 								<div className="container">
                                    <div className="columns">
