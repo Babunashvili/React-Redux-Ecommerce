@@ -33186,7 +33186,7 @@
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                _react2.default.createElement(_reactHelmet2.default, { title: 'single product' }),
+	                _react2.default.createElement(_reactHelmet2.default, { title: this.props.product.title }),
 	                _react2.default.createElement(
 	                    'section',
 	                    { className: 'section' },

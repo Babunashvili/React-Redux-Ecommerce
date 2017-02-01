@@ -13,7 +13,7 @@ import { fetchProduct } from '../actions/fetchProduct'
  	render(){
  		return (
 			<div>
-            <Helmet title="single product" />
+                        <Helmet title={this.props.product.title} />
 						<section className="section">
 								<div className="container">
                                    <div className="columns">
