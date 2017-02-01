@@ -29128,12 +29128,14 @@
 
 	var _index2 = _interopRequireDefault(_index);
 
+	var _Loading = __webpack_require__(321);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	/**
 	 * Create Middleware
 	 */
-	var middleware = (0, _redux.applyMiddleware)(_reduxThunk2.default);
+	var middleware = (0, _redux.applyMiddleware)(_reduxThunk2.default, _Loading.Loading);
 	/**
 	 * Create Store
 	 */
@@ -32896,7 +32898,35 @@
 	};
 
 /***/ },
-/* 321 */,
+/* 321 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var Loading = exports.Loading = function Loading(store) {
+	  return function (next) {
+	    return function (action) {
+	      var result = next(action);
+	      var fetching = '';
+	      Object.keys(store.getState()).map(function (reducer) {
+	        if ('fetching' in store.getState()[reducer]) {
+	          fetching = fetching || store.getState()[reducer]['fetching'];
+	        }
+	      });
+	      if (fetching) {
+	        result = next({ type: "SHOW_LOADING" });
+	      } else {
+	        result = next({ type: "HIDE_LOADING" });
+	      }
+	      return result;
+	    };
+	  };
+	};
+
+/***/ },
 /* 322 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -32977,6 +33007,7 @@
 	var LoadingReducer = function LoadingReducer() {
 	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { isVisible: false };
 	  var action = arguments[1];
+
 
 	  switch (action.type) {
 	    case 'SHOW_LOADING':
