@@ -5,6 +5,7 @@ import About from './containers/About'
 import Cart from './containers/Cart'
 import Wishlist from './containers/Wishlist'
 import ProductList from './containers/ProductList'
+import SingleProduct from './containers/SingleProduct'
 import { Provider } from 'react-redux'
 import store from './store'
 import { Router, Route, Link, hashHistory, IndexRoute } from 'react-router'
@@ -19,6 +20,7 @@ ReactDOM.render(
              <Route path="about" component={About} />
              <Route path="cart" component={Cart} />
              <Route path="wishlist" component={Wishlist} />
+             <Route path="product/:id" component={SingleProduct} />
 	     </Route>
 	 </Router>  	
 	</Provider>,
