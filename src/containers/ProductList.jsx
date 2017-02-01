@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import ProductItem from '../components/ProductItem'
 import { fetchProducts } from '../actions/fetchProducts'
+import Helmet from "react-helmet"
 /**
  * Create ProductList Container
  */
@@ -12,18 +13,21 @@ import { fetchProducts } from '../actions/fetchProducts'
     }
  	render(){
  		return (
- 			   <section className="section">
-				    <div className="container">
-				      <div className="heading">
-				        <h1 className="title">Latest Products</h1> 
-									<div className="columns is-multiline">
-										{this.props.products.map((product) => {
-												return <ProductItem key={product.id} product={product} />
-										})}
+			   <div>
+            <Helmet title="Home" />
+						<section className="section">
+								<div className="container">
+									<div className="heading">
+										<h1 className="title">Latest Products</h1> 
+											<div className="columns is-multiline">
+												{this.props.products.map((product) => {
+														return <ProductItem key={product.id} product={product} />
+												})}
+											</div>
 									</div>
-				      </div>
-				    </div>
-				  </section>
+								</div>
+							</section>
+				 </div>
  			)
  	}
  }
@@ -32,7 +36,7 @@ import { fetchProducts } from '../actions/fetchProducts'
  */
  const stateProps = (state) => {
  	return { 
-       products:state.ProductsReducer
+       products:state.ProductsReducer.data
  	}
  }
  export default connect(stateProps)(ProductList)

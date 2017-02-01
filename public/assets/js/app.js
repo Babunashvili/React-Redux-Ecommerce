@@ -54,7 +54,7 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _App = __webpack_require__(178);
+	var _App = __webpack_require__(325);
 
 	var _App2 = _interopRequireDefault(_App);
 
@@ -21539,80 +21539,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 178 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _NavBar = __webpack_require__(179);
-
-	var _NavBar2 = _interopRequireDefault(_NavBar);
-
-	var _ProductList = __webpack_require__(271);
-
-	var _ProductList2 = _interopRequireDefault(_ProductList);
-
-	var _Footer = __webpack_require__(304);
-
-	var _Footer2 = _interopRequireDefault(_Footer);
-
-	var _reactHelmet = __webpack_require__(309);
-
-	var _reactHelmet2 = _interopRequireDefault(_reactHelmet);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	/**
-	 * Create App Component
-	 */
-	var App = function (_Component) {
-		_inherits(App, _Component);
-
-		function App() {
-			_classCallCheck(this, App);
-
-			return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
-		}
-
-		_createClass(App, [{
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(
-					'div',
-					null,
-					_react2.default.createElement(_reactHelmet2.default, {
-						title: 'Home',
-						titleTemplate: 'Ecommerce - %s'
-					}),
-					_react2.default.createElement(_NavBar2.default, null),
-					this.props.children,
-					_react2.default.createElement(_Footer2.default, null)
-				);
-			}
-		}]);
-
-		return App;
-	}(_react.Component);
-
-	exports.default = App;
-
-/***/ },
+/* 178 */,
 /* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -28951,6 +28878,10 @@
 
 	var _fetchProducts = __webpack_require__(273);
 
+	var _reactHelmet = __webpack_require__(309);
+
+	var _reactHelmet2 = _interopRequireDefault(_reactHelmet);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28982,25 +28913,30 @@
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
-	        'section',
-	        { className: 'section' },
+	        'div',
+	        null,
+	        _react2.default.createElement(_reactHelmet2.default, { title: 'Home' }),
 	        _react2.default.createElement(
-	          'div',
-	          { className: 'container' },
+	          'section',
+	          { className: 'section' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'heading' },
-	            _react2.default.createElement(
-	              'h1',
-	              { className: 'title' },
-	              'Latest Products'
-	            ),
+	            { className: 'container' },
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'columns is-multiline' },
-	              this.props.products.map(function (product) {
-	                return _react2.default.createElement(_ProductItem2.default, { key: product.id, product: product });
-	              })
+	              { className: 'heading' },
+	              _react2.default.createElement(
+	                'h1',
+	                { className: 'title' },
+	                'Latest Products'
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'columns is-multiline' },
+	                this.props.products.map(function (product) {
+	                  return _react2.default.createElement(_ProductItem2.default, { key: product.id, product: product });
+	                })
+	              )
 	            )
 	          )
 	        )
@@ -29017,7 +28953,7 @@
 
 	var stateProps = function stateProps(state) {
 	  return {
-	    products: state.ProductsReducer
+	    products: state.ProductsReducer.data
 	  };
 	};
 	exports.default = (0, _reactRedux.connect)(stateProps)(ProductList);
@@ -29192,12 +29128,14 @@
 
 	var _index2 = _interopRequireDefault(_index);
 
+	var _Loading = __webpack_require__(321);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	/**
 	 * Create Middleware
 	 */
-	var middleware = (0, _redux.applyMiddleware)(_reduxThunk2.default);
+	var middleware = (0, _redux.applyMiddleware)(_reduxThunk2.default, _Loading.Loading);
 	/**
 	 * Create Store
 	 */
@@ -29253,6 +29191,10 @@
 
 	var _ProductsReducer2 = _interopRequireDefault(_ProductsReducer);
 
+	var _LoadingReducer = __webpack_require__(324);
+
+	var _LoadingReducer2 = _interopRequireDefault(_LoadingReducer);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	/**
@@ -29260,7 +29202,8 @@
 	 */
 	exports.default = (0, _redux.combineReducers)({
 	  AboutReducer: _AboutReducer2.default,
-	  ProductsReducer: _ProductsReducer2.default
+	  ProductsReducer: _ProductsReducer2.default,
+	  LoadingReducer: _LoadingReducer2.default
 	});
 
 /***/ },
@@ -29270,7 +29213,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	   value: true
+	  value: true
 	});
 	/**
 	 * About Reducer
@@ -29278,19 +29221,25 @@
 	 * @param  {Object} action
 	 */
 	var AboutReducer = function AboutReducer() {
-	   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { title: '', content: '' };
-	   var action = arguments[1];
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { fetching: false, data: { title: '', content: '' } };
+	  var action = arguments[1];
 
-	   switch (action.type) {
-	      case 'REQUEST_ABOUT':
-	         return state;
-	         break;
-	      case 'RECEIVE_ABOUT':
-	         return Object.assign({}, state, action.payload);
-	         break;
-	      default:
-	         return state;
-	   }
+	  switch (action.type) {
+	    case 'REQUEST_ABOUT':
+	      return Object.assign({}, state, {
+	        fetching: true,
+	        data: { title: '', content: '' }
+	      });
+	      break;
+	    case 'RECEIVE_ABOUT':
+	      return Object.assign({}, state, {
+	        fetching: false,
+	        data: action.payload
+	      });
+	      break;
+	    default:
+	      return state;
+	  }
 	};
 	exports.default = AboutReducer;
 
@@ -29301,7 +29250,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	   value: true
+	  value: true
 	});
 	/**
 	 * Products Reducer
@@ -29309,19 +29258,25 @@
 	 * @param  {Object} action
 	 */
 	var ProductsReducer = function ProductsReducer() {
-	   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-	   var action = arguments[1];
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { fetching: false, data: [] };
+	  var action = arguments[1];
 
-	   switch (action.type) {
-	      case 'REQUEST_PRODUCTS':
-	         return state;
-	         break;
-	      case 'RECEIVE_PRODUCTS':
-	         return action.payload;
-	         break;
-	      default:
-	         return state;
-	   }
+	  switch (action.type) {
+	    case 'REQUEST_PRODUCTS':
+	      return Object.assign({}, state, {
+	        fetching: true,
+	        data: []
+	      });
+	      break;
+	    case 'RECEIVE_PRODUCTS':
+	      return Object.assign({}, state, {
+	        fetching: false,
+	        data: action.payload
+	      });
+	      break;
+	    default:
+	      return state;
+	  }
 	};
 	exports.default = ProductsReducer;
 
@@ -30971,7 +30926,7 @@
 
 	var stateProps = function stateProps(state) {
 	  return {
-	    about: state.AboutReducer
+	    about: state.AboutReducer.data
 	  };
 	};
 
@@ -32941,6 +32896,218 @@
 	    "itemprop": "itemProp",
 	    "class": "className"
 	};
+
+/***/ },
+/* 321 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var Loading = exports.Loading = function Loading(store) {
+	  return function (next) {
+	    return function (action) {
+	      var result = next(action);
+	      var fetching = '';
+	      Object.keys(store.getState()).map(function (reducer) {
+	        if ('fetching' in store.getState()[reducer]) {
+	          fetching = fetching || store.getState()[reducer]['fetching'];
+	        }
+	      });
+	      if (fetching) {
+	        result = next({ type: "SHOW_LOADING" });
+	      } else {
+	        result = next({ type: "HIDE_LOADING" });
+	      }
+	      return result;
+	    };
+	  };
+	};
+
+/***/ },
+/* 322 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(180);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	/**
+	 * Create Loading Component
+	 */
+	var Loading = function (_Component) {
+	  _inherits(Loading, _Component);
+
+	  function Loading() {
+	    _classCallCheck(this, Loading);
+
+	    return _possibleConstructorReturn(this, (Loading.__proto__ || Object.getPrototypeOf(Loading)).apply(this, arguments));
+	  }
+
+	  _createClass(Loading, [{
+	    key: 'render',
+	    value: function render() {
+	      var isLoading = this.props.loading ? 'is-loading' : 'is-loaded';
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'loading-wrapper ' + isLoading },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'loading' },
+	          _react2.default.createElement(
+	            'span',
+	            null,
+	            'Loading ...'
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Loading;
+	}(_react.Component);
+
+	exports.default = Loading;
+
+/***/ },
+/* 323 */,
+/* 324 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	/**
+	 * Products Reducer
+	 * @param  {Array} state 
+	 * @param  {Object} action
+	 */
+	var LoadingReducer = function LoadingReducer() {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { isVisible: false };
+	  var action = arguments[1];
+
+
+	  switch (action.type) {
+	    case 'SHOW_LOADING':
+	      return Object.assign({}, state, {
+	        isVisible: true
+	      });
+	      break;
+	    case 'HIDE_LOADING':
+	      return Object.assign({}, state, {
+	        isVisible: false
+	      });
+	      break;
+	    default:
+	      return state;
+	  }
+	};
+	exports.default = LoadingReducer;
+
+/***/ },
+/* 325 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _NavBar = __webpack_require__(179);
+
+	var _NavBar2 = _interopRequireDefault(_NavBar);
+
+	var _ProductList = __webpack_require__(271);
+
+	var _ProductList2 = _interopRequireDefault(_ProductList);
+
+	var _Footer = __webpack_require__(304);
+
+	var _Footer2 = _interopRequireDefault(_Footer);
+
+	var _reactHelmet = __webpack_require__(309);
+
+	var _reactHelmet2 = _interopRequireDefault(_reactHelmet);
+
+	var _Laoding = __webpack_require__(322);
+
+	var _Laoding2 = _interopRequireDefault(_Laoding);
+
+	var _reactRedux = __webpack_require__(180);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	/**
+	 * Create App Component
+	 */
+	var App = function (_Component) {
+	  _inherits(App, _Component);
+
+	  function App() {
+	    _classCallCheck(this, App);
+
+	    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+	  }
+
+	  _createClass(App, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_reactHelmet2.default, { titleTemplate: 'Ecommerce - %s' }),
+	        _react2.default.createElement(_Laoding2.default, { loading: this.props.loading }),
+	        _react2.default.createElement(_NavBar2.default, null),
+	        this.props.children,
+	        _react2.default.createElement(_Footer2.default, null)
+	      );
+	    }
+	  }]);
+
+	  return App;
+	}(_react.Component);
+
+	var stateProps = function stateProps(state) {
+	  return {
+	    loading: state.LoadingReducer.isVisible
+	  };
+	};
+	exports.default = (0, _reactRedux.connect)(stateProps)(App);
 
 /***/ }
 /******/ ]);

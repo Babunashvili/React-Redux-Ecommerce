@@ -31,7 +31,7 @@ import Helmet from "react-helmet"
  */
  const stateProps = (state) => {
  	return { 
-       about:state.AboutReducer
+       about:state.AboutReducer.data
  	}
  }
 
