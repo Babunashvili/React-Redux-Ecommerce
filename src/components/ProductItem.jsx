@@ -22,7 +22,7 @@ import { Link } from 'react-router'
 				    <div className="content">
 				      <h4>Price: {this.props.product.price}$</h4>
 				    </div>
-				    <a className="button is-success is-pulled-left">
+						<a className="button is-success is-pulled-left" onClick={ () => { this.props.addToCart(this.props.product.id) } }>
 				    	<i className="fa fa-shopping-cart" aria-hidden="true"></i>
 				    </a>
 				    <a className="button is-danger is-pulled-right">

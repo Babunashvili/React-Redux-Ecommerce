@@ -2,11 +2,17 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import ProductItem from '../components/ProductItem'
 import { fetchProducts } from '../actions/fetchProducts'
+import { addToCart } from '../actions/addToCart'
 import Helmet from "react-helmet"
 /**
  * Create ProductList Container
  */
  class ProductList extends Component{
+
+	addToCart(id){
+		const { dispatch } = this.props
+		dispatch(addToCart(id))
+	}
     componentDidMount() {
         const { dispatch } = this.props
         dispatch(fetchProducts())
@@ -21,7 +27,7 @@ import Helmet from "react-helmet"
 										<h1 className="title">Latest Products</h1> 
 											<div className="columns is-multiline">
 												{this.props.products.map((product) => {
-														return <ProductItem key={product.id} product={product} />
+														return <ProductItem key={product.id} product={product} addToCart={ this.addToCart.bind(this) } />
 												})}
 											</div>
 									</div>

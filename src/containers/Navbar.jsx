@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
+import { fetchCart } from '../actions/fetchCart'
 /**
  * Create NavBar Container
  */
@@ -11,6 +12,13 @@ import { Link } from 'react-router'
  			showBar: false
  		}
  	}
+	 componentWillMount(){
+		 const { dispatch } = this.props
+         dispatch(fetchCart())
+	 }
+	 componentDidUpdate(){
+		
+	 }
  	toggleNavBar(){
  		if(this.state.showBar){
  			this.setState({
@@ -49,7 +57,7 @@ import { Link } from 'react-router'
 							<span className="icon">
 							   <i className="fa fa-shopping-cart" aria-hidden="true"></i>
 							</span>
-							<span className="tag is-light">0</span>
+							<span className="tag is-light">{Object.keys(this.props.cart).length}</span>
 						</Link>
 						<Link to="wishlist" className="button is-danger is-outlined">
 							<span className="icon">
@@ -78,7 +86,7 @@ import { Link } from 'react-router'
  */
  const stateProps = (state) => {
  	return { 
-
+       cart:state.CartReducer.data
  	}
  }
 

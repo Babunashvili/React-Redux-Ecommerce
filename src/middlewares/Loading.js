@@ -2,7 +2,7 @@ export const Loading = store => next => action => {
 
   let prev = next(action)
 
-  let isFetching = ''
+  let isFetching = null
 
    Object.keys(store.getState()).map((reducer) => {
          if('fetching' in store.getState()[reducer]){

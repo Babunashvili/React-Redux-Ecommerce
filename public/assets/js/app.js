@@ -21648,6 +21648,8 @@
 
 	var _reactRouter = __webpack_require__(218);
 
+	var _fetchCart = __webpack_require__(329);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21674,6 +21676,16 @@
 		}
 
 		_createClass(NavBar, [{
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				var dispatch = this.props.dispatch;
+
+				dispatch((0, _fetchCart.fetchCart)());
+			}
+		}, {
+			key: 'componentDidUpdate',
+			value: function componentDidUpdate() {}
+		}, {
 			key: 'toggleNavBar',
 			value: function toggleNavBar() {
 				if (this.state.showBar) {
@@ -21738,7 +21750,7 @@
 									_react2.default.createElement(
 										'span',
 										{ className: 'tag is-light' },
-										'0'
+										Object.keys(this.props.cart).length
 									)
 								),
 								_react2.default.createElement(
@@ -21792,7 +21804,9 @@
 
 
 	var stateProps = function stateProps(state) {
-		return {};
+		return {
+			cart: state.CartReducer.data
+		};
 	};
 
 	exports.default = (0, _reactRedux.connect)(stateProps)(NavBar);
@@ -28967,6 +28981,8 @@
 
 	var _fetchProducts = __webpack_require__(273);
 
+	var _addToCart2 = __webpack_require__(327);
+
 	var _reactHelmet = __webpack_require__(307);
 
 	var _reactHelmet2 = _interopRequireDefault(_reactHelmet);
@@ -28992,6 +29008,13 @@
 	  }
 
 	  _createClass(ProductList, [{
+	    key: 'addToCart',
+	    value: function addToCart(id) {
+	      var dispatch = this.props.dispatch;
+
+	      dispatch((0, _addToCart2.addToCart)(id));
+	    }
+	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      var dispatch = this.props.dispatch;
@@ -29001,6 +29024,8 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this2 = this;
+
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -29023,7 +29048,7 @@
 	                'div',
 	                { className: 'columns is-multiline' },
 	                this.props.products.map(function (product) {
-	                  return _react2.default.createElement(_ProductItem2.default, { key: product.id, product: product });
+	                  return _react2.default.createElement(_ProductItem2.default, { key: product.id, product: product, addToCart: _this2.addToCart.bind(_this2) });
 	                })
 	              )
 	            )
@@ -29054,7 +29079,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+			value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -29077,84 +29102,88 @@
 	 * Create ProductItem Component
 	 */
 	var ProductItem = function (_Component) {
-		_inherits(ProductItem, _Component);
+			_inherits(ProductItem, _Component);
 
-		function ProductItem() {
-			_classCallCheck(this, ProductItem);
+			function ProductItem() {
+					_classCallCheck(this, ProductItem);
 
-			return _possibleConstructorReturn(this, (ProductItem.__proto__ || Object.getPrototypeOf(ProductItem)).apply(this, arguments));
-		}
-
-		_createClass(ProductItem, [{
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(
-					'div',
-					{ className: 'column is-one-quarter' },
-					_react2.default.createElement(
-						'div',
-						{ className: 'card' },
-						_react2.default.createElement(
-							'div',
-							{ className: 'card-image' },
-							_react2.default.createElement(
-								'figure',
-								{ className: 'image is-4by3' },
-								_react2.default.createElement(
-									_reactRouter.Link,
-									{ to: 'product/' + this.props.product.id },
-									_react2.default.createElement('img', { src: this.props.product.image })
-								)
-							)
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'card-content is-clearfix' },
-							_react2.default.createElement(
-								'div',
-								{ className: 'media' },
-								_react2.default.createElement(
-									'div',
-									{ className: 'media-content' },
-									_react2.default.createElement(
-										'h4',
-										{ className: 'title is-4' },
-										_react2.default.createElement(
-											_reactRouter.Link,
-											{ to: 'product/' + this.props.product.id },
-											this.props.product.title
-										)
-									)
-								)
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'content' },
-								_react2.default.createElement(
-									'h4',
-									null,
-									'Price: ',
-									this.props.product.price,
-									'$'
-								)
-							),
-							_react2.default.createElement(
-								'a',
-								{ className: 'button is-success is-pulled-left' },
-								_react2.default.createElement('i', { className: 'fa fa-shopping-cart', 'aria-hidden': 'true' })
-							),
-							_react2.default.createElement(
-								'a',
-								{ className: 'button is-danger is-pulled-right' },
-								_react2.default.createElement('i', { className: 'fa fa-heart', 'aria-hidden': 'true' })
-							)
-						)
-					)
-				);
+					return _possibleConstructorReturn(this, (ProductItem.__proto__ || Object.getPrototypeOf(ProductItem)).apply(this, arguments));
 			}
-		}]);
 
-		return ProductItem;
+			_createClass(ProductItem, [{
+					key: 'render',
+					value: function render() {
+							var _this2 = this;
+
+							return _react2.default.createElement(
+									'div',
+									{ className: 'column is-one-quarter' },
+									_react2.default.createElement(
+											'div',
+											{ className: 'card' },
+											_react2.default.createElement(
+													'div',
+													{ className: 'card-image' },
+													_react2.default.createElement(
+															'figure',
+															{ className: 'image is-4by3' },
+															_react2.default.createElement(
+																	_reactRouter.Link,
+																	{ to: 'product/' + this.props.product.id },
+																	_react2.default.createElement('img', { src: this.props.product.image })
+															)
+													)
+											),
+											_react2.default.createElement(
+													'div',
+													{ className: 'card-content is-clearfix' },
+													_react2.default.createElement(
+															'div',
+															{ className: 'media' },
+															_react2.default.createElement(
+																	'div',
+																	{ className: 'media-content' },
+																	_react2.default.createElement(
+																			'h4',
+																			{ className: 'title is-4' },
+																			_react2.default.createElement(
+																					_reactRouter.Link,
+																					{ to: 'product/' + this.props.product.id },
+																					this.props.product.title
+																			)
+																	)
+															)
+													),
+													_react2.default.createElement(
+															'div',
+															{ className: 'content' },
+															_react2.default.createElement(
+																	'h4',
+																	null,
+																	'Price: ',
+																	this.props.product.price,
+																	'$'
+															)
+													),
+													_react2.default.createElement(
+															'a',
+															{ className: 'button is-success is-pulled-left', onClick: function onClick() {
+																			_this2.props.addToCart(_this2.props.product.id);
+																	} },
+															_react2.default.createElement('i', { className: 'fa fa-shopping-cart', 'aria-hidden': 'true' })
+													),
+													_react2.default.createElement(
+															'a',
+															{ className: 'button is-danger is-pulled-right' },
+															_react2.default.createElement('i', { className: 'fa fa-heart', 'aria-hidden': 'true' })
+													)
+											)
+									)
+							);
+					}
+			}]);
+
+			return ProductItem;
 	}(_react.Component);
 
 	exports.default = ProductItem;
@@ -29298,6 +29327,10 @@
 
 	var _LoadingReducer2 = _interopRequireDefault(_LoadingReducer);
 
+	var _CartReducer = __webpack_require__(328);
+
+	var _CartReducer2 = _interopRequireDefault(_CartReducer);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	/**
@@ -29307,7 +29340,8 @@
 	  AboutReducer: _AboutReducer2.default,
 	  ProductsReducer: _ProductsReducer2.default,
 	  ProductReducer: _ProductReducer2.default,
-	  LoadingReducer: _LoadingReducer2.default
+	  LoadingReducer: _LoadingReducer2.default,
+	  CartReducer: _CartReducer2.default
 	});
 
 /***/ },
@@ -29481,7 +29515,7 @@
 
 	      var prev = next(action);
 
-	      var isFetching = '';
+	      var isFetching = null;
 
 	      Object.keys(store.getState()).map(function (reducer) {
 	        if ('fetching' in store.getState()[reducer]) {
@@ -33347,6 +33381,148 @@
 	      return response;
 	    }).then(function (json) {
 	      dispatch(receiveProduct(json.data, id));
+	    });
+	  };
+	};
+
+/***/ },
+/* 327 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.addToCart = undefined;
+
+	var _store = __webpack_require__(274);
+
+	var _store2 = _interopRequireDefault(_store);
+
+	var _axios = __webpack_require__(282);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	var _fetchCart = __webpack_require__(329);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * Create fetchAbout Action
+	 */
+	var requestAddToCart = function requestAddToCart() {
+	  return {
+	    type: 'REQUEST_ADD_TO_CART'
+	  };
+	};
+
+	var receiveAddToCart = function receiveAddToCart(data) {
+	  return {
+	    type: 'RECEIVE_ADD_TO_CART',
+	    payload: data
+	  };
+	};
+
+	var addToCart = exports.addToCart = function addToCart(id) {
+	  return function (dispatch) {
+	    dispatch(requestAddToCart());
+	    return _axios2.default.post('https://ecommerce-e4289.firebaseio.com/cart.json', { id: id, userId: 1 }).then(function (response) {
+	      return response;
+	    }).then(function (json) {
+	      dispatch(receiveAddToCart(json.data));
+	      dispatch((0, _fetchCart.fetchCart)());
+	    });
+	  };
+	};
+
+/***/ },
+/* 328 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	/**
+	 * Cart Reducer
+	 * @param  {Object} state
+	 * @param  {Object} action
+	 */
+	var CartReducer = function CartReducer() {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+	    loading: false,
+	    data: {}
+	  };
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case 'REQUEST_ADD_TO_CART':
+	      return Object.assign({}, state, { loading: true });
+	      break;
+	    case 'RECEIVE_ADD_TO_CART':
+	      return Object.assign({}, state, { loading: false });
+	      break;
+	    case 'REQUEST_CART':
+	      return Object.assign({}, state, { loading: true });
+	      break;
+	    case 'RECEIVE_CART':
+	      return Object.assign({}, state, {
+	        loading: false,
+	        data: action.payload
+	      });
+	      break;
+	    default:
+	      return state;
+	  }
+	};
+	exports.default = CartReducer;
+
+/***/ },
+/* 329 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.fetchCart = undefined;
+
+	var _store = __webpack_require__(274);
+
+	var _store2 = _interopRequireDefault(_store);
+
+	var _axios = __webpack_require__(282);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * Create fetchAbout Action
+	 */
+	var requestCart = function requestCart() {
+	  return {
+	    type: 'REQUEST_CART'
+	  };
+	};
+
+	var receiveCart = function receiveCart(data) {
+	  return {
+	    type: 'RECEIVE_CART',
+	    payload: data
+	  };
+	};
+
+	var fetchCart = exports.fetchCart = function fetchCart() {
+	  return function (dispatch) {
+	    dispatch(requestCart());
+	    return _axios2.default.get('https://ecommerce-e4289.firebaseio.com/cart.json').then(function (response) {
+	      return response;
+	    }).then(function (json) {
+	      dispatch(receiveCart(json.data));
 	    });
 	  };
 	};
