@@ -21611,7 +21611,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+		value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -21636,131 +21636,131 @@
 	 * Create NavBar Container
 	 */
 	var NavBar = function (_Component) {
-	  _inherits(NavBar, _Component);
+		_inherits(NavBar, _Component);
 
-	  function NavBar(props) {
-	    _classCallCheck(this, NavBar);
+		function NavBar(props) {
+			_classCallCheck(this, NavBar);
 
-	    var _this = _possibleConstructorReturn(this, (NavBar.__proto__ || Object.getPrototypeOf(NavBar)).call(this, props));
+			var _this = _possibleConstructorReturn(this, (NavBar.__proto__ || Object.getPrototypeOf(NavBar)).call(this, props));
 
-	    _this.state = {
-	      showBar: false
-	    };
-	    return _this;
-	  }
+			_this.state = {
+				showBar: false
+			};
+			return _this;
+		}
 
-	  _createClass(NavBar, [{
-	    key: 'toggleNavBar',
-	    value: function toggleNavBar() {
-	      if (this.state.showBar) {
-	        this.setState({
-	          showBar: false
-	        });
-	      } else {
-	        this.setState({
-	          showBar: true
-	        });
-	      }
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'nav',
-	        { className: 'nav has-shadow' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'container' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'nav-left' },
-	            _react2.default.createElement(
-	              _reactRouter.Link,
-	              { to: '/', className: 'nav-item' },
-	              _react2.default.createElement('img', { src: 'http://bulma.io/images/bulma-logo.png', alt: 'Bulma logo' })
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'span',
-	            { className: 'nav-toggle', onClick: this.toggleNavBar.bind(this) },
-	            _react2.default.createElement('span', null),
-	            _react2.default.createElement('span', null),
-	            _react2.default.createElement('span', null)
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'nav-right nav-menu ' + (this.state.showBar ? 'is-active' : '') },
-	            _react2.default.createElement(
-	              _reactRouter.Link,
-	              { to: '/', className: 'nav-item' },
-	              'Home'
-	            ),
-	            _react2.default.createElement(
-	              _reactRouter.Link,
-	              { to: '/about', className: 'nav-item' },
-	              'About us'
-	            ),
-	            _react2.default.createElement(
-	              'span',
-	              { className: 'nav-item' },
-	              _react2.default.createElement(
-	                _reactRouter.Link,
-	                { to: 'cart', className: 'button is-success is-outlined' },
-	                _react2.default.createElement(
-	                  'span',
-	                  { className: 'icon' },
-	                  _react2.default.createElement('i', { className: 'fa fa-shopping-cart', 'aria-hidden': 'true' })
-	                ),
-	                _react2.default.createElement(
-	                  'span',
-	                  { className: 'tag is-light' },
-	                  '0'
-	                )
-	              ),
-	              _react2.default.createElement(
-	                _reactRouter.Link,
-	                { to: 'wishlist', className: 'button is-danger is-outlined' },
-	                _react2.default.createElement(
-	                  'span',
-	                  { className: 'icon' },
-	                  _react2.default.createElement('i', { className: 'fa fa-heart', 'aria-hidden': 'true' })
-	                ),
-	                _react2.default.createElement(
-	                  'span',
-	                  { className: 'tag is-light' },
-	                  '0'
-	                )
-	              )
-	            ),
-	            _react2.default.createElement(
-	              'span',
-	              { className: 'nav-item' },
-	              _react2.default.createElement(
-	                'a',
-	                { className: 'button' },
-	                _react2.default.createElement(
-	                  'span',
-	                  null,
-	                  'Login'
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'a',
-	                { className: 'button is-info' },
-	                _react2.default.createElement(
-	                  'span',
-	                  null,
-	                  'Register'
-	                )
-	              )
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
+		_createClass(NavBar, [{
+			key: 'toggleNavBar',
+			value: function toggleNavBar() {
+				if (this.state.showBar) {
+					this.setState({
+						showBar: false
+					});
+				} else {
+					this.setState({
+						showBar: true
+					});
+				}
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'nav',
+					{ className: 'nav has-shadow' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'container' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'nav-left' },
+							_react2.default.createElement(
+								_reactRouter.Link,
+								{ to: '/', className: 'nav-item' },
+								_react2.default.createElement('img', { src: 'http://bulma.io/images/bulma-logo.png', alt: 'Bulma logo' })
+							)
+						),
+						_react2.default.createElement(
+							'span',
+							{ className: 'nav-toggle', onClick: this.toggleNavBar.bind(this) },
+							_react2.default.createElement('span', null),
+							_react2.default.createElement('span', null),
+							_react2.default.createElement('span', null)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'nav-right nav-menu ' + (this.state.showBar ? 'is-active' : '') },
+							_react2.default.createElement(
+								_reactRouter.Link,
+								{ to: '/', className: 'nav-item' },
+								'Home'
+							),
+							_react2.default.createElement(
+								_reactRouter.Link,
+								{ to: '/about', className: 'nav-item' },
+								'About us'
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'nav-item' },
+								_react2.default.createElement(
+									_reactRouter.Link,
+									{ to: 'cart', className: 'button is-success is-outlined' },
+									_react2.default.createElement(
+										'span',
+										{ className: 'icon' },
+										_react2.default.createElement('i', { className: 'fa fa-shopping-cart', 'aria-hidden': 'true' })
+									),
+									_react2.default.createElement(
+										'span',
+										{ className: 'tag is-light' },
+										'0'
+									)
+								),
+								_react2.default.createElement(
+									_reactRouter.Link,
+									{ to: 'wishlist', className: 'button is-danger is-outlined' },
+									_react2.default.createElement(
+										'span',
+										{ className: 'icon' },
+										_react2.default.createElement('i', { className: 'fa fa-heart', 'aria-hidden': 'true' })
+									),
+									_react2.default.createElement(
+										'span',
+										{ className: 'tag is-light' },
+										'0'
+									)
+								)
+							),
+							_react2.default.createElement(
+								'span',
+								{ className: 'nav-item' },
+								_react2.default.createElement(
+									'a',
+									{ className: 'button' },
+									_react2.default.createElement(
+										'span',
+										null,
+										'Login'
+									)
+								),
+								_react2.default.createElement(
+									'a',
+									{ className: 'button is-info' },
+									_react2.default.createElement(
+										'span',
+										null,
+										'Register'
+									)
+								)
+							)
+						)
+					)
+				);
+			}
+		}]);
 
-	  return NavBar;
+		return NavBar;
 	}(_react.Component);
 	/**
 	 * Insert Props Into Component
@@ -21768,7 +21768,7 @@
 
 
 	var stateProps = function stateProps(state) {
-	  return {};
+		return {};
 	};
 
 	exports.default = (0, _reactRedux.connect)(stateProps)(NavBar);
@@ -28926,7 +28926,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	   value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -28955,52 +28955,52 @@
 	 * Create ProductList Container
 	 */
 	var ProductList = function (_Component) {
-	   _inherits(ProductList, _Component);
+	  _inherits(ProductList, _Component);
 
-	   function ProductList() {
-	      _classCallCheck(this, ProductList);
+	  function ProductList() {
+	    _classCallCheck(this, ProductList);
 
-	      return _possibleConstructorReturn(this, (ProductList.__proto__ || Object.getPrototypeOf(ProductList)).apply(this, arguments));
-	   }
+	    return _possibleConstructorReturn(this, (ProductList.__proto__ || Object.getPrototypeOf(ProductList)).apply(this, arguments));
+	  }
 
-	   _createClass(ProductList, [{
-	      key: 'componentDidMount',
-	      value: function componentDidMount() {
-	         var dispatch = this.props.dispatch;
+	  _createClass(ProductList, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var dispatch = this.props.dispatch;
 
-	         dispatch((0, _fetchProducts.fetchProducts)());
-	      }
-	   }, {
-	      key: 'render',
-	      value: function render() {
-	         return _react2.default.createElement(
-	            'section',
-	            { className: 'section' },
+	      dispatch((0, _fetchProducts.fetchProducts)());
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'section',
+	        { className: 'section' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'container' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'heading' },
 	            _react2.default.createElement(
-	               'div',
-	               { className: 'container' },
-	               _react2.default.createElement(
-	                  'div',
-	                  { className: 'heading' },
-	                  _react2.default.createElement(
-	                     'h1',
-	                     { className: 'title' },
-	                     'Latest Products'
-	                  ),
-	                  _react2.default.createElement(
-	                     'div',
-	                     { className: 'columns is-multiline' },
-	                     this.props.products.map(function (product) {
-	                        return _react2.default.createElement(_ProductItem2.default, { key: product.id, product: product });
-	                     })
-	                  )
-	               )
+	              'h1',
+	              { className: 'title' },
+	              'Latest Products'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'columns is-multiline' },
+	              this.props.products.map(function (product) {
+	                return _react2.default.createElement(_ProductItem2.default, { key: product.id, product: product });
+	              })
 	            )
-	         );
-	      }
-	   }]);
+	          )
+	        )
+	      );
+	    }
+	  }]);
 
-	   return ProductList;
+	  return ProductList;
 	}(_react.Component);
 	/**
 	 * Insert Props Into Component
@@ -29008,9 +29008,9 @@
 
 
 	var stateProps = function stateProps(state) {
-	   return {
-	      products: state.ProductsReducer
-	   };
+	  return {
+	    products: state.ProductsReducer
+	  };
 	};
 	exports.default = (0, _reactRedux.connect)(stateProps)(ProductList);
 

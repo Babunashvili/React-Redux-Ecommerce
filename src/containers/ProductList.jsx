@@ -16,11 +16,11 @@ import { fetchProducts } from '../actions/fetchProducts'
 				    <div className="container">
 				      <div className="heading">
 				        <h1 className="title">Latest Products</h1> 
-				          <div className="columns is-multiline">
-                             {this.props.products.map((product) => {
-                                return <ProductItem key={product.id} product={product} />
-                             })}
-                          </div>
+									<div className="columns is-multiline">
+										{this.props.products.map((product) => {
+												return <ProductItem key={product.id} product={product} />
+										})}
+									</div>
 				      </div>
 				    </div>
 				  </section>

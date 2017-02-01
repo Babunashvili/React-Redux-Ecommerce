@@ -6,14 +6,14 @@ import { connect } from 'react-redux'
  class Cart extends Component{
  	render(){
  		return (
- 			<section className="section">
- 			<div className="container">
- 			<div className="heading">
- 			<h1 className="title">My Cart</h1>
- 			</div>
- 			 cart
- 			 </div>
- 			</section>
+			<section className="section">
+				<div className="container">
+					<div className="heading">
+						<h1 className="title">My Cart</h1>
+					</div>
+				    cart
+				</div>
+			</section>
  			)
     }
 }
