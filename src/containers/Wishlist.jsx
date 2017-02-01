@@ -1,19 +1,23 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import Helmet from "react-helmet"
 /**
  * Create Wishlist Container
  */
  class Wishlist extends Component{
  	render(){
  		return (
- 			<section className="section">
-				<div className="container">
-					<div className="heading">
-						<h1 className="title">My Wishlist</h1>
+			<div>
+                <Helmet  title="My Wishlist" />
+				<section className="section">
+					<div className="container">
+						<div className="heading">
+							<h1 className="title">My Wishlist</h1>
+						</div>
+						Wishlist...
 					</div>
-				    Wishlist...
-				</div>
- 			</section>
+				</section>
+			</div>
  			)
     }
 }
