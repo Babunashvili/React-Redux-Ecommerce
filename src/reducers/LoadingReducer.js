@@ -4,6 +4,7 @@
  * @param  {Object} action
  */
 const LoadingReducer = (state = {isVisible:false}, action) => {
+
    switch(action.type){
    	  case 'SHOW_LOADING':
         return Object.assign({}, state,{
