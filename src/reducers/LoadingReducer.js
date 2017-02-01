@@ -3,22 +3,20 @@
  * @param  {Array} state 
  * @param  {Object} action
  */
-const ProductsReducer = (state = {fetching:false,data:[]}, action) => {
+const LoadingReducer = (state = {isVisible:false}, action) => {
    switch(action.type){
-   	  case 'REQUEST_PRODUCTS':
+   	  case 'SHOW_LOADING':
         return Object.assign({}, state,{
-          fetching:true,
-          data:[]
+          isVisible:true
         })
    	  break
-      case 'RECEIVE_PRODUCTS':
+      case 'HIDE_LOADING':
         return Object.assign({}, state,{
-          fetching:false,
-          data:action.payload
+          isVisible:false
         })
    	  break
    	  default:
    	  return state
    }
 }
-export default ProductsReducer
+export default LoadingReducer
