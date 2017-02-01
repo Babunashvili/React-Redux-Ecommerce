@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router'
 /**
  * Create ProductItem Component
  */
@@ -9,13 +10,13 @@ import React, { Component } from 'react'
  		       <div className="card">
 				  <div className="card-image">
 				    <figure className="image is-4by3">
-				      <img src={this.props.product.image} /> 
+				      <Link to={`product/${this.props.product.id}`}><img src={this.props.product.image} /></Link> 
 				    </figure>
 				  </div>
 				  <div className="card-content is-clearfix">
 				    <div className="media">
 				      <div className="media-content">
-				        <h4 className="title is-4">{this.props.product.title}</h4>
+								<h4 className="title is-4"><Link to={`product/${this.props.product.id}`}>{this.props.product.title}</Link></h4>
 				      </div>
 				    </div>
 				    <div className="content">
