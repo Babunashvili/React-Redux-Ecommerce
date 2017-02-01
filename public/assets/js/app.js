@@ -104,7 +104,9 @@
 	      _react2.default.createElement(_reactRouter.Route, { path: 'about', component: _About2.default }),
 	      _react2.default.createElement(_reactRouter.Route, { path: 'cart', component: _Cart2.default }),
 	      _react2.default.createElement(_reactRouter.Route, { path: 'wishlist', component: _Wishlist2.default }),
-	      _react2.default.createElement(_reactRouter.Route, { path: 'product/:id', component: _SingleProduct2.default })
+	      _react2.default.createElement(_reactRouter.Route, { path: 'product/:id', component: _SingleProduct2.default, onEnter: function onEnter() {
+	          return _store2.default.dispatch({ type: 'CLEAR_PRODUCT' });
+	        } })
 	    )
 	  )
 	), document.getElementById('root'));
@@ -33329,6 +33331,12 @@
 	      return Object.assign({}, state, {
 	        fetching: false,
 	        data: filtered[0]
+	      });
+	      break;
+	    case 'CLEAR_PRODUCT':
+	      return Object.assign({}, state, {
+	        fetching: false,
+	        data: {}
 	      });
 	      break;
 	    default:

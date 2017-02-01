@@ -20,7 +20,7 @@ ReactDOM.render(
              <Route path="about" component={About} />
              <Route path="cart" component={Cart} />
              <Route path="wishlist" component={Wishlist} />
-             <Route path="product/:id" component={SingleProduct} />
+             <Route path="product/:id" component={SingleProduct} onEnter={ () => store.dispatch({type:'CLEAR_PRODUCT'}) } />
 	     </Route>
 	 </Router>  	
 	</Provider>,

@@ -20,6 +20,12 @@ const ProductReducer = (state = {fetching:false,data:{}}, action) => {
           data:filtered[0]
         })
    	  break
+       case 'CLEAR_PRODUCT':
+        return Object.assign({}, state,{
+          fetching:false,
+          data:{}
+        })
+   	  break
    	  default:
    	  return state
    }
