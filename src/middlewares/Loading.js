@@ -1,5 +1,5 @@
 export const Loading = store => next => action => {
-  let result = next(action)
+
   let fetching = ''
    Object.keys(store.getState()).map((reducer) => {
          if('fetching' in store.getState()[reducer]){
@@ -7,9 +7,9 @@ export const Loading = store => next => action => {
          } 
   })
   if(fetching) {
-    result = next({type:"SHOW_LOADING"})
+    return next({type:"SHOW_LOADING"})
   }else{
-    result = next({type:"HIDE_LOADING"})
+    return next({type:"HIDE_LOADING"})
   }
-  return result
+  return next(action)
 }

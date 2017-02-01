@@ -84,6 +84,8 @@
 
 	var _store2 = _interopRequireDefault(_store);
 
+	var _fetchAbout = __webpack_require__(306);
+
 	var _reactRouter = __webpack_require__(218);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -32931,7 +32933,7 @@
 	var Loading = exports.Loading = function Loading(store) {
 	  return function (next) {
 	    return function (action) {
-	      var result = next(action);
+
 	      var fetching = '';
 	      Object.keys(store.getState()).map(function (reducer) {
 	        if ('fetching' in store.getState()[reducer]) {
@@ -32939,11 +32941,11 @@
 	        }
 	      });
 	      if (fetching) {
-	        result = next({ type: "SHOW_LOADING" });
+	        return next({ type: "SHOW_LOADING" });
 	      } else {
-	        result = next({ type: "HIDE_LOADING" });
+	        return next({ type: "HIDE_LOADING" });
 	      }
-	      return result;
+	      return next(action);
 	    };
 	  };
 	};

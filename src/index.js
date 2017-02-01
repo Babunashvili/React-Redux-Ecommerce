@@ -8,6 +8,7 @@ import ProductList from './containers/ProductList'
 import SingleProduct from './containers/SingleProduct'
 import { Provider } from 'react-redux'
 import store from './store'
+import { fetchAbout } from './actions/fetchAbout'
 import { Router, Route, Link, hashHistory, IndexRoute } from 'react-router'
 /**
  * Render App
@@ -16,11 +17,11 @@ ReactDOM.render(
    <Provider store={store}>
      <Router history={hashHistory}> 
 	     <Route path="/" component={App} >
-	         <IndexRoute component={ProductList} />
+             <IndexRoute component={ProductList} />
              <Route path="about" component={About} />
-             <Route path="cart" component={Cart} />
+             <Route path="cart" component={Cart}  />
              <Route path="wishlist" component={Wishlist} />
-             <Route path="product/:id" component={SingleProduct} onEnter={ () => store.dispatch({type:'CLEAR_PRODUCT'}) } />
+             <Route path="product/:id" component={SingleProduct} onEnter={ () => store.dispatch({type:'CLEAR_PRODUCT'}) }  />
 	     </Route>
 	 </Router>  	
 	</Provider>,
