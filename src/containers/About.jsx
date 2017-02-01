@@ -13,11 +13,11 @@ import { fetchAbout } from '../actions/fetchAbout'
  		return (
  			<section className="section">
  			<div className="container">
- 			<div className="heading">
- 			<h1 className="title">{this.props.about.title}</h1>
- 			</div>
- 			<p>{this.props.about.content}</p>
- 			</div>
+				<div className="heading">
+					<h1 className="title">{this.props.about.title}</h1>
+				</div>
+				<p>{this.props.about.content}</p>
+				</div>
  			</section>
  			)
     }

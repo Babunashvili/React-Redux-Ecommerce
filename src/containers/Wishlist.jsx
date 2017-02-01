@@ -7,12 +7,12 @@ import { connect } from 'react-redux'
  	render(){
  		return (
  			<section className="section">
- 			<div className="container">
- 			<div className="heading">
- 			<h1 className="title">My Wishlist</h1>
- 			</div>
- 			 Wishlist...
- 			 </div>
+				<div className="container">
+					<div className="heading">
+						<h1 className="title">My Wishlist</h1>
+					</div>
+				    Wishlist...
+				</div>
  			</section>
  			)
     }
