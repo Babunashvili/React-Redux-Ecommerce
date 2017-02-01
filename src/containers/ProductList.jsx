@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import ProductItem from '../components/ProductItem'
 import { fetchProducts } from '../actions/fetchProducts'
 import { addToCart } from '../actions/addToCart'
+import { addToWishlist } from '../actions/addToWishlist'
+import { removeFromWishlist } from '../actions/removeFromWishlist'
 import Helmet from "react-helmet"
 /**
  * Create ProductList Container
@@ -12,6 +14,14 @@ import Helmet from "react-helmet"
 	addToCart(id){
 		const { dispatch } = this.props
 		dispatch(addToCart(id))
+	}
+	addToWishlist(id){
+		const { dispatch } = this.props
+		dispatch(addToWishlist(id))
+	}
+	removeFromWishlist(id){
+		const { dispatch } = this.props
+		dispatch(removeFromWishlist(id))
 	}
     componentDidMount() {
         const { dispatch } = this.props
@@ -27,7 +37,13 @@ import Helmet from "react-helmet"
 										<h1 className="title">Latest Products</h1> 
 											<div className="columns is-multiline">
 												{this.props.products.map((product) => {
-														return <ProductItem key={product.id} product={product} addToCart={ this.addToCart.bind(this) } />
+														return <ProductItem key={product.id} 
+														         product={product} 
+																 addToCart={ this.addToCart.bind(this) } 
+																 addToWishlist={ this.addToWishlist.bind(this) }
+																 removeFromWishlist={ this.removeFromWishlist.bind(this) }
+																 wishlist={this.props.wishlist}
+																 />
 												})}
 											</div>
 									</div>
@@ -42,7 +58,8 @@ import Helmet from "react-helmet"
  */
  const stateProps = (state) => {
  	return { 
-       products:state.ProductsReducer.data
+       products:state.ProductsReducer.data,
+       wishlist:state.WishlistReducer.data
  	}
  }
  export default connect(stateProps)(ProductList)

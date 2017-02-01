@@ -21650,6 +21650,8 @@
 
 	var _fetchCart = __webpack_require__(329);
 
+	var _fetchWishlist = __webpack_require__(332);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21681,6 +21683,7 @@
 				var dispatch = this.props.dispatch;
 
 				dispatch((0, _fetchCart.fetchCart)());
+				dispatch((0, _fetchWishlist.fetchWishlist)());
 			}
 		}, {
 			key: 'componentDidUpdate',
@@ -21764,7 +21767,7 @@
 									_react2.default.createElement(
 										'span',
 										{ className: 'tag is-light' },
-										'0'
+										Object.keys(this.props.wishlist).length
 									)
 								)
 							),
@@ -21805,7 +21808,8 @@
 
 	var stateProps = function stateProps(state) {
 		return {
-			cart: state.CartReducer.data
+			cart: state.CartReducer.data,
+			wishlist: state.WishlistReducer.data
 		};
 	};
 
@@ -28964,7 +28968,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+		value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -28983,6 +28987,10 @@
 
 	var _addToCart2 = __webpack_require__(327);
 
+	var _addToWishlist2 = __webpack_require__(330);
+
+	var _removeFromWishlist2 = __webpack_require__(333);
+
 	var _reactHelmet = __webpack_require__(307);
 
 	var _reactHelmet2 = _interopRequireDefault(_reactHelmet);
@@ -28999,66 +29007,86 @@
 	 * Create ProductList Container
 	 */
 	var ProductList = function (_Component) {
-	  _inherits(ProductList, _Component);
+		_inherits(ProductList, _Component);
 
-	  function ProductList() {
-	    _classCallCheck(this, ProductList);
+		function ProductList() {
+			_classCallCheck(this, ProductList);
 
-	    return _possibleConstructorReturn(this, (ProductList.__proto__ || Object.getPrototypeOf(ProductList)).apply(this, arguments));
-	  }
+			return _possibleConstructorReturn(this, (ProductList.__proto__ || Object.getPrototypeOf(ProductList)).apply(this, arguments));
+		}
 
-	  _createClass(ProductList, [{
-	    key: 'addToCart',
-	    value: function addToCart(id) {
-	      var dispatch = this.props.dispatch;
+		_createClass(ProductList, [{
+			key: 'addToCart',
+			value: function addToCart(id) {
+				var dispatch = this.props.dispatch;
 
-	      dispatch((0, _addToCart2.addToCart)(id));
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var dispatch = this.props.dispatch;
+				dispatch((0, _addToCart2.addToCart)(id));
+			}
+		}, {
+			key: 'addToWishlist',
+			value: function addToWishlist(id) {
+				var dispatch = this.props.dispatch;
 
-	      dispatch((0, _fetchProducts.fetchProducts)());
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
+				dispatch((0, _addToWishlist2.addToWishlist)(id));
+			}
+		}, {
+			key: 'removeFromWishlist',
+			value: function removeFromWishlist(id) {
+				var dispatch = this.props.dispatch;
 
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(_reactHelmet2.default, { title: 'Home' }),
-	        _react2.default.createElement(
-	          'section',
-	          { className: 'section' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'container' },
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'heading' },
-	              _react2.default.createElement(
-	                'h1',
-	                { className: 'title' },
-	                'Latest Products'
-	              ),
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'columns is-multiline' },
-	                this.props.products.map(function (product) {
-	                  return _react2.default.createElement(_ProductItem2.default, { key: product.id, product: product, addToCart: _this2.addToCart.bind(_this2) });
-	                })
-	              )
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
+				dispatch((0, _removeFromWishlist2.removeFromWishlist)(id));
+			}
+		}, {
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				var dispatch = this.props.dispatch;
 
-	  return ProductList;
+				dispatch((0, _fetchProducts.fetchProducts)());
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var _this2 = this;
+
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(_reactHelmet2.default, { title: 'Home' }),
+					_react2.default.createElement(
+						'section',
+						{ className: 'section' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'container' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'heading' },
+								_react2.default.createElement(
+									'h1',
+									{ className: 'title' },
+									'Latest Products'
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'columns is-multiline' },
+									this.props.products.map(function (product) {
+										return _react2.default.createElement(_ProductItem2.default, { key: product.id,
+											product: product,
+											addToCart: _this2.addToCart.bind(_this2),
+											addToWishlist: _this2.addToWishlist.bind(_this2),
+											removeFromWishlist: _this2.removeFromWishlist.bind(_this2),
+											wishlist: _this2.props.wishlist
+										});
+									})
+								)
+							)
+						)
+					)
+				);
+			}
+		}]);
+
+		return ProductList;
 	}(_react.Component);
 	/**
 	 * Insert Props Into Component
@@ -29066,9 +29094,10 @@
 
 
 	var stateProps = function stateProps(state) {
-	  return {
-	    products: state.ProductsReducer.data
-	  };
+		return {
+			products: state.ProductsReducer.data,
+			wishlist: state.WishlistReducer.data
+		};
 	};
 	exports.default = (0, _reactRedux.connect)(stateProps)(ProductList);
 
@@ -29079,7 +29108,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-			value: true
+		value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -29102,88 +29131,113 @@
 	 * Create ProductItem Component
 	 */
 	var ProductItem = function (_Component) {
-			_inherits(ProductItem, _Component);
+		_inherits(ProductItem, _Component);
 
-			function ProductItem() {
-					_classCallCheck(this, ProductItem);
+		function ProductItem() {
+			_classCallCheck(this, ProductItem);
 
-					return _possibleConstructorReturn(this, (ProductItem.__proto__ || Object.getPrototypeOf(ProductItem)).apply(this, arguments));
+			return _possibleConstructorReturn(this, (ProductItem.__proto__ || Object.getPrototypeOf(ProductItem)).apply(this, arguments));
+		}
+
+		_createClass(ProductItem, [{
+			key: 'checkWishlist',
+			value: function checkWishlist(id) {
+				var _this2 = this;
+
+				var check = null;
+				Object.keys(this.props.wishlist).map(function (key) {
+					if (_this2.props.wishlist[key].id == id) check = true;
+				});
+				return check;
 			}
+		}, {
+			key: 'getKeyById',
+			value: function getKeyById(id) {
+				var _this3 = this;
 
-			_createClass(ProductItem, [{
-					key: 'render',
-					value: function render() {
-							var _this2 = this;
+				var productKey = '';
+				Object.keys(this.props.wishlist).map(function (key) {
+					if (_this3.props.wishlist[key].id == id) productKey = key;
+				});
+				return productKey;
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var _this4 = this;
 
-							return _react2.default.createElement(
+				return _react2.default.createElement(
+					'div',
+					{ className: 'column is-one-quarter' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'card' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'card-image' },
+							_react2.default.createElement(
+								'figure',
+								{ className: 'image is-4by3' },
+								_react2.default.createElement(
+									_reactRouter.Link,
+									{ to: 'product/' + this.props.product.id },
+									_react2.default.createElement('img', { src: this.props.product.image })
+								)
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'card-content is-clearfix' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'media' },
+								_react2.default.createElement(
 									'div',
-									{ className: 'column is-one-quarter' },
+									{ className: 'media-content' },
 									_react2.default.createElement(
-											'div',
-											{ className: 'card' },
-											_react2.default.createElement(
-													'div',
-													{ className: 'card-image' },
-													_react2.default.createElement(
-															'figure',
-															{ className: 'image is-4by3' },
-															_react2.default.createElement(
-																	_reactRouter.Link,
-																	{ to: 'product/' + this.props.product.id },
-																	_react2.default.createElement('img', { src: this.props.product.image })
-															)
-													)
-											),
-											_react2.default.createElement(
-													'div',
-													{ className: 'card-content is-clearfix' },
-													_react2.default.createElement(
-															'div',
-															{ className: 'media' },
-															_react2.default.createElement(
-																	'div',
-																	{ className: 'media-content' },
-																	_react2.default.createElement(
-																			'h4',
-																			{ className: 'title is-4' },
-																			_react2.default.createElement(
-																					_reactRouter.Link,
-																					{ to: 'product/' + this.props.product.id },
-																					this.props.product.title
-																			)
-																	)
-															)
-													),
-													_react2.default.createElement(
-															'div',
-															{ className: 'content' },
-															_react2.default.createElement(
-																	'h4',
-																	null,
-																	'Price: ',
-																	this.props.product.price,
-																	'$'
-															)
-													),
-													_react2.default.createElement(
-															'a',
-															{ className: 'button is-success is-pulled-left', onClick: function onClick() {
-																			_this2.props.addToCart(_this2.props.product.id);
-																	} },
-															_react2.default.createElement('i', { className: 'fa fa-shopping-cart', 'aria-hidden': 'true' })
-													),
-													_react2.default.createElement(
-															'a',
-															{ className: 'button is-danger is-pulled-right' },
-															_react2.default.createElement('i', { className: 'fa fa-heart', 'aria-hidden': 'true' })
-													)
-											)
+										'h4',
+										{ className: 'title is-4' },
+										_react2.default.createElement(
+											_reactRouter.Link,
+											{ to: 'product/' + this.props.product.id },
+											this.props.product.title
+										)
 									)
-							);
-					}
-			}]);
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'content' },
+								_react2.default.createElement(
+									'h4',
+									null,
+									'Price: ',
+									this.props.product.price,
+									'$'
+								)
+							),
+							_react2.default.createElement(
+								'button',
+								{ className: 'button is-success is-pulled-left', onClick: function onClick() {
+										_this4.props.addToCart(_this4.props.product.id);
+									} },
+								_react2.default.createElement('i', { className: 'fa fa-shopping-cart', 'aria-hidden': 'true' })
+							),
+							_react2.default.createElement(
+								'button',
+								{ className: 'button is-pulled-right ' + (this.checkWishlist(this.props.product.id) ? 'is-info' : 'is-primary'),
+									onClick: function onClick(e) {
+										_this4.checkWishlist(_this4.props.product.id) ? _this4.props.removeFromWishlist(_this4.getKeyById(_this4.props.product.id)) : _this4.props.addToWishlist(_this4.props.product.id);
+									} },
+								_react2.default.createElement('i', { className: 'fa fa-heart', 'aria-hidden': 'true' })
+							)
+						)
+					)
+				);
+			}
+		}]);
 
-			return ProductItem;
+		return ProductItem;
 	}(_react.Component);
 
 	exports.default = ProductItem;
@@ -29331,6 +29385,10 @@
 
 	var _CartReducer2 = _interopRequireDefault(_CartReducer);
 
+	var _WishlistReducer = __webpack_require__(331);
+
+	var _WishlistReducer2 = _interopRequireDefault(_WishlistReducer);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	/**
@@ -29341,7 +29399,8 @@
 	  ProductsReducer: _ProductsReducer2.default,
 	  ProductReducer: _ProductReducer2.default,
 	  LoadingReducer: _LoadingReducer2.default,
-	  CartReducer: _CartReducer2.default
+	  CartReducer: _CartReducer2.default,
+	  WishlistReducer: _WishlistReducer2.default
 	});
 
 /***/ },
@@ -33523,6 +33582,207 @@
 	      return response;
 	    }).then(function (json) {
 	      dispatch(receiveCart(json.data));
+	    });
+	  };
+	};
+
+/***/ },
+/* 330 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.addToWishlist = undefined;
+
+	var _store = __webpack_require__(274);
+
+	var _store2 = _interopRequireDefault(_store);
+
+	var _axios = __webpack_require__(282);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	var _fetchWishlist = __webpack_require__(332);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * Create fetchAbout Action
+	 */
+	var requestAddToWishlist = function requestAddToWishlist() {
+	  return {
+	    type: 'REQUEST_ADD_TO_WL'
+	  };
+	};
+
+	var receiveAddToWishlist = function receiveAddToWishlist(data) {
+	  return {
+	    type: 'RECEIVE_ADD_TO_WL',
+	    payload: data
+	  };
+	};
+
+	var addToWishlist = exports.addToWishlist = function addToWishlist(id) {
+	  return function (dispatch) {
+	    dispatch(requestAddToWishlist());
+	    return _axios2.default.post('https://ecommerce-e4289.firebaseio.com/wishlist.json', { id: id, userId: 1 }).then(function (response) {
+	      return response;
+	    }).then(function (json) {
+	      dispatch(receiveAddToWishlist(json.data));
+	      dispatch((0, _fetchWishlist.fetchWishlist)());
+	    });
+	  };
+	};
+
+/***/ },
+/* 331 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	/**
+	 * Wishlist Reducer
+	 * @param  {Object} state
+	 * @param  {Object} action
+	 */
+	var WishlistReducer = function WishlistReducer() {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+	    loading: false,
+	    data: {}
+	  };
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case 'REQUEST_ADD_TO_WL':
+	      return Object.assign({}, state, { loading: true });
+	      break;
+	    case 'RECEIVE_ADD_TO_WL':
+	      return Object.assign({}, state, { loading: false });
+	      break;
+	    case 'REQUEST_WL':
+	      return Object.assign({}, state, { loading: true });
+	      break;
+	    case 'RECEIVE_WL':
+	      return Object.assign({}, state, {
+	        loading: false,
+	        data: action.payload
+	      });
+	      break;
+	    case 'REQUEST_REMOVE_FROM_WL':
+	      return Object.assign({}, state, {
+	        loading: true
+	      });
+	      break;
+	    case 'RECEIVE_REMOVE_FROM_WL':
+	      return Object.assign({}, state, {
+	        loading: false,
+	        data: action.payload
+	      });
+	      break;
+	    default:
+	      return state;
+	  }
+	};
+	exports.default = WishlistReducer;
+
+/***/ },
+/* 332 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.fetchWishlist = undefined;
+
+	var _store = __webpack_require__(274);
+
+	var _store2 = _interopRequireDefault(_store);
+
+	var _axios = __webpack_require__(282);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * Create fetchAbout Action
+	 */
+	var requestWishlist = function requestWishlist() {
+	  return {
+	    type: 'REQUEST_WL'
+	  };
+	};
+
+	var receiveWishlist = function receiveWishlist(data) {
+	  return {
+	    type: 'RECEIVE_WL',
+	    payload: data === null ? {} : data
+	  };
+	};
+
+	var fetchWishlist = exports.fetchWishlist = function fetchWishlist() {
+	  return function (dispatch) {
+	    dispatch(requestWishlist());
+	    return _axios2.default.get('https://ecommerce-e4289.firebaseio.com/wishlist.json').then(function (response) {
+	      return response;
+	    }).then(function (json) {
+	      dispatch(receiveWishlist(json.data));
+	    });
+	  };
+	};
+
+/***/ },
+/* 333 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.removeFromWishlist = undefined;
+
+	var _store = __webpack_require__(274);
+
+	var _store2 = _interopRequireDefault(_store);
+
+	var _axios = __webpack_require__(282);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	var _fetchWishlist = __webpack_require__(332);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var requestRemoveFromWishlist = function requestRemoveFromWishlist() {
+	  return {
+	    type: 'REQUEST_REMOVE_FROM_WL'
+	  };
+	};
+
+	var receiveRemoveFromWishlist = function receiveRemoveFromWishlist(data) {
+	  return {
+	    type: 'RECEIVE_REMOVE_FROM_WL',
+	    payload: data === null ? {} : data
+	  };
+	};
+
+	var removeFromWishlist = exports.removeFromWishlist = function removeFromWishlist(key) {
+	  return function (dispatch) {
+	    dispatch(requestRemoveFromWishlist());
+	    return _axios2.default.delete('https://ecommerce-e4289.firebaseio.com/wishlist/' + key + '.json').then(function (response) {
+	      return response;
+	    }).then(function (json) {
+	      dispatch(receiveRemoveFromWishlist(json.data));
+	      dispatch((0, _fetchWishlist.fetchWishlist)());
 	    });
 	  };
 	};
