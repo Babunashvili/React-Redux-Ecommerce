@@ -33076,7 +33076,6 @@
 	    loading: state.LoadingReducer.isVisible
 	  };
 	};
-
 	exports.default = (0, _reactRedux.connect)(stateProps)(App);
 
 /***/ }

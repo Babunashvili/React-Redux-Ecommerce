@@ -27,5 +27,4 @@ class App extends Component {
       loading:state.LoadingReducer.isVisible
  	}
  }
-
 export default connect(stateProps)(App)
