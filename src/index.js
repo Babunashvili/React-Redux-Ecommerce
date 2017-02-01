@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App'
+import App from './containers/App'
 import About from './containers/About'
 import Cart from './containers/Cart'
 import Wishlist from './containers/Wishlist'

@@ -1,0 +1,48 @@
+.loading-wrapper{
+    position:fixed;
+    top:0;
+    left:0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 5;
+    background: #fff;
+    .loading{
+        display: table;
+        width: 100vw;
+        height: 100vh;
+        span{
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+            width: 100vw;
+            height: 100vh;
+        }
+    }
+    &.is-loading{
+        visibility : visible;
+    }
+    &.is-loaded{
+        -webkit-animation: hideLoading 1s forwards;
+        -moz-animation: hideLoading 1s forwards;
+        -o-animation: hideLoading 1s forwards;
+        animation: hideLoading 1s forwards;
+    }
+}
+
+
+@-webkit-keyframes hideLoading {
+  0%   { visibility : visible; }
+  100% { visibility : hidden; }
+}
+@-moz-keyframes hideLoading {
+  0%   { visibility : visible; }
+  100% { visibility : hidden; }
+}
+@-o-keyframes hideLoading {
+  0%   { visibility : visible; }
+  100% { visibility : hidden; }
+}
+@keyframes hideLoading {
+ 0%   { visibility : visible; }
+  100% { visibility : hidden; }
+}
