@@ -58,29 +58,29 @@
 
 	var _App2 = _interopRequireDefault(_App);
 
-	var _About = __webpack_require__(321);
+	var _About = __webpack_require__(328);
 
 	var _About2 = _interopRequireDefault(_About);
 
-	var _Cart = __webpack_require__(323);
+	var _Cart = __webpack_require__(330);
 
 	var _Cart2 = _interopRequireDefault(_Cart);
 
-	var _Wishlist = __webpack_require__(324);
+	var _Wishlist = __webpack_require__(331);
 
 	var _Wishlist2 = _interopRequireDefault(_Wishlist);
 
-	var _ProductList = __webpack_require__(271);
+	var _ProductList = __webpack_require__(308);
 
 	var _ProductList2 = _interopRequireDefault(_ProductList);
 
-	var _SingleProduct = __webpack_require__(325);
+	var _SingleProduct = __webpack_require__(332);
 
 	var _SingleProduct2 = _interopRequireDefault(_SingleProduct);
 
 	var _reactRedux = __webpack_require__(180);
 
-	var _store = __webpack_require__(274);
+	var _store = __webpack_require__(272);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -21565,19 +21565,19 @@
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _ProductList = __webpack_require__(271);
+	var _ProductList = __webpack_require__(308);
 
 	var _ProductList2 = _interopRequireDefault(_ProductList);
 
-	var _Footer = __webpack_require__(319);
+	var _Footer = __webpack_require__(326);
 
 	var _Footer2 = _interopRequireDefault(_Footer);
 
-	var _reactHelmet = __webpack_require__(307);
+	var _reactHelmet = __webpack_require__(314);
 
 	var _reactHelmet2 = _interopRequireDefault(_reactHelmet);
 
-	var _Laoding = __webpack_require__(320);
+	var _Laoding = __webpack_require__(327);
 
 	var _Laoding2 = _interopRequireDefault(_Laoding);
 
@@ -21648,9 +21648,9 @@
 
 	var _reactRouter = __webpack_require__(218);
 
-	var _fetchCart = __webpack_require__(329);
+	var _fetchCart = __webpack_require__(271);
 
-	var _fetchWishlist = __webpack_require__(332);
+	var _fetchWishlist = __webpack_require__(307);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28968,292 +28968,11 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRedux = __webpack_require__(180);
-
-	var _ProductItem = __webpack_require__(272);
-
-	var _ProductItem2 = _interopRequireDefault(_ProductItem);
-
-	var _fetchProducts = __webpack_require__(273);
-
-	var _addToCart2 = __webpack_require__(327);
-
-	var _addToWishlist2 = __webpack_require__(330);
-
-	var _removeFromWishlist2 = __webpack_require__(333);
-
-	var _reactHelmet = __webpack_require__(307);
-
-	var _reactHelmet2 = _interopRequireDefault(_reactHelmet);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	/**
-	 * Create ProductList Container
-	 */
-	var ProductList = function (_Component) {
-		_inherits(ProductList, _Component);
-
-		function ProductList() {
-			_classCallCheck(this, ProductList);
-
-			return _possibleConstructorReturn(this, (ProductList.__proto__ || Object.getPrototypeOf(ProductList)).apply(this, arguments));
-		}
-
-		_createClass(ProductList, [{
-			key: 'addToCart',
-			value: function addToCart(id) {
-				var dispatch = this.props.dispatch;
-
-				dispatch((0, _addToCart2.addToCart)(id));
-			}
-		}, {
-			key: 'addToWishlist',
-			value: function addToWishlist(id) {
-				var dispatch = this.props.dispatch;
-
-				dispatch((0, _addToWishlist2.addToWishlist)(id));
-			}
-		}, {
-			key: 'removeFromWishlist',
-			value: function removeFromWishlist(id) {
-				var dispatch = this.props.dispatch;
-
-				dispatch((0, _removeFromWishlist2.removeFromWishlist)(id));
-			}
-		}, {
-			key: 'componentDidMount',
-			value: function componentDidMount() {
-				var dispatch = this.props.dispatch;
-
-				dispatch((0, _fetchProducts.fetchProducts)());
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				var _this2 = this;
-
-				return _react2.default.createElement(
-					'div',
-					null,
-					_react2.default.createElement(_reactHelmet2.default, { title: 'Home' }),
-					_react2.default.createElement(
-						'section',
-						{ className: 'section' },
-						_react2.default.createElement(
-							'div',
-							{ className: 'container' },
-							_react2.default.createElement(
-								'div',
-								{ className: 'heading' },
-								_react2.default.createElement(
-									'h1',
-									{ className: 'title' },
-									'Latest Products'
-								),
-								_react2.default.createElement(
-									'div',
-									{ className: 'columns is-multiline' },
-									this.props.products.map(function (product) {
-										return _react2.default.createElement(_ProductItem2.default, { key: product.id,
-											product: product,
-											addToCart: _this2.addToCart.bind(_this2),
-											addToWishlist: _this2.addToWishlist.bind(_this2),
-											removeFromWishlist: _this2.removeFromWishlist.bind(_this2),
-											wishlist: _this2.props.wishlist
-										});
-									})
-								)
-							)
-						)
-					)
-				);
-			}
-		}]);
-
-		return ProductList;
-	}(_react.Component);
-	/**
-	 * Insert Props Into Component
-	 */
-
-
-	var stateProps = function stateProps(state) {
-		return {
-			products: state.ProductsReducer.data,
-			wishlist: state.WishlistReducer.data
-		};
-	};
-	exports.default = (0, _reactRedux.connect)(stateProps)(ProductList);
-
-/***/ },
-/* 272 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRouter = __webpack_require__(218);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	/**
-	 * Create ProductItem Component
-	 */
-	var ProductItem = function (_Component) {
-		_inherits(ProductItem, _Component);
-
-		function ProductItem() {
-			_classCallCheck(this, ProductItem);
-
-			return _possibleConstructorReturn(this, (ProductItem.__proto__ || Object.getPrototypeOf(ProductItem)).apply(this, arguments));
-		}
-
-		_createClass(ProductItem, [{
-			key: 'checkWishlist',
-			value: function checkWishlist(id) {
-				var _this2 = this;
-
-				var check = null;
-				Object.keys(this.props.wishlist).map(function (key) {
-					if (_this2.props.wishlist[key].id == id) check = true;
-				});
-				return check;
-			}
-		}, {
-			key: 'getKeyById',
-			value: function getKeyById(id) {
-				var _this3 = this;
-
-				var productKey = '';
-				Object.keys(this.props.wishlist).map(function (key) {
-					if (_this3.props.wishlist[key].id == id) productKey = key;
-				});
-				return productKey;
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				var _this4 = this;
-
-				return _react2.default.createElement(
-					'div',
-					{ className: 'column is-one-quarter' },
-					_react2.default.createElement(
-						'div',
-						{ className: 'card' },
-						_react2.default.createElement(
-							'div',
-							{ className: 'card-image' },
-							_react2.default.createElement(
-								'figure',
-								{ className: 'image is-4by3' },
-								_react2.default.createElement(
-									_reactRouter.Link,
-									{ to: 'product/' + this.props.product.id },
-									_react2.default.createElement('img', { src: this.props.product.image })
-								)
-							)
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'card-content is-clearfix' },
-							_react2.default.createElement(
-								'div',
-								{ className: 'media' },
-								_react2.default.createElement(
-									'div',
-									{ className: 'media-content' },
-									_react2.default.createElement(
-										'h4',
-										{ className: 'title is-4' },
-										_react2.default.createElement(
-											_reactRouter.Link,
-											{ to: 'product/' + this.props.product.id },
-											this.props.product.title
-										)
-									)
-								)
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'content' },
-								_react2.default.createElement(
-									'h4',
-									null,
-									'Price: ',
-									this.props.product.price,
-									'$'
-								)
-							),
-							_react2.default.createElement(
-								'button',
-								{ className: 'button is-success is-pulled-left', onClick: function onClick() {
-										_this4.props.addToCart(_this4.props.product.id);
-									} },
-								_react2.default.createElement('i', { className: 'fa fa-shopping-cart', 'aria-hidden': 'true' })
-							),
-							_react2.default.createElement(
-								'button',
-								{ className: 'button is-pulled-right ' + (this.checkWishlist(this.props.product.id) ? 'is-info' : 'is-primary'),
-									onClick: function onClick(e) {
-										_this4.checkWishlist(_this4.props.product.id) ? _this4.props.removeFromWishlist(_this4.getKeyById(_this4.props.product.id)) : _this4.props.addToWishlist(_this4.props.product.id);
-									} },
-								_react2.default.createElement('i', { className: 'fa fa-heart', 'aria-hidden': 'true' })
-							)
-						)
-					)
-				);
-			}
-		}]);
-
-		return ProductItem;
-	}(_react.Component);
-
-	exports.default = ProductItem;
-
-/***/ },
-/* 273 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.fetchProducts = undefined;
+	exports.fetchCart = undefined;
 
-	var _store = __webpack_require__(274);
+	var _store = __webpack_require__(272);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -29266,32 +28985,32 @@
 	/**
 	 * Create fetchAbout Action
 	 */
-	var requestProducts = function requestProducts() {
+	var requestCart = function requestCart() {
 	  return {
-	    type: 'REQUEST_PRODUCTS'
+	    type: 'REQUEST_CART'
 	  };
 	};
 
-	var receiveProducts = function receiveProducts(data) {
+	var receiveCart = function receiveCart(data) {
 	  return {
-	    type: 'RECEIVE_PRODUCTS',
+	    type: 'RECEIVE_CART',
 	    payload: data
 	  };
 	};
 
-	var fetchProducts = exports.fetchProducts = function fetchProducts() {
+	var fetchCart = exports.fetchCart = function fetchCart() {
 	  return function (dispatch) {
-	    dispatch(requestProducts());
-	    return _axios2.default.get('https://ecommerce-e4289.firebaseio.com/products.json').then(function (response) {
+	    dispatch(requestCart());
+	    return _axios2.default.get('https://ecommerce-e4289.firebaseio.com/cart.json').then(function (response) {
 	      return response;
 	    }).then(function (json) {
-	      dispatch(receiveProducts(json.data));
+	      dispatch(receiveCart(json.data));
 	    });
 	  };
 	};
 
 /***/ },
-/* 274 */
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29302,11 +29021,11 @@
 
 	var _redux = __webpack_require__(191);
 
-	var _reduxThunk = __webpack_require__(275);
+	var _reduxThunk = __webpack_require__(273);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _index = __webpack_require__(276);
+	var _index = __webpack_require__(274);
 
 	var _index2 = _interopRequireDefault(_index);
 
@@ -29326,7 +29045,7 @@
 	exports.default = store;
 
 /***/ },
-/* 275 */
+/* 273 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29354,7 +29073,7 @@
 	exports['default'] = thunk;
 
 /***/ },
-/* 276 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29365,27 +29084,27 @@
 
 	var _redux = __webpack_require__(191);
 
-	var _AboutReducer = __webpack_require__(277);
+	var _AboutReducer = __webpack_require__(275);
 
 	var _AboutReducer2 = _interopRequireDefault(_AboutReducer);
 
-	var _ProductsReducer = __webpack_require__(278);
+	var _ProductsReducer = __webpack_require__(276);
 
 	var _ProductsReducer2 = _interopRequireDefault(_ProductsReducer);
 
-	var _ProductReducer = __webpack_require__(279);
+	var _ProductReducer = __webpack_require__(277);
 
 	var _ProductReducer2 = _interopRequireDefault(_ProductReducer);
 
-	var _LoadingReducer = __webpack_require__(280);
+	var _LoadingReducer = __webpack_require__(278);
 
 	var _LoadingReducer2 = _interopRequireDefault(_LoadingReducer);
 
-	var _CartReducer = __webpack_require__(328);
+	var _CartReducer = __webpack_require__(279);
 
 	var _CartReducer2 = _interopRequireDefault(_CartReducer);
 
-	var _WishlistReducer = __webpack_require__(331);
+	var _WishlistReducer = __webpack_require__(280);
 
 	var _WishlistReducer2 = _interopRequireDefault(_WishlistReducer);
 
@@ -29404,7 +29123,7 @@
 	});
 
 /***/ },
-/* 277 */
+/* 275 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29441,7 +29160,7 @@
 	exports.default = AboutReducer;
 
 /***/ },
-/* 278 */
+/* 276 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29478,7 +29197,7 @@
 	exports.default = ProductsReducer;
 
 /***/ },
-/* 279 */
+/* 277 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29524,7 +29243,7 @@
 	exports.default = ProductReducer;
 
 /***/ },
-/* 280 */
+/* 278 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29558,6 +29277,102 @@
 	  }
 	};
 	exports.default = LoadingReducer;
+
+/***/ },
+/* 279 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	/**
+	 * Cart Reducer
+	 * @param  {Object} state
+	 * @param  {Object} action
+	 */
+	var CartReducer = function CartReducer() {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+	    loading: false,
+	    data: {}
+	  };
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case 'REQUEST_ADD_TO_CART':
+	      return Object.assign({}, state, { loading: true });
+	      break;
+	    case 'RECEIVE_ADD_TO_CART':
+	      return Object.assign({}, state, { loading: false });
+	      break;
+	    case 'REQUEST_CART':
+	      return Object.assign({}, state, { loading: true });
+	      break;
+	    case 'RECEIVE_CART':
+	      return Object.assign({}, state, {
+	        loading: false,
+	        data: action.payload
+	      });
+	      break;
+	    default:
+	      return state;
+	  }
+	};
+	exports.default = CartReducer;
+
+/***/ },
+/* 280 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	/**
+	 * Wishlist Reducer
+	 * @param  {Object} state
+	 * @param  {Object} action
+	 */
+	var WishlistReducer = function WishlistReducer() {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+	    loading: false,
+	    data: {}
+	  };
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case 'REQUEST_ADD_TO_WL':
+	      return Object.assign({}, state, { loading: true });
+	      break;
+	    case 'RECEIVE_ADD_TO_WL':
+	      return Object.assign({}, state, { loading: false });
+	      break;
+	    case 'REQUEST_WL':
+	      return Object.assign({}, state, { loading: true });
+	      break;
+	    case 'RECEIVE_WL':
+	      return Object.assign({}, state, {
+	        loading: false,
+	        data: action.payload
+	      });
+	      break;
+	    case 'REQUEST_REMOVE_FROM_WL':
+	      return Object.assign({}, state, {
+	        loading: true
+	      });
+	      break;
+	    case 'RECEIVE_REMOVE_FROM_WL':
+	      return Object.assign({}, state, {
+	        loading: false
+	      });
+	      break;
+	    default:
+	      return state;
+	  }
+	};
+	exports.default = WishlistReducer;
 
 /***/ },
 /* 281 */
@@ -31086,6 +30901,533 @@
 /* 307 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.fetchWishlist = undefined;
+
+	var _store = __webpack_require__(272);
+
+	var _store2 = _interopRequireDefault(_store);
+
+	var _axios = __webpack_require__(282);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * Create fetchAbout Action
+	 */
+	var requestWishlist = function requestWishlist() {
+	  return {
+	    type: 'REQUEST_WL'
+	  };
+	};
+
+	var receiveWishlist = function receiveWishlist(data) {
+	  return {
+	    type: 'RECEIVE_WL',
+	    payload: data === null ? {} : data
+	  };
+	};
+
+	var fetchWishlist = exports.fetchWishlist = function fetchWishlist() {
+	  return function (dispatch) {
+	    dispatch(requestWishlist());
+	    return _axios2.default.get('https://ecommerce-e4289.firebaseio.com/wishlist.json').then(function (response) {
+	      return response;
+	    }).then(function (json) {
+	      dispatch(receiveWishlist(json.data));
+	    });
+	  };
+	};
+
+/***/ },
+/* 308 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(180);
+
+	var _ProductItem = __webpack_require__(309);
+
+	var _ProductItem2 = _interopRequireDefault(_ProductItem);
+
+	var _fetchProducts = __webpack_require__(310);
+
+	var _addToCart2 = __webpack_require__(311);
+
+	var _addToWishlist2 = __webpack_require__(312);
+
+	var _removeFromWishlist2 = __webpack_require__(313);
+
+	var _reactHelmet = __webpack_require__(314);
+
+	var _reactHelmet2 = _interopRequireDefault(_reactHelmet);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	/**
+	 * Create ProductList Container
+	 */
+	var ProductList = function (_Component) {
+		_inherits(ProductList, _Component);
+
+		function ProductList() {
+			_classCallCheck(this, ProductList);
+
+			return _possibleConstructorReturn(this, (ProductList.__proto__ || Object.getPrototypeOf(ProductList)).apply(this, arguments));
+		}
+
+		_createClass(ProductList, [{
+			key: 'addToCart',
+			value: function addToCart(id) {
+				var dispatch = this.props.dispatch;
+
+				dispatch((0, _addToCart2.addToCart)(id));
+			}
+		}, {
+			key: 'addToWishlist',
+			value: function addToWishlist(id) {
+				var dispatch = this.props.dispatch;
+
+				dispatch((0, _addToWishlist2.addToWishlist)(id));
+			}
+		}, {
+			key: 'removeFromWishlist',
+			value: function removeFromWishlist(id) {
+				var dispatch = this.props.dispatch;
+
+				dispatch((0, _removeFromWishlist2.removeFromWishlist)(id));
+			}
+		}, {
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				var dispatch = this.props.dispatch;
+
+				dispatch((0, _fetchProducts.fetchProducts)());
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var _this2 = this;
+
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(_reactHelmet2.default, { title: 'Home' }),
+					_react2.default.createElement(
+						'section',
+						{ className: 'section' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'container' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'heading' },
+								_react2.default.createElement(
+									'h1',
+									{ className: 'title' },
+									'Latest Products'
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'columns is-multiline' },
+									this.props.products.map(function (product) {
+										return _react2.default.createElement(_ProductItem2.default, { key: product.id,
+											product: product,
+											addToCart: _this2.addToCart.bind(_this2),
+											addToWishlist: _this2.addToWishlist.bind(_this2),
+											removeFromWishlist: _this2.removeFromWishlist.bind(_this2),
+											wishlist: _this2.props.wishlist
+										});
+									})
+								)
+							)
+						)
+					)
+				);
+			}
+		}]);
+
+		return ProductList;
+	}(_react.Component);
+	/**
+	 * Insert Props Into Component
+	 */
+
+
+	var stateProps = function stateProps(state) {
+		return {
+			products: state.ProductsReducer.data,
+			wishlist: state.WishlistReducer.data
+		};
+	};
+	exports.default = (0, _reactRedux.connect)(stateProps)(ProductList);
+
+/***/ },
+/* 309 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(218);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	/**
+	 * Create ProductItem Component
+	 */
+	var ProductItem = function (_Component) {
+		_inherits(ProductItem, _Component);
+
+		function ProductItem() {
+			_classCallCheck(this, ProductItem);
+
+			return _possibleConstructorReturn(this, (ProductItem.__proto__ || Object.getPrototypeOf(ProductItem)).apply(this, arguments));
+		}
+
+		_createClass(ProductItem, [{
+			key: 'checkWishlist',
+			value: function checkWishlist(id) {
+				var _this2 = this;
+
+				var check = null;
+				Object.keys(this.props.wishlist).map(function (key) {
+					if (_this2.props.wishlist[key].id == id) check = true;
+				});
+				return check;
+			}
+		}, {
+			key: 'getKeyById',
+			value: function getKeyById(id) {
+				var _this3 = this;
+
+				var productKey = '';
+				Object.keys(this.props.wishlist).map(function (key) {
+					if (_this3.props.wishlist[key].id == id) productKey = key;
+				});
+				return productKey;
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var _this4 = this;
+
+				return _react2.default.createElement(
+					'div',
+					{ className: 'column is-one-quarter' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'card' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'card-image' },
+							_react2.default.createElement(
+								'figure',
+								{ className: 'image is-4by3' },
+								_react2.default.createElement(
+									_reactRouter.Link,
+									{ to: 'product/' + this.props.product.id },
+									_react2.default.createElement('img', { src: this.props.product.image })
+								)
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'card-content is-clearfix' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'media' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'media-content' },
+									_react2.default.createElement(
+										'h4',
+										{ className: 'title is-4' },
+										_react2.default.createElement(
+											_reactRouter.Link,
+											{ to: 'product/' + this.props.product.id },
+											this.props.product.title
+										)
+									)
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'content' },
+								_react2.default.createElement(
+									'h4',
+									null,
+									'Price: ',
+									this.props.product.price,
+									'$'
+								)
+							),
+							_react2.default.createElement(
+								'button',
+								{ className: 'button is-success is-pulled-left', onClick: function onClick() {
+										_this4.props.addToCart(_this4.props.product.id);
+									} },
+								_react2.default.createElement('i', { className: 'fa fa-shopping-cart', 'aria-hidden': 'true' })
+							),
+							_react2.default.createElement(
+								'button',
+								{ className: 'button is-pulled-right ' + (this.checkWishlist(this.props.product.id) ? 'is-info' : 'is-primary'),
+									onClick: function onClick(e) {
+										_this4.checkWishlist(_this4.props.product.id) ? _this4.props.removeFromWishlist(_this4.getKeyById(_this4.props.product.id)) : _this4.props.addToWishlist(_this4.props.product.id);
+									} },
+								_react2.default.createElement('i', { className: 'fa fa-heart', 'aria-hidden': 'true' })
+							)
+						)
+					)
+				);
+			}
+		}]);
+
+		return ProductItem;
+	}(_react.Component);
+
+	exports.default = ProductItem;
+
+/***/ },
+/* 310 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.fetchProducts = undefined;
+
+	var _store = __webpack_require__(272);
+
+	var _store2 = _interopRequireDefault(_store);
+
+	var _axios = __webpack_require__(282);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * Create fetchAbout Action
+	 */
+	var requestProducts = function requestProducts() {
+	  return {
+	    type: 'REQUEST_PRODUCTS'
+	  };
+	};
+
+	var receiveProducts = function receiveProducts(data) {
+	  return {
+	    type: 'RECEIVE_PRODUCTS',
+	    payload: data
+	  };
+	};
+
+	var fetchProducts = exports.fetchProducts = function fetchProducts() {
+	  return function (dispatch) {
+	    dispatch(requestProducts());
+	    return _axios2.default.get('https://ecommerce-e4289.firebaseio.com/products.json').then(function (response) {
+	      return response;
+	    }).then(function (json) {
+	      dispatch(receiveProducts(json.data));
+	    });
+	  };
+	};
+
+/***/ },
+/* 311 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.addToCart = undefined;
+
+	var _store = __webpack_require__(272);
+
+	var _store2 = _interopRequireDefault(_store);
+
+	var _axios = __webpack_require__(282);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	var _fetchCart = __webpack_require__(271);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * Create fetchAbout Action
+	 */
+	var requestAddToCart = function requestAddToCart() {
+	  return {
+	    type: 'REQUEST_ADD_TO_CART'
+	  };
+	};
+
+	var receiveAddToCart = function receiveAddToCart(data) {
+	  return {
+	    type: 'RECEIVE_ADD_TO_CART',
+	    payload: data
+	  };
+	};
+
+	var addToCart = exports.addToCart = function addToCart(id) {
+	  return function (dispatch) {
+	    dispatch(requestAddToCart());
+	    return _axios2.default.post('https://ecommerce-e4289.firebaseio.com/cart.json', { id: id, userId: 1 }).then(function (response) {
+	      return response;
+	    }).then(function (json) {
+	      dispatch(receiveAddToCart(json.data));
+	      dispatch((0, _fetchCart.fetchCart)());
+	    });
+	  };
+	};
+
+/***/ },
+/* 312 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.addToWishlist = undefined;
+
+	var _store = __webpack_require__(272);
+
+	var _store2 = _interopRequireDefault(_store);
+
+	var _axios = __webpack_require__(282);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	var _fetchWishlist = __webpack_require__(307);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * Create fetchAbout Action
+	 */
+	var requestAddToWishlist = function requestAddToWishlist() {
+	  return {
+	    type: 'REQUEST_ADD_TO_WL'
+	  };
+	};
+
+	var receiveAddToWishlist = function receiveAddToWishlist(data) {
+	  return {
+	    type: 'RECEIVE_ADD_TO_WL',
+	    payload: data
+	  };
+	};
+
+	var addToWishlist = exports.addToWishlist = function addToWishlist(id) {
+	  return function (dispatch) {
+	    dispatch(requestAddToWishlist());
+	    return _axios2.default.post('https://ecommerce-e4289.firebaseio.com/wishlist.json', { id: id, userId: 1 }).then(function (response) {
+	      return response;
+	    }).then(function (json) {
+	      dispatch(receiveAddToWishlist(json.data));
+	      dispatch((0, _fetchWishlist.fetchWishlist)());
+	    });
+	  };
+	};
+
+/***/ },
+/* 313 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.removeFromWishlist = undefined;
+
+	var _store = __webpack_require__(272);
+
+	var _store2 = _interopRequireDefault(_store);
+
+	var _axios = __webpack_require__(282);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	var _fetchWishlist = __webpack_require__(307);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var requestRemoveFromWishlist = function requestRemoveFromWishlist() {
+	  return {
+	    type: 'REQUEST_REMOVE_FROM_WL'
+	  };
+	};
+
+	var receiveRemoveFromWishlist = function receiveRemoveFromWishlist(data) {
+	  console.log(data);
+	  return {
+	    type: 'RECEIVE_REMOVE_FROM_WL'
+	  };
+	};
+
+	var removeFromWishlist = exports.removeFromWishlist = function removeFromWishlist(key) {
+	  return function (dispatch) {
+	    dispatch(requestRemoveFromWishlist());
+	    return _axios2.default.delete('https://ecommerce-e4289.firebaseio.com/wishlist/' + key + '.json').then(function (response) {
+	      return response;
+	    }).then(function (json) {
+	      dispatch(receiveRemoveFromWishlist(json.data));
+	      dispatch((0, _fetchWishlist.fetchWishlist)());
+	    });
+	  };
+	};
+
+/***/ },
+/* 314 */
+/***/ function(module, exports, __webpack_require__) {
+
 	exports.__esModule = true;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -31096,11 +31438,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactSideEffect = __webpack_require__(308);
+	var _reactSideEffect = __webpack_require__(315);
 
 	var _reactSideEffect2 = _interopRequireDefault(_reactSideEffect);
 
-	var _deepEqual = __webpack_require__(315);
+	var _deepEqual = __webpack_require__(322);
 
 	var _deepEqual2 = _interopRequireDefault(_deepEqual);
 
@@ -31108,7 +31450,7 @@
 
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 
-	var _HelmetConstants = __webpack_require__(318);
+	var _HelmetConstants = __webpack_require__(325);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -31621,7 +31963,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 308 */
+/* 315 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31638,11 +31980,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _exenv = __webpack_require__(309);
+	var _exenv = __webpack_require__(316);
 
 	var _exenv2 = _interopRequireDefault(_exenv);
 
-	var _shallowequal = __webpack_require__(310);
+	var _shallowequal = __webpack_require__(317);
 
 	var _shallowequal2 = _interopRequireDefault(_shallowequal);
 
@@ -31750,7 +32092,7 @@
 	};
 
 /***/ },
-/* 309 */
+/* 316 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -31796,12 +32138,12 @@
 
 
 /***/ },
-/* 310 */
+/* 317 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var fetchKeys = __webpack_require__(311);
+	var fetchKeys = __webpack_require__(318);
 
 	module.exports = function shallowEqual(objA, objB, compare, compareContext) {
 
@@ -31849,7 +32191,7 @@
 	};
 
 /***/ },
-/* 311 */
+/* 318 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -31860,9 +32202,9 @@
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var getNative = __webpack_require__(312),
-	    isArguments = __webpack_require__(313),
-	    isArray = __webpack_require__(314);
+	var getNative = __webpack_require__(319),
+	    isArguments = __webpack_require__(320),
+	    isArray = __webpack_require__(321);
 
 	/** Used to detect unsigned integer values. */
 	var reIsUint = /^\d+$/;
@@ -32091,7 +32433,7 @@
 
 
 /***/ },
-/* 312 */
+/* 319 */
 /***/ function(module, exports) {
 
 	/**
@@ -32234,7 +32576,7 @@
 
 
 /***/ },
-/* 313 */
+/* 320 */
 /***/ function(module, exports) {
 
 	/**
@@ -32469,7 +32811,7 @@
 
 
 /***/ },
-/* 314 */
+/* 321 */
 /***/ function(module, exports) {
 
 	/**
@@ -32655,12 +32997,12 @@
 
 
 /***/ },
-/* 315 */
+/* 322 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var pSlice = Array.prototype.slice;
-	var objectKeys = __webpack_require__(316);
-	var isArguments = __webpack_require__(317);
+	var objectKeys = __webpack_require__(323);
+	var isArguments = __webpack_require__(324);
 
 	var deepEqual = module.exports = function (actual, expected, opts) {
 	  if (!opts) opts = {};
@@ -32755,7 +33097,7 @@
 
 
 /***/ },
-/* 316 */
+/* 323 */
 /***/ function(module, exports) {
 
 	exports = module.exports = typeof Object.keys === 'function'
@@ -32770,7 +33112,7 @@
 
 
 /***/ },
-/* 317 */
+/* 324 */
 /***/ function(module, exports) {
 
 	var supportsArgumentsClass = (function(){
@@ -32796,7 +33138,7 @@
 
 
 /***/ },
-/* 318 */
+/* 325 */
 /***/ function(module, exports) {
 
 	exports.__esModule = true;
@@ -32832,7 +33174,7 @@
 	};
 
 /***/ },
-/* 319 */
+/* 326 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -32896,7 +33238,7 @@
 	exports.default = Footer;
 
 /***/ },
-/* 320 */
+/* 327 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32959,7 +33301,7 @@
 	exports.default = Loading;
 
 /***/ },
-/* 321 */
+/* 328 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32976,9 +33318,9 @@
 
 	var _reactRedux = __webpack_require__(180);
 
-	var _fetchAbout = __webpack_require__(322);
+	var _fetchAbout = __webpack_require__(329);
 
-	var _reactHelmet = __webpack_require__(307);
+	var _reactHelmet = __webpack_require__(314);
 
 	var _reactHelmet2 = _interopRequireDefault(_reactHelmet);
 
@@ -33058,7 +33400,7 @@
 	exports.default = (0, _reactRedux.connect)(stateProps)(About);
 
 /***/ },
-/* 322 */
+/* 329 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33068,7 +33410,7 @@
 	});
 	exports.fetchAbout = undefined;
 
-	var _store = __webpack_require__(274);
+	var _store = __webpack_require__(272);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -33106,7 +33448,7 @@
 	};
 
 /***/ },
-/* 323 */
+/* 330 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33123,7 +33465,7 @@
 
 	var _reactRedux = __webpack_require__(180);
 
-	var _reactHelmet = __webpack_require__(307);
+	var _reactHelmet = __webpack_require__(314);
 
 	var _reactHelmet2 = _interopRequireDefault(_reactHelmet);
 
@@ -33190,7 +33532,7 @@
 	exports.default = (0, _reactRedux.connect)(stateProps)(Cart);
 
 /***/ },
-/* 324 */
+/* 331 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33207,7 +33549,7 @@
 
 	var _reactRedux = __webpack_require__(180);
 
-	var _reactHelmet = __webpack_require__(307);
+	var _reactHelmet = __webpack_require__(314);
 
 	var _reactHelmet2 = _interopRequireDefault(_reactHelmet);
 
@@ -33274,7 +33616,7 @@
 	exports.default = (0, _reactRedux.connect)(stateProps)(Wishlist);
 
 /***/ },
-/* 325 */
+/* 332 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33291,11 +33633,11 @@
 
 	var _reactRedux = __webpack_require__(180);
 
-	var _reactHelmet = __webpack_require__(307);
+	var _reactHelmet = __webpack_require__(314);
 
 	var _reactHelmet2 = _interopRequireDefault(_reactHelmet);
 
-	var _fetchProduct = __webpack_require__(326);
+	var _fetchProduct = __webpack_require__(333);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33396,7 +33738,7 @@
 	exports.default = (0, _reactRedux.connect)(stateProps)(SingleProduct);
 
 /***/ },
-/* 326 */
+/* 333 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33406,7 +33748,7 @@
 	});
 	exports.fetchProduct = undefined;
 
-	var _store = __webpack_require__(274);
+	var _store = __webpack_require__(272);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -33440,349 +33782,6 @@
 	      return response;
 	    }).then(function (json) {
 	      dispatch(receiveProduct(json.data, id));
-	    });
-	  };
-	};
-
-/***/ },
-/* 327 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.addToCart = undefined;
-
-	var _store = __webpack_require__(274);
-
-	var _store2 = _interopRequireDefault(_store);
-
-	var _axios = __webpack_require__(282);
-
-	var _axios2 = _interopRequireDefault(_axios);
-
-	var _fetchCart = __webpack_require__(329);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	/**
-	 * Create fetchAbout Action
-	 */
-	var requestAddToCart = function requestAddToCart() {
-	  return {
-	    type: 'REQUEST_ADD_TO_CART'
-	  };
-	};
-
-	var receiveAddToCart = function receiveAddToCart(data) {
-	  return {
-	    type: 'RECEIVE_ADD_TO_CART',
-	    payload: data
-	  };
-	};
-
-	var addToCart = exports.addToCart = function addToCart(id) {
-	  return function (dispatch) {
-	    dispatch(requestAddToCart());
-	    return _axios2.default.post('https://ecommerce-e4289.firebaseio.com/cart.json', { id: id, userId: 1 }).then(function (response) {
-	      return response;
-	    }).then(function (json) {
-	      dispatch(receiveAddToCart(json.data));
-	      dispatch((0, _fetchCart.fetchCart)());
-	    });
-	  };
-	};
-
-/***/ },
-/* 328 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	/**
-	 * Cart Reducer
-	 * @param  {Object} state
-	 * @param  {Object} action
-	 */
-	var CartReducer = function CartReducer() {
-	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
-	    loading: false,
-	    data: {}
-	  };
-	  var action = arguments[1];
-
-	  switch (action.type) {
-	    case 'REQUEST_ADD_TO_CART':
-	      return Object.assign({}, state, { loading: true });
-	      break;
-	    case 'RECEIVE_ADD_TO_CART':
-	      return Object.assign({}, state, { loading: false });
-	      break;
-	    case 'REQUEST_CART':
-	      return Object.assign({}, state, { loading: true });
-	      break;
-	    case 'RECEIVE_CART':
-	      return Object.assign({}, state, {
-	        loading: false,
-	        data: action.payload
-	      });
-	      break;
-	    default:
-	      return state;
-	  }
-	};
-	exports.default = CartReducer;
-
-/***/ },
-/* 329 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.fetchCart = undefined;
-
-	var _store = __webpack_require__(274);
-
-	var _store2 = _interopRequireDefault(_store);
-
-	var _axios = __webpack_require__(282);
-
-	var _axios2 = _interopRequireDefault(_axios);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	/**
-	 * Create fetchAbout Action
-	 */
-	var requestCart = function requestCart() {
-	  return {
-	    type: 'REQUEST_CART'
-	  };
-	};
-
-	var receiveCart = function receiveCart(data) {
-	  return {
-	    type: 'RECEIVE_CART',
-	    payload: data
-	  };
-	};
-
-	var fetchCart = exports.fetchCart = function fetchCart() {
-	  return function (dispatch) {
-	    dispatch(requestCart());
-	    return _axios2.default.get('https://ecommerce-e4289.firebaseio.com/cart.json').then(function (response) {
-	      return response;
-	    }).then(function (json) {
-	      dispatch(receiveCart(json.data));
-	    });
-	  };
-	};
-
-/***/ },
-/* 330 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.addToWishlist = undefined;
-
-	var _store = __webpack_require__(274);
-
-	var _store2 = _interopRequireDefault(_store);
-
-	var _axios = __webpack_require__(282);
-
-	var _axios2 = _interopRequireDefault(_axios);
-
-	var _fetchWishlist = __webpack_require__(332);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	/**
-	 * Create fetchAbout Action
-	 */
-	var requestAddToWishlist = function requestAddToWishlist() {
-	  return {
-	    type: 'REQUEST_ADD_TO_WL'
-	  };
-	};
-
-	var receiveAddToWishlist = function receiveAddToWishlist(data) {
-	  return {
-	    type: 'RECEIVE_ADD_TO_WL',
-	    payload: data
-	  };
-	};
-
-	var addToWishlist = exports.addToWishlist = function addToWishlist(id) {
-	  return function (dispatch) {
-	    dispatch(requestAddToWishlist());
-	    return _axios2.default.post('https://ecommerce-e4289.firebaseio.com/wishlist.json', { id: id, userId: 1 }).then(function (response) {
-	      return response;
-	    }).then(function (json) {
-	      dispatch(receiveAddToWishlist(json.data));
-	      dispatch((0, _fetchWishlist.fetchWishlist)());
-	    });
-	  };
-	};
-
-/***/ },
-/* 331 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	/**
-	 * Wishlist Reducer
-	 * @param  {Object} state
-	 * @param  {Object} action
-	 */
-	var WishlistReducer = function WishlistReducer() {
-	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
-	    loading: false,
-	    data: {}
-	  };
-	  var action = arguments[1];
-
-	  switch (action.type) {
-	    case 'REQUEST_ADD_TO_WL':
-	      return Object.assign({}, state, { loading: true });
-	      break;
-	    case 'RECEIVE_ADD_TO_WL':
-	      return Object.assign({}, state, { loading: false });
-	      break;
-	    case 'REQUEST_WL':
-	      return Object.assign({}, state, { loading: true });
-	      break;
-	    case 'RECEIVE_WL':
-	      return Object.assign({}, state, {
-	        loading: false,
-	        data: action.payload
-	      });
-	      break;
-	    case 'REQUEST_REMOVE_FROM_WL':
-	      return Object.assign({}, state, {
-	        loading: true
-	      });
-	      break;
-	    case 'RECEIVE_REMOVE_FROM_WL':
-	      return Object.assign({}, state, {
-	        loading: false,
-	        data: action.payload
-	      });
-	      break;
-	    default:
-	      return state;
-	  }
-	};
-	exports.default = WishlistReducer;
-
-/***/ },
-/* 332 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.fetchWishlist = undefined;
-
-	var _store = __webpack_require__(274);
-
-	var _store2 = _interopRequireDefault(_store);
-
-	var _axios = __webpack_require__(282);
-
-	var _axios2 = _interopRequireDefault(_axios);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	/**
-	 * Create fetchAbout Action
-	 */
-	var requestWishlist = function requestWishlist() {
-	  return {
-	    type: 'REQUEST_WL'
-	  };
-	};
-
-	var receiveWishlist = function receiveWishlist(data) {
-	  return {
-	    type: 'RECEIVE_WL',
-	    payload: data === null ? {} : data
-	  };
-	};
-
-	var fetchWishlist = exports.fetchWishlist = function fetchWishlist() {
-	  return function (dispatch) {
-	    dispatch(requestWishlist());
-	    return _axios2.default.get('https://ecommerce-e4289.firebaseio.com/wishlist.json').then(function (response) {
-	      return response;
-	    }).then(function (json) {
-	      dispatch(receiveWishlist(json.data));
-	    });
-	  };
-	};
-
-/***/ },
-/* 333 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.removeFromWishlist = undefined;
-
-	var _store = __webpack_require__(274);
-
-	var _store2 = _interopRequireDefault(_store);
-
-	var _axios = __webpack_require__(282);
-
-	var _axios2 = _interopRequireDefault(_axios);
-
-	var _fetchWishlist = __webpack_require__(332);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var requestRemoveFromWishlist = function requestRemoveFromWishlist() {
-	  return {
-	    type: 'REQUEST_REMOVE_FROM_WL'
-	  };
-	};
-
-	var receiveRemoveFromWishlist = function receiveRemoveFromWishlist(data) {
-	  return {
-	    type: 'RECEIVE_REMOVE_FROM_WL',
-	    payload: data === null ? {} : data
-	  };
-	};
-
-	var removeFromWishlist = exports.removeFromWishlist = function removeFromWishlist(key) {
-	  return function (dispatch) {
-	    dispatch(requestRemoveFromWishlist());
-	    return _axios2.default.delete('https://ecommerce-e4289.firebaseio.com/wishlist/' + key + '.json').then(function (response) {
-	      return response;
-	    }).then(function (json) {
-	      dispatch(receiveRemoveFromWishlist(json.data));
-	      dispatch((0, _fetchWishlist.fetchWishlist)());
 	    });
 	  };
 	};
