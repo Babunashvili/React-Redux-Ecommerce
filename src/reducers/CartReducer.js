@@ -23,6 +23,16 @@ const CartReducer = (state = {
         data: action.payload
       })
       break
+      case 'REQUEST_REMOVE_FROM_CART':
+      return Object.assign({}, state, {
+        loading: true,
+      })
+      break
+      case 'RECEIVE_REMOVE_FROM_CART':
+      return Object.assign({}, state, {
+        loading: false
+      })
+      break
     default:
       return state
   }

@@ -4,7 +4,7 @@ import {fetchWishlist} from './fetchWishlist'
 
 const requestRemoveFromWishlist = () => {
   return {
-    type: 'REQUEST_REMOVE_FROM_WL',
+    type: 'REQUEST_REMOVE_FROM_WL'
   }
 }
 

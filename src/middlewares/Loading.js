@@ -5,9 +5,9 @@ export const Loading = store => next => action => {
   let isFetching = null
 
    Object.keys(store.getState()).map((reducer) => {
-         if('fetching' in store.getState()[reducer]){
-            isFetching = isFetching ||  store.getState()[reducer]['fetching']
-         } 
+    if('fetching' in store.getState()[reducer]){
+      isFetching = isFetching ||  store.getState()[reducer]['fetching']
+    } 
   })
 
   if(isFetching) {

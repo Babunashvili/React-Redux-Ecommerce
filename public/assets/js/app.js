@@ -58,15 +58,15 @@
 
 	var _App2 = _interopRequireDefault(_App);
 
-	var _About = __webpack_require__(328);
+	var _About = __webpack_require__(329);
 
 	var _About2 = _interopRequireDefault(_About);
 
-	var _Cart = __webpack_require__(330);
+	var _Cart = __webpack_require__(331);
 
 	var _Cart2 = _interopRequireDefault(_Cart);
 
-	var _Wishlist = __webpack_require__(331);
+	var _Wishlist = __webpack_require__(332);
 
 	var _Wishlist2 = _interopRequireDefault(_Wishlist);
 
@@ -74,7 +74,7 @@
 
 	var _ProductList2 = _interopRequireDefault(_ProductList);
 
-	var _SingleProduct = __webpack_require__(332);
+	var _SingleProduct = __webpack_require__(333);
 
 	var _SingleProduct2 = _interopRequireDefault(_SingleProduct);
 
@@ -21569,15 +21569,15 @@
 
 	var _ProductList2 = _interopRequireDefault(_ProductList);
 
-	var _Footer = __webpack_require__(326);
+	var _Footer = __webpack_require__(327);
 
 	var _Footer2 = _interopRequireDefault(_Footer);
 
-	var _reactHelmet = __webpack_require__(314);
+	var _reactHelmet = __webpack_require__(315);
 
 	var _reactHelmet2 = _interopRequireDefault(_reactHelmet);
 
-	var _Laoding = __webpack_require__(327);
+	var _Laoding = __webpack_require__(328);
 
 	var _Laoding2 = _interopRequireDefault(_Laoding);
 
@@ -28994,7 +28994,7 @@
 	var receiveCart = function receiveCart(data) {
 	  return {
 	    type: 'RECEIVE_CART',
-	    payload: data
+	    payload: data === null ? {} : data
 	  };
 	};
 
@@ -29313,6 +29313,16 @@
 	      return Object.assign({}, state, {
 	        loading: false,
 	        data: action.payload
+	      });
+	      break;
+	    case 'REQUEST_REMOVE_FROM_CART':
+	      return Object.assign({}, state, {
+	        loading: true
+	      });
+	      break;
+	    case 'RECEIVE_REMOVE_FROM_CART':
+	      return Object.assign({}, state, {
+	        loading: false
 	      });
 	      break;
 	    default:
@@ -30975,7 +30985,9 @@
 
 	var _removeFromWishlist2 = __webpack_require__(313);
 
-	var _reactHelmet = __webpack_require__(314);
+	var _removeFromCart2 = __webpack_require__(314);
+
+	var _reactHelmet = __webpack_require__(315);
 
 	var _reactHelmet2 = _interopRequireDefault(_reactHelmet);
 
@@ -31021,6 +31033,13 @@
 				dispatch((0, _removeFromWishlist2.removeFromWishlist)(id));
 			}
 		}, {
+			key: 'removeFromCart',
+			value: function removeFromCart(id) {
+				var dispatch = this.props.dispatch;
+
+				dispatch((0, _removeFromCart2.removeFromCart)(id));
+			}
+		}, {
 			key: 'componentDidMount',
 			value: function componentDidMount() {
 				var dispatch = this.props.dispatch;
@@ -31059,7 +31078,9 @@
 											addToCart: _this2.addToCart.bind(_this2),
 											addToWishlist: _this2.addToWishlist.bind(_this2),
 											removeFromWishlist: _this2.removeFromWishlist.bind(_this2),
-											wishlist: _this2.props.wishlist
+											removeFromCart: _this2.removeFromCart.bind(_this2),
+											wishlist: _this2.props.wishlist,
+											cart: _this2.props.cart
 										});
 									})
 								)
@@ -31080,7 +31101,8 @@
 	var stateProps = function stateProps(state) {
 		return {
 			products: state.ProductsReducer.data,
-			wishlist: state.WishlistReducer.data
+			wishlist: state.WishlistReducer.data,
+			cart: state.CartReducer.data
 		};
 	};
 	exports.default = (0, _reactRedux.connect)(stateProps)(ProductList);
@@ -31135,20 +31157,42 @@
 				return check;
 			}
 		}, {
-			key: 'getKeyById',
-			value: function getKeyById(id) {
+			key: 'checkCart',
+			value: function checkCart(id) {
 				var _this3 = this;
+
+				var check = null;
+				Object.keys(this.props.cart).map(function (key) {
+					if (_this3.props.cart[key].id == id) check = true;
+				});
+				return check;
+			}
+		}, {
+			key: 'getKeyByIdForWl',
+			value: function getKeyByIdForWl(id) {
+				var _this4 = this;
 
 				var productKey = '';
 				Object.keys(this.props.wishlist).map(function (key) {
-					if (_this3.props.wishlist[key].id == id) productKey = key;
+					if (_this4.props.wishlist[key].id == id) productKey = key;
+				});
+				return productKey;
+			}
+		}, {
+			key: 'getKeyByIdForCart',
+			value: function getKeyByIdForCart(id) {
+				var _this5 = this;
+
+				var productKey = '';
+				Object.keys(this.props.cart).map(function (key) {
+					if (_this5.props.cart[key].id == id) productKey = key;
 				});
 				return productKey;
 			}
 		}, {
 			key: 'render',
 			value: function render() {
-				var _this4 = this;
+				var _this6 = this;
 
 				return _react2.default.createElement(
 					'div',
@@ -31202,16 +31246,16 @@
 							),
 							_react2.default.createElement(
 								'button',
-								{ className: 'button is-success is-pulled-left', onClick: function onClick() {
-										_this4.props.addToCart(_this4.props.product.id);
+								{ className: 'button is-pulled-left ' + (this.checkCart(this.props.product.id) ? 'is-info' : 'is-success'), onClick: function onClick() {
+										_this6.checkCart(_this6.props.product.id) ? _this6.props.removeFromCart(_this6.getKeyByIdForCart(_this6.props.product.id)) : _this6.props.addToCart(_this6.props.product.id);
 									} },
 								_react2.default.createElement('i', { className: 'fa fa-shopping-cart', 'aria-hidden': 'true' })
 							),
 							_react2.default.createElement(
 								'button',
 								{ className: 'button is-pulled-right ' + (this.checkWishlist(this.props.product.id) ? 'is-info' : 'is-primary'),
-									onClick: function onClick(e) {
-										_this4.checkWishlist(_this4.props.product.id) ? _this4.props.removeFromWishlist(_this4.getKeyById(_this4.props.product.id)) : _this4.props.addToWishlist(_this4.props.product.id);
+									onClick: function onClick() {
+										_this6.checkWishlist(_this6.props.product.id) ? _this6.props.removeFromWishlist(_this6.getKeyByIdForWl(_this6.props.product.id)) : _this6.props.addToWishlist(_this6.props.product.id);
 									} },
 								_react2.default.createElement('i', { className: 'fa fa-heart', 'aria-hidden': 'true' })
 							)
@@ -31427,6 +31471,53 @@
 /* 314 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.removeFromCart = undefined;
+
+	var _store = __webpack_require__(272);
+
+	var _store2 = _interopRequireDefault(_store);
+
+	var _axios = __webpack_require__(282);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	var _fetchCart = __webpack_require__(271);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var requestRemoveFromCart = function requestRemoveFromCart() {
+	  return {
+	    type: 'REQUEST_REMOVE_FROM_CART'
+	  };
+	};
+
+	var receiveRemoveFromCart = function receiveRemoveFromCart(data) {
+	  return {
+	    type: 'RECEIVE_REMOVE_FROM_CART'
+	  };
+	};
+
+	var removeFromCart = exports.removeFromCart = function removeFromCart(key) {
+	  return function (dispatch) {
+	    dispatch(requestRemoveFromCart());
+	    return _axios2.default.delete('https://ecommerce-e4289.firebaseio.com/cart/' + key + '.json').then(function (response) {
+	      return response;
+	    }).then(function (json) {
+	      dispatch(receiveRemoveFromCart(json.data));
+	      dispatch((0, _fetchCart.fetchCart)());
+	    });
+	  };
+	};
+
+/***/ },
+/* 315 */
+/***/ function(module, exports, __webpack_require__) {
+
 	exports.__esModule = true;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -31437,11 +31528,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactSideEffect = __webpack_require__(315);
+	var _reactSideEffect = __webpack_require__(316);
 
 	var _reactSideEffect2 = _interopRequireDefault(_reactSideEffect);
 
-	var _deepEqual = __webpack_require__(322);
+	var _deepEqual = __webpack_require__(323);
 
 	var _deepEqual2 = _interopRequireDefault(_deepEqual);
 
@@ -31449,7 +31540,7 @@
 
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 
-	var _HelmetConstants = __webpack_require__(325);
+	var _HelmetConstants = __webpack_require__(326);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -31962,7 +32053,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 315 */
+/* 316 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31979,11 +32070,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _exenv = __webpack_require__(316);
+	var _exenv = __webpack_require__(317);
 
 	var _exenv2 = _interopRequireDefault(_exenv);
 
-	var _shallowequal = __webpack_require__(317);
+	var _shallowequal = __webpack_require__(318);
 
 	var _shallowequal2 = _interopRequireDefault(_shallowequal);
 
@@ -32091,7 +32182,7 @@
 	};
 
 /***/ },
-/* 316 */
+/* 317 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -32137,12 +32228,12 @@
 
 
 /***/ },
-/* 317 */
+/* 318 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var fetchKeys = __webpack_require__(318);
+	var fetchKeys = __webpack_require__(319);
 
 	module.exports = function shallowEqual(objA, objB, compare, compareContext) {
 
@@ -32190,7 +32281,7 @@
 	};
 
 /***/ },
-/* 318 */
+/* 319 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -32201,9 +32292,9 @@
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var getNative = __webpack_require__(319),
-	    isArguments = __webpack_require__(320),
-	    isArray = __webpack_require__(321);
+	var getNative = __webpack_require__(320),
+	    isArguments = __webpack_require__(321),
+	    isArray = __webpack_require__(322);
 
 	/** Used to detect unsigned integer values. */
 	var reIsUint = /^\d+$/;
@@ -32432,7 +32523,7 @@
 
 
 /***/ },
-/* 319 */
+/* 320 */
 /***/ function(module, exports) {
 
 	/**
@@ -32575,7 +32666,7 @@
 
 
 /***/ },
-/* 320 */
+/* 321 */
 /***/ function(module, exports) {
 
 	/**
@@ -32810,7 +32901,7 @@
 
 
 /***/ },
-/* 321 */
+/* 322 */
 /***/ function(module, exports) {
 
 	/**
@@ -32996,12 +33087,12 @@
 
 
 /***/ },
-/* 322 */
+/* 323 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var pSlice = Array.prototype.slice;
-	var objectKeys = __webpack_require__(323);
-	var isArguments = __webpack_require__(324);
+	var objectKeys = __webpack_require__(324);
+	var isArguments = __webpack_require__(325);
 
 	var deepEqual = module.exports = function (actual, expected, opts) {
 	  if (!opts) opts = {};
@@ -33096,7 +33187,7 @@
 
 
 /***/ },
-/* 323 */
+/* 324 */
 /***/ function(module, exports) {
 
 	exports = module.exports = typeof Object.keys === 'function'
@@ -33111,7 +33202,7 @@
 
 
 /***/ },
-/* 324 */
+/* 325 */
 /***/ function(module, exports) {
 
 	var supportsArgumentsClass = (function(){
@@ -33137,7 +33228,7 @@
 
 
 /***/ },
-/* 325 */
+/* 326 */
 /***/ function(module, exports) {
 
 	exports.__esModule = true;
@@ -33173,7 +33264,7 @@
 	};
 
 /***/ },
-/* 326 */
+/* 327 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -33237,7 +33328,7 @@
 	exports.default = Footer;
 
 /***/ },
-/* 327 */
+/* 328 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33300,7 +33391,7 @@
 	exports.default = Loading;
 
 /***/ },
-/* 328 */
+/* 329 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33317,9 +33408,9 @@
 
 	var _reactRedux = __webpack_require__(180);
 
-	var _fetchAbout = __webpack_require__(329);
+	var _fetchAbout = __webpack_require__(330);
 
-	var _reactHelmet = __webpack_require__(314);
+	var _reactHelmet = __webpack_require__(315);
 
 	var _reactHelmet2 = _interopRequireDefault(_reactHelmet);
 
@@ -33399,7 +33490,7 @@
 	exports.default = (0, _reactRedux.connect)(stateProps)(About);
 
 /***/ },
-/* 329 */
+/* 330 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33447,13 +33538,13 @@
 	};
 
 /***/ },
-/* 330 */
+/* 331 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+		value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -33464,9 +33555,15 @@
 
 	var _reactRedux = __webpack_require__(180);
 
-	var _reactHelmet = __webpack_require__(314);
+	var _reactHelmet = __webpack_require__(315);
 
 	var _reactHelmet2 = _interopRequireDefault(_reactHelmet);
+
+	var _fetchProducts = __webpack_require__(310);
+
+	var _fetchCart = __webpack_require__(271);
+
+	var _reactRouter = __webpack_require__(218);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33480,44 +33577,127 @@
 	 * Create Cart Container
 	 */
 	var Cart = function (_Component) {
-	  _inherits(Cart, _Component);
+		_inherits(Cart, _Component);
 
-	  function Cart() {
-	    _classCallCheck(this, Cart);
+		function Cart() {
+			_classCallCheck(this, Cart);
 
-	    return _possibleConstructorReturn(this, (Cart.__proto__ || Object.getPrototypeOf(Cart)).apply(this, arguments));
-	  }
+			return _possibleConstructorReturn(this, (Cart.__proto__ || Object.getPrototypeOf(Cart)).apply(this, arguments));
+		}
 
-	  _createClass(Cart, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(_reactHelmet2.default, { title: 'My Cart' }),
-	        _react2.default.createElement(
-	          'section',
-	          { className: 'section' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'container' },
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'heading' },
-	              _react2.default.createElement(
-	                'h1',
-	                { className: 'title' },
-	                'My Cart'
-	              )
-	            ),
-	            'cart'
-	          )
-	        )
-	      );
-	    }
-	  }]);
+		_createClass(Cart, [{
+			key: 'getItemById',
+			value: function getItemById(id) {
+				var obj = {};
+				this.props.products.map(function (item) {
+					if (item.id == id) obj = item;
+				});
+				return obj;
+			}
+		}, {
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				var dispatch = this.props.dispatch;
 
-	  return Cart;
+				dispatch((0, _fetchProducts.fetchProducts)());
+				dispatch((0, _fetchCart.fetchCart)());
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var _this2 = this;
+
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(_reactHelmet2.default, { title: 'My Cart' }),
+					_react2.default.createElement(
+						'section',
+						{ className: 'section' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'container' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'heading' },
+								_react2.default.createElement(
+									'h1',
+									{ className: 'title' },
+									'My Cart'
+								)
+							),
+							_react2.default.createElement(
+								'table',
+								{ className: 'table' },
+								_react2.default.createElement(
+									'thead',
+									null,
+									_react2.default.createElement(
+										'tr',
+										null,
+										_react2.default.createElement(
+											'th',
+											null,
+											_react2.default.createElement(
+												'abbr',
+												null,
+												'ID'
+											)
+										),
+										_react2.default.createElement(
+											'th',
+											null,
+											_react2.default.createElement(
+												'abbr',
+												null,
+												'Title'
+											)
+										),
+										_react2.default.createElement(
+											'th',
+											null,
+											'Price'
+										)
+									)
+								),
+								_react2.default.createElement(
+									'tbody',
+									null,
+									Object.keys(this.props.cart).map(function (key) {
+										return _react2.default.createElement(
+											'tr',
+											{ key: key },
+											_react2.default.createElement(
+												'td',
+												null,
+												_this2.getItemById(_this2.props.cart[key].id).id
+											),
+											_react2.default.createElement(
+												'td',
+												null,
+												_react2.default.createElement(
+													_reactRouter.Link,
+													{ to: 'product/' + _this2.props.cart[key].id },
+													_this2.getItemById(_this2.props.cart[key].id).title
+												)
+											),
+											_react2.default.createElement(
+												'td',
+												null,
+												_this2.getItemById(_this2.props.cart[key].id).price,
+												'$'
+											)
+										);
+									})
+								)
+							)
+						)
+					)
+				);
+			}
+		}]);
+
+		return Cart;
 	}(_react.Component);
 	/**
 	 * Insert Props Into Component
@@ -33525,19 +33705,22 @@
 
 
 	var stateProps = function stateProps(state) {
-	  return {};
+		return {
+			cart: state.CartReducer.data,
+			products: state.ProductsReducer.data
+		};
 	};
 
 	exports.default = (0, _reactRedux.connect)(stateProps)(Cart);
 
 /***/ },
-/* 331 */
+/* 332 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+		value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -33548,9 +33731,15 @@
 
 	var _reactRedux = __webpack_require__(180);
 
-	var _reactHelmet = __webpack_require__(314);
+	var _reactHelmet = __webpack_require__(315);
 
 	var _reactHelmet2 = _interopRequireDefault(_reactHelmet);
+
+	var _fetchWishlist = __webpack_require__(307);
+
+	var _fetchProducts = __webpack_require__(310);
+
+	var _reactRouter = __webpack_require__(218);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33564,44 +33753,127 @@
 	 * Create Wishlist Container
 	 */
 	var Wishlist = function (_Component) {
-	  _inherits(Wishlist, _Component);
+		_inherits(Wishlist, _Component);
 
-	  function Wishlist() {
-	    _classCallCheck(this, Wishlist);
+		function Wishlist() {
+			_classCallCheck(this, Wishlist);
 
-	    return _possibleConstructorReturn(this, (Wishlist.__proto__ || Object.getPrototypeOf(Wishlist)).apply(this, arguments));
-	  }
+			return _possibleConstructorReturn(this, (Wishlist.__proto__ || Object.getPrototypeOf(Wishlist)).apply(this, arguments));
+		}
 
-	  _createClass(Wishlist, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(_reactHelmet2.default, { title: 'My Wishlist' }),
-	        _react2.default.createElement(
-	          'section',
-	          { className: 'section' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'container' },
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'heading' },
-	              _react2.default.createElement(
-	                'h1',
-	                { className: 'title' },
-	                'My Wishlist'
-	              )
-	            ),
-	            'Wishlist...'
-	          )
-	        )
-	      );
-	    }
-	  }]);
+		_createClass(Wishlist, [{
+			key: 'getItemById',
+			value: function getItemById(id) {
+				var obj = {};
+				this.props.products.map(function (item) {
+					if (item.id == id) obj = item;
+				});
+				return obj;
+			}
+		}, {
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				var dispatch = this.props.dispatch;
 
-	  return Wishlist;
+				dispatch((0, _fetchProducts.fetchProducts)());
+				dispatch((0, _fetchWishlist.fetchWishlist)());
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var _this2 = this;
+
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(_reactHelmet2.default, { title: 'My Wishlist' }),
+					_react2.default.createElement(
+						'section',
+						{ className: 'section' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'container' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'heading' },
+								_react2.default.createElement(
+									'h1',
+									{ className: 'title' },
+									'My Wishlist'
+								)
+							),
+							_react2.default.createElement(
+								'table',
+								{ className: 'table' },
+								_react2.default.createElement(
+									'thead',
+									null,
+									_react2.default.createElement(
+										'tr',
+										null,
+										_react2.default.createElement(
+											'th',
+											null,
+											_react2.default.createElement(
+												'abbr',
+												null,
+												'ID'
+											)
+										),
+										_react2.default.createElement(
+											'th',
+											null,
+											_react2.default.createElement(
+												'abbr',
+												null,
+												'Title'
+											)
+										),
+										_react2.default.createElement(
+											'th',
+											null,
+											'Price'
+										)
+									)
+								),
+								_react2.default.createElement(
+									'tbody',
+									null,
+									Object.keys(this.props.wishlist).map(function (key) {
+										return _react2.default.createElement(
+											'tr',
+											{ key: key },
+											_react2.default.createElement(
+												'td',
+												null,
+												_this2.getItemById(_this2.props.wishlist[key].id).id
+											),
+											_react2.default.createElement(
+												'td',
+												null,
+												_react2.default.createElement(
+													_reactRouter.Link,
+													{ to: 'product/' + _this2.props.wishlist[key].id },
+													_this2.getItemById(_this2.props.wishlist[key].id).title
+												)
+											),
+											_react2.default.createElement(
+												'td',
+												null,
+												_this2.getItemById(_this2.props.wishlist[key].id).price,
+												'$'
+											)
+										);
+									})
+								)
+							)
+						)
+					)
+				);
+			}
+		}]);
+
+		return Wishlist;
 	}(_react.Component);
 	/**
 	 * Insert Props Into Component
@@ -33609,13 +33881,16 @@
 
 
 	var stateProps = function stateProps(state) {
-	  return {};
+		return {
+			wishlist: state.WishlistReducer.data,
+			products: state.ProductsReducer.data
+		};
 	};
 
 	exports.default = (0, _reactRedux.connect)(stateProps)(Wishlist);
 
 /***/ },
-/* 332 */
+/* 333 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33632,11 +33907,11 @@
 
 	var _reactRedux = __webpack_require__(180);
 
-	var _reactHelmet = __webpack_require__(314);
+	var _reactHelmet = __webpack_require__(315);
 
 	var _reactHelmet2 = _interopRequireDefault(_reactHelmet);
 
-	var _fetchProduct = __webpack_require__(333);
+	var _fetchProduct = __webpack_require__(334);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33737,7 +34012,7 @@
 	exports.default = (0, _reactRedux.connect)(stateProps)(SingleProduct);
 
 /***/ },
-/* 333 */
+/* 334 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

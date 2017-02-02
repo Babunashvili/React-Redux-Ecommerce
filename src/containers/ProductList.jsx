@@ -5,6 +5,7 @@ import { fetchProducts } from '../actions/fetchProducts'
 import { addToCart } from '../actions/addToCart'
 import { addToWishlist } from '../actions/addToWishlist'
 import { removeFromWishlist } from '../actions/removeFromWishlist'
+import { removeFromCart } from '../actions/removeFromCart'
 import Helmet from "react-helmet"
 /**
  * Create ProductList Container
@@ -22,6 +23,10 @@ import Helmet from "react-helmet"
 	removeFromWishlist(id){
 		const { dispatch } = this.props
 		dispatch(removeFromWishlist(id))
+	}
+	removeFromCart(id){
+		const { dispatch } = this.props
+		dispatch(removeFromCart(id))
 	}
     componentDidMount() {
         const { dispatch } = this.props
@@ -42,7 +47,9 @@ import Helmet from "react-helmet"
 																 addToCart={ this.addToCart.bind(this) } 
 																 addToWishlist={ this.addToWishlist.bind(this) }
 																 removeFromWishlist={ this.removeFromWishlist.bind(this) }
+																 removeFromCart={ this.removeFromCart.bind(this) }
 																 wishlist={this.props.wishlist}
+																 cart={this.props.cart}
 																 />
 												})}
 											</div>
@@ -59,7 +66,8 @@ import Helmet from "react-helmet"
  const stateProps = (state) => {
  	return { 
        products:state.ProductsReducer.data,
-       wishlist:state.WishlistReducer.data
+       wishlist:state.WishlistReducer.data,
+       cart:state.CartReducer.data
  	}
  }
  export default connect(stateProps)(ProductList)

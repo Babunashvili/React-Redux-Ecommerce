@@ -12,7 +12,7 @@ const requestCart = () => {
 const receiveCart = (data) => {
    return {
     type: 'RECEIVE_CART',
-    payload:data,
+		payload:(data === null) ? {} : data
   }
 }
 
