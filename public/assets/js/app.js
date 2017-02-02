@@ -31406,7 +31406,6 @@
 	};
 
 	var receiveRemoveFromWishlist = function receiveRemoveFromWishlist(data) {
-	  console.log(data);
 	  return {
 	    type: 'RECEIVE_REMOVE_FROM_WL'
 	  };

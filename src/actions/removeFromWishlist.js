@@ -9,7 +9,6 @@ const requestRemoveFromWishlist = () => {
 }
 
 const receiveRemoveFromWishlist = (data) => {
-	console.log(data)
    return {
     type: 'RECEIVE_REMOVE_FROM_WL'
   }
