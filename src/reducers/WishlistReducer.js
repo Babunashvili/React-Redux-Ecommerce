@@ -25,13 +25,12 @@ const WishlistReducer = (state = {
       break
       case 'REQUEST_REMOVE_FROM_WL':
       return Object.assign({}, state, {
-        loading: true
+        loading: true,
       })
       break
       case 'RECEIVE_REMOVE_FROM_WL':
       return Object.assign({}, state, {
-        loading: false,
-        data: action.payload
+        loading: false
       })
       break
     default:
