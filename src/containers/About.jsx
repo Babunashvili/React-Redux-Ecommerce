@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchAbout } from '../actions/fetchAbout'
+import Helmet from "react-helmet"
 /**
  * Create About Container
  */
@@ -11,14 +12,17 @@ import { fetchAbout } from '../actions/fetchAbout'
 	}
  	render(){
  		return (
- 			<section className="section">
- 			<div className="container">
- 			<div className="heading">
- 			<h1 className="title">{this.props.about.title}</h1>
- 			</div>
- 			<p>{this.props.about.content}</p>
- 			</div>
- 			</section>
+			 <div>
+			    <Helmet  title="About Us" />
+				<section className="section">
+				<div className="container">
+					<div className="heading">
+						<h1 className="title">{this.props.about.title}</h1>
+					</div>
+					<p>{this.props.about.content}</p>
+					</div>
+				</section>
+			 </div>
  			)
     }
 }
@@ -27,7 +31,7 @@ import { fetchAbout } from '../actions/fetchAbout'
  */
  const stateProps = (state) => {
  	return { 
-       about:state.AboutReducer
+       about:state.AboutReducer.data
  	}
  }
 
