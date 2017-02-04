@@ -6,35 +6,35 @@ import { fetchWishlist } from '../actions/fetchWishlist'
 /**
  * Create NavBar Container
  */
- class NavBar extends Component{
- 	constructor(props){
- 		super(props)
- 		this.state ={
- 			showBar: false
- 		}
- 	}
-	 componentWillMount(){
-		 const { dispatch } = this.props
-         dispatch(fetchCart())
-         dispatch(fetchWishlist())
-	 }
-	 componentDidUpdate(){
-	 
-	 }
- 	toggleNavBar(){
- 		if(this.state.showBar){
- 			this.setState({
- 				showBar:false
- 			})
- 		}else{
- 			this.setState({
- 				showBar:true
- 			})
- 		}
- 	}
- 	render(){
- 		return (
- 			<nav className="nav has-shadow">
+class NavBar extends Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			showBar: false
+		}
+	}
+	componentWillMount() {
+		const { dispatch } = this.props
+		dispatch(fetchCart())
+		dispatch(fetchWishlist())
+	}
+	componentDidUpdate() {
+
+	}
+	toggleNavBar() {
+		if (this.state.showBar) {
+			this.setState({
+				showBar: false
+			})
+		} else {
+			this.setState({
+				showBar: true
+			})
+		}
+	}
+	render() {
+		return (
+			<nav className="nav has-shadow">
 				<div className="container">
 					<div className="nav-left">
 						<Link to="/" className="nav-item">
@@ -47,26 +47,26 @@ import { fetchWishlist } from '../actions/fetchWishlist'
 						<span></span>
 					</span>
 
-					<div className={`nav-right nav-menu ${ (this.state.showBar) ? 'is-active' : '' }`}>
+					<div className={`nav-right nav-menu ${(this.state.showBar) ? 'is-active' : ''}`}>
 						<Link to="/" className="nav-item">
-						Home
+							Home
 						</Link>
 						<Link to="/about" className="nav-item">
-						About us
-						</Link> 
+							About us
+						</Link>
 						<div className="nav-item">
-						<Link to="cart" className="button is-success is-outlined" >
-							<span className="icon">
-							   <i className="fa fa-shopping-cart" aria-hidden="true"></i>
-							</span>
-							<span className="tag is-light">{Object.keys(this.props.cart).length}</span>
-						</Link>
-						<Link to="wishlist" className="button is-danger is-outlined">
-							<span className="icon">
-								<i className="fa fa-heart" aria-hidden="true"></i>
-							</span>
-							<span className="tag is-light">{Object.keys(this.props.wishlist).length}</span>
-						</Link>
+							<Link to="cart" className="button is-success is-outlined" >
+								<span className="icon">
+									<i className="fa fa-shopping-cart" aria-hidden="true"></i>
+								</span>
+								<span className="tag is-light">{Object.keys(this.props.cart).length}</span>
+							</Link>
+							<Link to="wishlist" className="button is-danger is-outlined">
+								<span className="icon">
+									<i className="fa fa-heart" aria-hidden="true"></i>
+								</span>
+								<span className="tag is-light">{Object.keys(this.props.wishlist).length}</span>
+							</Link>
 						</div>
 
 						<span className="nav-item">
@@ -79,18 +79,18 @@ import { fetchWishlist } from '../actions/fetchWishlist'
 						</span>
 					</div>
 				</div>
- 			</nav>
- 		)
- 	}
- }
+			</nav>
+		)
+	}
+}
 /**
  * Insert Props Into Component
  */
- const stateProps = (state) => {
- 	return { 
-       cart:state.CartReducer.data,
-       wishlist:state.WishlistReducer.data
- 	}
- }
+const stateProps = (state) => {
+	return {
+		cart: state.CartReducer.data,
+		wishlist: state.WishlistReducer.data
+	}
+}
 
- export default connect(stateProps)(NavBar)
+export default connect(stateProps)(NavBar)

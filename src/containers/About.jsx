@@ -5,34 +5,34 @@ import Helmet from "react-helmet"
 /**
  * Create About Container
  */
- class About extends Component{
- 	componentDidMount() {
-	    const { dispatch } = this.props
-	    dispatch(fetchAbout())
+class About extends Component {
+	componentDidMount() {
+		const { dispatch } = this.props
+		dispatch(fetchAbout())
 	}
- 	render(){
- 		return (
-			 <div>
-			    <Helmet  title="About Us" />
+	render() {
+		return (
+			<div>
+				<Helmet title="About Us" />
 				<section className="section">
-				<div className="container">
-					<div className="heading">
-						<h1 className="title">{this.props.about.title}</h1>
-					</div>
-					<p>{this.props.about.content}</p>
+					<div className="container">
+						<div className="heading">
+							<h1 className="title">{this.props.about.title}</h1>
+						</div>
+						<p>{this.props.about.content}</p>
 					</div>
 				</section>
-			 </div>
- 			)
-    }
+			</div>
+		)
+	}
 }
 /**
  * Insert Props Into Component
  */
- const stateProps = (state) => {
- 	return { 
-       about:state.AboutReducer.data
- 	}
- }
+const stateProps = (state) => {
+	return {
+		about: state.AboutReducer.data
+	}
+}
 
- export default connect(stateProps)(About)
+export default connect(stateProps)(About)

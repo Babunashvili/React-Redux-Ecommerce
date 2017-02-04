@@ -29,6 +29,11 @@
     }
 }
 
+body{
+    &.isLoading{
+        overflow: hidden;
+    }
+}
 
 @-webkit-keyframes hideLoading {
   0%   { visibility : visible; }

@@ -24,6 +24,9 @@
     -o-animation: hideLoading 1s forwards;
     animation: hideLoading 1s forwards; }
 
+body.isLoading {
+  overflow: hidden; }
+
 @-webkit-keyframes hideLoading {
   0% {
     visibility: visible; }

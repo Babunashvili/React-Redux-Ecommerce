@@ -3,27 +3,45 @@ import { connect } from 'react-redux'
 import Helmet from "react-helmet"
 import { fetchProducts } from '../actions/fetchProducts'
 import { fetchCart } from '../actions/fetchCart'
+import { removeFromCart } from '../actions/removeFromCart'
+import CartItem from '../components/CartItem'
 import { Link } from 'react-router'
 /**
  * Create Cart Container
  */
- class Cart extends Component{
-	getItemById(id){
-	  let obj = {}
-      this.props.products.map((item) => {
-         if(item.id == id) obj = item
-	  })
-	  return obj
+class Cart extends Component {
+	getItemById(id) {
+		let obj = {}
+		this.props.products.map((item) => {
+			if (item.id == id) obj = item
+		})
+		return obj
 	}
-	componentDidMount(){
-        const { dispatch } = this.props
-        dispatch(fetchProducts())
-        dispatch(fetchCart())
+	handleTrash(key) {
+		const { dispatch } = this.props
+		dispatch(removeFromCart(key))
 	}
- 	render(){
- 		return (
+	totalPricesArray() {
+		let cartItems = this.props.cart
+		let getPricesById = (id) => { return this.getItemById(id).price }
+		let prices = []
+		Object.keys(this.props.cart).map(function(key) {
+			prices.push(getPricesById(cartItems[key].id))
+		})
+		return prices
+	}
+	componentDidMount() {
+		const { dispatch } = this.props
+		dispatch(fetchProducts())
+		dispatch(fetchCart())
+	}
+	render() {
+		let total = this.totalPricesArray().reduce(function (prev,next) {
+			return prev + next;
+		}, 0)
+		return (
 			<div>
-			    <Helmet  title="My Cart" />
+				<Helmet title="My Cart" />
 				<section className="section">
 					<div className="container">
 						<div className="heading">
@@ -32,37 +50,42 @@ import { Link } from 'react-router'
 						<table className="table">
 							<thead>
 								<tr>
-								<th><abbr>ID</abbr></th>
-								<th><abbr>Title</abbr></th>
-								<th>Price</th>
+									<th><abbr>ID</abbr></th>
+									<th><abbr>Title</abbr></th>
+									<th>Price</th>
+									<th>&nbsp;</th>
 								</tr>
 							</thead>
+							<tfoot>
+								<tr>
+									<th>&nbsp;</th>
+									<th>&nbsp;</th>
+									<th>Total:{total}$</th>
+									<th>&nbsp;</th>
+								</tr>
+							</tfoot>
 							<tbody>
-							   {
-		                         Object.keys(this.props.cart).map((key) => {
-									 return (<tr key={key}>
-										  <td>{this.getItemById(this.props.cart[key].id).id}</td>
-										  <td><Link to={`product/${this.props.cart[key].id}`}>{this.getItemById(this.props.cart[key].id).title}</Link></td>
-										  <td>{this.getItemById(this.props.cart[key].id).price}$</td>
-									 </tr>)
-								 })
-							   }
-					     	</tbody>
+								{
+									Object.keys(this.props.cart).map((key) => {
+										return (<CartItem key={key} productKey={key} handleTrash={this.handleTrash.bind(this)} product={this.getItemById(this.props.cart[key].id)} />)
+									})
+								}
+							</tbody>
 						</table>
 					</div>
 				</section>
 			</div>
- 			)
-    }
+		)
+	}
 }
 /**
  * Insert Props Into Component
  */
- const stateProps = (state) => {
- 	return { 
-       cart:state.CartReducer.data,
-       products:state.ProductsReducer.data
- 	}
- }
+const stateProps = (state) => {
+	return {
+		cart: state.CartReducer.data,
+		products: state.ProductsReducer.data
+	}
+}
 
- export default connect(stateProps)(Cart)
+export default connect(stateProps)(Cart)
