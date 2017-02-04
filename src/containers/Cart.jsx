@@ -25,7 +25,7 @@ class Cart extends Component {
 		let cartItems = this.props.cart
 		let getPricesById = (id) => { return this.getItemById(id).price }
 		let prices = []
-		Object.keys(this.props.cart).map(function(key) {
+		Object.keys(this.props.cart).map(function (key) {
 			prices.push(getPricesById(cartItems[key].id))
 		})
 		return prices
@@ -36,7 +36,7 @@ class Cart extends Component {
 		dispatch(fetchCart())
 	}
 	render() {
-		let total = this.totalPricesArray().reduce(function (prev,next) {
+		let total = this.totalPricesArray().reduce(function (prev, next) {
 			return prev + next;
 		}, 0)
 		return (
