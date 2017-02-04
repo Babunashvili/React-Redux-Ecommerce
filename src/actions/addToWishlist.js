@@ -17,9 +17,7 @@ const receiveAddToWishlist = (data) => {
     }
 }
 const checkUserOrGuest = (productId) => {
-    if (localStorage.getItem('user') || false) {
-        return { id: productId, userId: localStorage.getItem('user') }
-    } else if (localStorage.getItem('guest') || false) {
+    if (localStorage.getItem('guest') || false) {
         return { id: productId, guestKey: localStorage.getItem('guest') }
     }
 }

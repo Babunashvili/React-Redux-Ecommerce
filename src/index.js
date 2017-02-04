@@ -13,7 +13,7 @@ import { Router, Route, Link, hashHistory, IndexRoute } from 'react-router'
  * Render App
  */
 ReactDOM.render(
-   <Provider store={store}>
+    <Provider store={store}>
      <Router history={hashHistory}> 
 	     <Route path="/" component={App} >
 	         <IndexRoute component={ProductList} />
@@ -24,5 +24,5 @@ ReactDOM.render(
 	     </Route>
 	 </Router>  	
 	</Provider>,
-  document.getElementById('root')
+    document.getElementById('root')
 );

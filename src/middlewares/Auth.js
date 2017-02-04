@@ -7,19 +7,13 @@ export const Auth = store => next => action => {
     let filterUserData = (data) => {
         let newCart = {}
         Object.keys(data).map((key) => {
-            if (localStorage.getItem('user') || false) {
-                //user exists
-                if (data[key].userId == localStorage.getItem('user')) {
-                    newCart[key] = data[key]
-                }
-            } else if (localStorage.getItem('guest') || false) {
+            if (localStorage.getItem('guest') || false) {
                 //guest exists
                 if (data[key].guestKey == localStorage.getItem('guest')) {
                     newCart[key] = data[key]
                 }
             } else {
-                //user not exists
-                //create random key for guest
+                //create random key for guest 
                 localStorage.setItem('guest', generate(7))
             }
         })

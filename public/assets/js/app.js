@@ -21770,28 +21770,6 @@
 										Object.keys(this.props.wishlist).length
 									)
 								)
-							),
-							_react2.default.createElement(
-								'span',
-								{ className: 'nav-item' },
-								_react2.default.createElement(
-									'a',
-									{ className: 'button' },
-									_react2.default.createElement(
-										'span',
-										null,
-										'Login'
-									)
-								),
-								_react2.default.createElement(
-									'a',
-									{ className: 'button is-info' },
-									_react2.default.createElement(
-										'span',
-										null,
-										'Register'
-									)
-								)
 							)
 						)
 					)
@@ -29442,19 +29420,13 @@
 	            var filterUserData = function filterUserData(data) {
 	                var newCart = {};
 	                Object.keys(data).map(function (key) {
-	                    if (localStorage.getItem('user') || false) {
-	                        //user exists
-	                        if (data[key].userId == localStorage.getItem('user')) {
-	                            newCart[key] = data[key];
-	                        }
-	                    } else if (localStorage.getItem('guest') || false) {
+	                    if (localStorage.getItem('guest') || false) {
 	                        //guest exists
 	                        if (data[key].guestKey == localStorage.getItem('guest')) {
 	                            newCart[key] = data[key];
 	                        }
 	                    } else {
-	                        //user not exists
-	                        //create random key for guest
+	                        //create random key for guest 
 	                        localStorage.setItem('guest', (0, _randomstring.generate)(7));
 	                    }
 	                });
@@ -39696,9 +39668,7 @@
 	};
 
 	var checkUserOrGuest = function checkUserOrGuest(productId) {
-	    if (localStorage.getItem('user') || false) {
-	        return { id: productId, userId: localStorage.getItem('user') };
-	    } else if (localStorage.getItem('guest') || false) {
+	    if (localStorage.getItem('guest') || false) {
 	        return { id: productId, guestKey: localStorage.getItem('guest') };
 	    }
 	};
@@ -39754,9 +39724,7 @@
 	    };
 	};
 	var checkUserOrGuest = function checkUserOrGuest(productId) {
-	    if (localStorage.getItem('user') || false) {
-	        return { id: productId, userId: localStorage.getItem('user') };
-	    } else if (localStorage.getItem('guest') || false) {
+	    if (localStorage.getItem('guest') || false) {
 	        return { id: productId, guestKey: localStorage.getItem('guest') };
 	    }
 	};

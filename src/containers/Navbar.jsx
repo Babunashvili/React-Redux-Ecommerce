@@ -68,15 +68,6 @@ class NavBar extends Component {
 								<span className="tag is-light">{Object.keys(this.props.wishlist).length}</span>
 							</Link>
 						</div>
-
-						<span className="nav-item">
-							<a className="button" >
-								<span>Login</span>
-							</a>
-							<a className="button is-info">
-								<span>Register</span>
-							</a>
-						</span>
 					</div>
 				</div>
 			</nav>
