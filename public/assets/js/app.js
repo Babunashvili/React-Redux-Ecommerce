@@ -29442,14 +29442,14 @@
 	            var filterUserData = function filterUserData(data) {
 	                var newCart = {};
 	                Object.keys(data).map(function (key) {
-	                    if (localStorage.getItem('guest') || false) {
-	                        //guest exists
-	                        if (data[key].guestKey == localStorage.getItem('guest')) {
-	                            newCart[key] = data[key];
-	                        }
-	                    } else if (localStorage.getItem('user') || false) {
+	                    if (localStorage.getItem('user') || false) {
 	                        //user exists
 	                        if (data[key].userId == localStorage.getItem('user')) {
+	                            newCart[key] = data[key];
+	                        }
+	                    } else if (localStorage.getItem('guest') || false) {
+	                        //guest exists
+	                        if (data[key].guestKey == localStorage.getItem('guest')) {
 	                            newCart[key] = data[key];
 	                        }
 	                    } else {
@@ -29471,19 +29471,6 @@
 	                default:
 
 	            }
-
-	            // if (localStorage.getItem('guest') || false) {
-	            //     //user exists
-
-	            // } else {
-	            //     //user not exists
-	            //     localStorage.setItem('guest', generate(7))
-	            // }
-	            //   if(isFetching) {
-	            //     next({type:"SHOW_LOADING"})
-	            //   }else{
-	            //     next({type:"HIDE_LOADING"})
-	            //   }
 
 	            return prev;
 	        };
